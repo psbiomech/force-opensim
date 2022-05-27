@@ -26,10 +26,10 @@ class UserSettings():
         # GENERAL SETTINGS        
         
         # data folders
-        self.rootpath = r"C:\Users\Owner\Documents\data\TRAIL Test Data"
-        self.infolder = r"inputDatabase\Events"
-        self.outfolder = "outputDatabase"
-        self.trialgroupfolders = ["Baseline"]    
+        self.rootpath = r"C:\Users\Owner\Documents\data\FORCe"
+        self.infolder = r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim"
+        self.outfolder = "outputdatabase"
+        self.trialgroupfolders = [""]    
 
 
         # ******************************
@@ -42,7 +42,7 @@ class UserSettings():
         # OPENSIM PARAMETERS
         
         # OpenSim log file
-        self.logfilepath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline"
+        self.logfilepath = r"C:\Users\Owner\Documents\projects\force-moco\python"
         self.triallogfolder = "log"
         self.logfile = "out.log"
         
@@ -51,13 +51,13 @@ class UserSettings():
         self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped_NoUpperActuators.osim"
 
         # OpenSim setup files and folders
-        self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
-        self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
-        self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
-        self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"
-        self.refsetupso = "LASEM_TRAIL_Setup_Analysis.xml"
-        self.refsetuprra = "LASEM_TRAIL_Setup_RRA.xml"
-        self.refsetupcmc = "LASEM_TRAIL_Setup_CMC.xml"   
+        self.refsetuppath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-models"
+        self.refsetupscale = "LASEM_FORCE_Setup_Scale.xml"
+        self.refsetupik = "LASEM_FORCE_Setup_IK.xml"
+        self.refsetupid = "LASEM_FORCE_Setup_ID.xml"
+        self.refsetupso = "LASEM_FORCE_Setup_Analysis.xml"
+        self.refsetuprra = "LASEM_FORCE_Setup_RRA.xml"
+        self.refsetupcmc = "LASEM_FORCE_Setup_CMC.xml"   
         
         # OpenSim analysis codes
         self.scalecode = "scale"
@@ -70,52 +70,48 @@ class UserSettings():
         
         
         
-        
 '''
-TRAILSettings_RUN(UserSettings):
-    UserSettings for LASEM TRAIL Project: RUN
+FORCESettings_SDP(UserSettings):
+    UserSettings for LASEM FORCE Project: SDP
 '''
-class TRAILSettings_RUN(UserSettings):
+class FORCESettings_SDP(UserSettings):
     def __init__(self):
         
         
         # inherit parent attributes
-        super(TRAILSettings_RUN, self).__init__()
+        super(FORCESettings_SDP, self).__init__()
         
                         
         # ******************************
         # GENERAL SETTINGS
         
         # project
-        self.project = "TRAIL_RUN"
+        self.project = "FORCE_SDP"
 
         # export data
         self.csvfolder = "csvfolder"
-        self.csvfileprefix = "trail_run_opensim_results_all_"
+        self.csvfileprefix = "force_sdp_results_all_"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
         
         # file prefixes
-        self.subjprefix = "TRAIL_"
+        self.subjprefix = "FAILT"
+        self.subjgroups = ["SYMP", "CTRL"]
         
         # static trial info
         self.staticprefix = "STATIC"
-        self.staticused = "Static_01"
-        self.staticfpchannel = "Force.Fz3"
+        self.staticused = "Static01"
+        self.staticfpchannel = "Fz1"
         
         # file suffixes based on task
         self.trialprefixes = {}
-        self.trialprefixes["run_stance"] = ["EP", "FAST"]
-        self.trialprefixes["run_stridecycle"] = ["EP", "FAST"]
-        self.trialprefixes["run_stance_ep"] = ["EP"]
-        self.trialprefixes["run_stridecycle_ep"] = ["EP"]
-        self.trialprefixes["run_stance_fast"] = ["FAST"]
-        self.trialprefixes["run_stridecycle_fast"] = ["FAST"]
+        self.trialprefixes["sdp"] = ["SDP"]
                         
         # file name format regex pattern:
-        #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)
-        self.fnpat = "TRAIL_\d+_(\w+)_\w+"
+        #   (subjprefix)(num code)_(trialprefix)(num code)
+        self.fnpat = "(FAILTCRT|FAILT)(\d+)_([A-Za-z]+)(\d+)([A-Za-z]*)"
+        self.tasktoknum = 3   # the token that represents the task name/type
         
         # output samples
         self.samples = 101
@@ -140,18 +136,18 @@ class TRAILSettings_RUN(UserSettings):
         # OPENSIM PARAMETERS
         
         # OpenSim additional files
-        self.additionalfilesfolder = "RUN"
-        self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
-        self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators_WithUpper.xml"
-        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN.xml"
-        self.refrratasks = "LASEM_TRAIL_RRA_Tasks_RUN.xml"
-        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators_RUN.xml"
-        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks_RUN.xml"
-        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints_RUN.xml"
+        self.additionalfilesfolder = "SDP"
+        self.refexternalloads = "LASEM_FORCE_ExternalLoads.xml"
+        self.refreserveactuators = "LASEM_FORCE_Reserve_Actuators_WithUpper.xml"
+        self.refrraactuators = "LASEM_FORCE_RRA_Actuators_RUN.xml"
+        self.refrratasks = "LASEM_FORCE_RRA_Tasks_RUN.xml"
+        self.refcmcactuators = "LASEM_FORCEL_CMC_Actuators_RUN.xml"
+        self.refcmctasks = "LASEM_FORCE_CMC_Tasks_RUN.xml"
+        self.refcmccontrolconstraints = "LASEM_FORCE_CMC_ControlConstraints_RUN.xml"
         
         # OpenSim Scale parameters
-        self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 3.0
+        #self.fom_scalefactor = {}
+        #self.fom_scalefactor["all"] = 3.0
         #self.lom_lmt_scalefactor = {}
         #self.lom_lmt_scalefactor["all"] = 1.1
         
@@ -178,5 +174,3 @@ class TRAILSettings_RUN(UserSettings):
         self.jr_joints = {}
         self.jr_joints["all"] = ["child", "child"]
         self.jr_use_cmc_forces = False
-
-        

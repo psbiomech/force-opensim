@@ -44,7 +44,7 @@ TrialKey:
     laboratory and force plate frames.
 '''
 class TrialKey():
-    def __init__(self, lab, task, condition, c3dkey, xdir, static_fp_channel, mass):       
+    def __init__(self, lab, task, condition, c3dkey, xdir, static_fp_channel, mass, staticprefix):       
         self.subject_name = str(c3dkey.subject_name)
         self.trial_name = str(c3dkey.trial_name)
         self.lab_name = lab.lab_name
@@ -53,8 +53,8 @@ class TrialKey():
         self.mass = mass
         self.__set_events(c3dkey, task, static_fp_channel)
         self.__set_markers(lab, c3dkey, xdir)        
-        self.__set_force_plates(lab, c3dkey, xdir) 
-        self.__set_forces(lab, c3dkey)
+        self.__set_force_plates(lab, c3dkey, xdir, staticprefix) 
+        self.__set_forces(lab, c3dkey, staticprefix)
         return None
 
     def __set_events(self, c3dkey, task, static_fp_channel):
@@ -81,7 +81,7 @@ class TrialKey():
             events["time"] = [etime[e] for e in sortidxs]
                     
         # relative time, normalise to first frame
-        events["time0"] = events["time"] - (c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+        events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
             
       
         
@@ -250,15 +250,21 @@ class TrialKey():
         
         return None
      
-    def __set_force_plates(self, lab, c3dkey, xdir):
+    def __set_force_plates(self, lab, c3dkey, xdir, staticprefix):
         
         # initialise dict
         force_plates = {}
         
+        # determine used force plate depending on if static or dynamic trial
+        if staticprefix.casefold() in c3dkey.trial_name.casefold():
+            fpused = lab.fp_used_static
+        else:
+            fpused = lab.fp_used
+                        
         # get force plate info for only used force plates
         force_plates["fp_used"] = [] 
-        force_plates["fp_used_str"] = []
-        for f in lab.fp_used:
+        force_plates["fp_used_str"] = []        
+        for f in fpused:
             
             # dict field
             dict_name = lab.fp_dict_name_prefix + str(f)
@@ -282,7 +288,7 @@ class TrialKey():
         
         return None
           
-    def __set_forces(self, lab, c3dkey):
+    def __set_forces(self, lab, c3dkey, staticprefix):
         
         # initialise dict
         forces = {}        
@@ -293,10 +299,16 @@ class TrialKey():
         forces["frames"] = c3dkey.forces["FRAME"]
         forces["frames0"] = c3dkey.forces["FRAME"] - c3dkey.forces["FRAME"][0]    
         forces["rate"] = c3dkey.forces["RATE"]
+
+        # determine used force plate depending on if static or dynamic trial
+        if staticprefix.casefold() in c3dkey.trial_name.casefold():
+            fpused = lab.fp_used_static
+        else:
+            fpused = lab.fp_used
     
         # get forces for only used force plates
         ns = len(forces["time"])
-        for f in lab.fp_used:
+        for f in fpused:
             
             # dict field
             dict_name = lab.fp_dict_name_prefix + str(f)
@@ -578,8 +590,8 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_Static_02")
-                if trialre.match(trial):
+                trialre = re.compile("FAILTCRT01_STATIC\d+")
+                if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
                 #******************************
@@ -597,7 +609,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff)                           
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff, user.staticprefix)                           
                 
                 # get the mass from the used static trial
                 if usedstatic: mass = osimkey.mass
@@ -617,7 +629,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                trialre = re.compile("TRAIL_071_EP_01")
+                trialre = re.compile("FAILTCRT01_SDP01")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -635,7 +647,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff)                           
+                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff, user.staticprefix)                           
                      
             #
             # ###################################                    
@@ -651,7 +663,7 @@ c3d_extract(trial, c3dpath, c3dpath, lab, condition, xdir, ref_model,
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window, marker_filter_butter_order, marker_filter_cutoff):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window, marker_filter_butter_order, marker_filter_cutoff, staticprefix):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -671,7 +683,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, 
     c3dkey = C3DKey(sname, tname, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
-    trialkey = TrialKey(lab, task, condition, c3dkey, xdir, static_fp_channel, mass)
+    trialkey = TrialKey(lab, task, condition, c3dkey, xdir, static_fp_channel, mass, staticprefix)
     
     # opensim input data
     osimkey = OpenSimKey(trialkey, ref_model, c3dpath, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window, marker_filter_butter_order, marker_filter_cutoff)

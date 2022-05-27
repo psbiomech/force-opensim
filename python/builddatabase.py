@@ -41,6 +41,9 @@ def build_database(user, task):
     folderlist = glob.glob(inpath)
     subjlist = [os.path.split(f)[1] for f in folderlist]
     
+    # files that do not match regex
+    failedfiles = []
+    
     # build metadata dict
     meta = {}
     outpath = os.path.join(user.rootpath, user.outfolder)
@@ -65,12 +68,23 @@ def build_database(user, task):
             
             # trials (for selected task only)
             for m, trial in enumerate(triallist):
-                trialprefix = fnpatobj.fullmatch(trial).group(1)              
+                
+                trial = trial.upper()
+                
+                # file name tokens, check for tokens that do not match and
+                # skip, report in list for checking as this is usually a typo
+                trialtoks = fnpatobj.fullmatch(trial)
+                if trialtoks is None:
+                    failedfiles.append(trial)
+                    continue
+                
+                # get meta data
+                trialprefix = trialtoks.group(user.tasktoknum)                    
                 if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]):                                   
                     meta[subj]["trials"][group][trial] = {}                    
                     meta[subj]["trials"][group][trial]["trial"] = trial
                     meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
-                    meta[subj]["trials"][group][trial]["osim"] = subj + ".osim"
+                    meta[subj]["trials"][group][trial]["osim"] = subj.upper() + ".osim"
                     meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
                     meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
                     meta[subj]["trials"][group][trial]["task"] = task
@@ -83,6 +97,19 @@ def build_database(user, task):
                         meta[subj]["trials"][group][trial]["isstatic"] = True
                         if trial.casefold().endswith(user.staticused.casefold()):
                             meta[subj]["trials"][group][trial]["usedstatic"] = True
+                            
+                            
+            # determine which file to use as static trial in OpenSim, in most
+            # cases use the static file set in the user settings, if not found,
+            # then use the first available, or manually override later
+            finaltriallist = meta[subj]["trials"][group].keys()           
+            for trial in finaltriallist:             
+                if trial.casefold().endswith(user.staticused.casefold()):
+                    meta[subj]["trials"][group][trial]["usedstatic"] = True                            
+                    break
+                elif user.staticprefix.casefold() in trial.casefold():
+                    meta[subj]["trials"][group][trial]["usedstatic"] = True
+                    break
                             
     # create subdfolders if required and copy C3D files into output database
     if not os.path.exists(outpath): os.makedirs(outpath)
@@ -99,4 +126,35 @@ def build_database(user, task):
     # save the metadata dict
     with open(os.path.join(outpath, user.project + ".pkl"),"wb") as fid: pk.dump(meta, fid)
     
-    return meta
+    return meta, failedfiles
+
+
+
+'''
+-----------------------------------
+-------- MANUAL OVERRIDES ---------
+-----------------------------------
+'''
+
+
+'''
+manual_usedstatic(meta, user, subj, group, actual_static_trial, reset_first):
+    Some subjects may not have a static trial with the suffix designated in
+    user.staticused, e.g. user.staticused = "STATIC01", but subject SUBJ9 only
+    has one static SUBJ01_STATIC02, then this should be used for OpenSim. This 
+    function sets the usedstatic flag for this trial in the meta dict.
+'''
+def manual_usedstatic(meta, user, subj, group, actual_static_trial, reset_first):
+    
+    # reset all static trials
+    if reset_first:
+        triallist = meta[subj]["trials"][group].keys()
+        for trial in triallist:
+            if user.staticprefix.casefold() in trial.casefold():
+                meta[subj]["trials"][group][trial]["usedstatic"] = False
+            
+        
+    # set the required static trial
+    meta[subj]["trials"][group][actual_static_trial]["usedstatic"] = True
+    
+
