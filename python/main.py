@@ -10,7 +10,7 @@ import builddatabase as bd
 import usersettings as uset
 import labsetup as labs
 import opensimpipeline as osp
-#import opensimresults as osr
+import opensimresults as osr
 import pickle as pk
 import os
 import datetime
@@ -58,20 +58,20 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-print("Extracting C3D data, creating OpenSim files...\n")
-c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
-print("\nC3D data extract done.\n")
+# print("Extracting C3D data, creating OpenSim files...\n")
+# c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
+# print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
-# print("Running OpenSim model scaling: SCALE...\n")
-# osp.opensim_pipeline(traildb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
+print("Running OpenSim model scaling: SCALE...\n")
+osp.opensim_pipeline(forcedb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# print("Running OpenSim analyses: IK, ID, SO...\n")
-# osp.opensim_pipeline(traildb, user, ["ik", "id", "so"])
-# print("\nOpenSim analyses (IK, ID, SO) completed.\n")
+print("Running OpenSim analyses: IK, ID, SO...\n")
+osp.opensim_pipeline(forcedb, user, ["ik", "id", "so"])
+print("\nOpenSim analyses (IK, ID, SO) completed.\n")
 
 # print("Running OpenSim analyses: RRA, CMC...\n")
 # osp.opensim_pipeline(traildb, user, ["rra",  "cmc"])

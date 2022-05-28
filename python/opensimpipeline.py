@@ -82,7 +82,7 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_EP_01")
+                trialre = re.compile("FAILTCRT01_SDP\d+")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue

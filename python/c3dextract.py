@@ -83,8 +83,7 @@ class TrialKey():
         # relative time, normalise to first frame
         events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
             
-      
-        
+             
         # ###################################
         # PROCESS EVENTS BASED ON TASK
         
@@ -200,6 +199,40 @@ class TrialKey():
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
             events["opensim_last_event_idx"] = 3
+
+        # step down and pivot
+        elif task.casefold().startswith("sdp"):
+            
+            # ipsilateral FO to ipsilateral FS after pivot
+            
+            # calculate the time window of interest (assume first FO is start
+            # of the trial time window, second FS is end of window)
+            fsidx0 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
+            foidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][-1]
+            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
+            
+            # list the individual intervals
+            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+             
+            # find force plate sequence for each interval (row) defined in the
+            # array window_intervals0
+            # note: sequences defined as per GaitExtract using a 2D array:
+            #   rows: event intervals
+            #   col1: right foot
+            #   col2: left foot
+            events["fp_sequence"] = [[0, 0]]
+            if events["window_labels"][0][0] == "R":
+                events["fp_sequence"] = np.array([[0, 3], [1, 3], [1, 0], [1, 2], [0, 2]])
+            else:
+                events["fp_sequence"] = np.array([[3, 0], [3, 2], [0, 2], [1, 2], [1, 0]])            
+            
+            # leg task is same for both legs  (R, L)
+            events["leg_task"] = ["sdp", "sdp"]   
+            
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = 6            
             
         #
         # ###################################
@@ -590,7 +623,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT01_STATIC\d+")
+                trialre = re.compile("FAILTCRT01_STATIC01")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -629,7 +662,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                trialre = re.compile("FAILTCRT01_SDP01")
+                trialre = re.compile("FAILTCRT01_SDP\d+")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -904,16 +937,17 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, cop_fixed_offset, win
         f0window = np.row_stack([[0.0, 0.0, 0.0], F[x, :]])
         fspline = interp.interp1d(x0window, f0window, kind = "linear", axis = 0) 
         f1window = fspline(x1window)
-        F[x - window:x, :] = f1window
+        if x >= window: F[x - window:x, :] = f1window
+            
         
         # T window
         t0window = np.row_stack([[0.0, 0.0, 0.0], T[x, :]])
         tspline = interp.interp1d(x0window, t0window, kind = "linear", axis = 0) 
         t1window = tspline(x1window)
-        T[x - window:x, :] = t1window      
+        if x >= window: T[x - window:x, :] = t1window      
         
         # CoP window, affix to a point reasonably ahead
-        cop[x - window:x, :] = cop[x, :]
+        if x >= window: cop[x - window:x, :] = cop[x, :]
 
     # rectify drift on foot off
     for xi in idxdn[0]:
