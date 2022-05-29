@@ -27,7 +27,7 @@ class UserSettings():
         
         # data folders
         self.rootpath = r"C:\Users\Owner\Documents\data\FORCe"
-        self.infolder = [r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim"]
+        self.infolder = [r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim", r"C:\Users\Owner\Documents\data\FORCe\inputdatabase\ForceMaster_LTUSymptomatics\3.2. OpenSim_C3D_Good"]
         self.outfolder = "outputdatabase"
         self.trialgroupfolders = [""]    
 

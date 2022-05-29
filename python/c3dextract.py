@@ -601,6 +601,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
 
     # extract C3D data for OpenSim
     print("\n")
+    failedfiles = []
     for subj in meta:
         
         print("\n")
@@ -623,7 +624,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT01_STATIC01")
+                trialre = re.compile("FAILTCRT02_STATIC\d+")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -638,14 +639,16 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 print("%s" % "-" * 30)
             
                 # process C3D file and generate OsimKey for trial
-                c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
-                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                task = meta[subj]["trials"][group][trial]["task"]
-                condition = meta[subj]["trials"][group][trial]["condition"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff, user.staticprefix)                           
-                
-                # get the mass from the used static trial
-                if usedstatic: mass = osimkey.mass
+                try:
+                    c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    task = meta[subj]["trials"][group][trial]["task"]
+                    condition = meta[subj]["trials"][group][trial]["condition"]
+                    osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff, user.staticprefix)                           
+                    if usedstatic: mass = osimkey.mass
+                except:
+                    print("*** FAILED ***")    
+                    failedfiles.append(c3dfile)
             
             #
             # ###################################            
@@ -662,7 +665,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                trialre = re.compile("FAILTCRT01_SDP\d+")
+                trialre = re.compile("FAILTCRT02_SDP\d+")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -676,16 +679,19 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 print("%s" % "-" * 30)
             
                 # process C3D file and generate OsimKey for trial
-                c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
-                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                task = meta[subj]["trials"][group][trial]["task"]
-                condition = meta[subj]["trials"][group][trial]["condition"]
-                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff, user.staticprefix)                           
-                     
+                try:
+                    c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    task = meta[subj]["trials"][group][trial]["task"]
+                    condition = meta[subj]["trials"][group][trial]["condition"]
+                    c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff, user.staticprefix)                           
+                except:
+                    print("*** FAILED ***")    
+                    failedfiles.append(c3dfile)
             #
             # ###################################                    
 
-    return None
+    return failedfiles
 
 
 
