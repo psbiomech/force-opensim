@@ -44,14 +44,14 @@ class UserSettings():
         # OpenSim log file
         self.logfilepath = r"C:\Users\Owner\Documents\projects\force-moco\python"
         self.triallogfolder = "log"
-        self.logfile = "out.log"
+        self.logfile = "opensim.log"
         
         # OpenSim reference model
-        self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped_NoUpperActuators.osim"
+        self.refmodelpath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-models"
+        self.refmodelfile = "LASEM_FORCE_ReferenceModel_Unclamped.osim"
 
         # OpenSim setup files and folders
-        self.refsetuppath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-models"
+        self.refsetuppath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-setup"
         self.refsetupscale = "LASEM_FORCE_Setup_Scale.xml"
         self.refsetupik = "LASEM_FORCE_Setup_IK.xml"
         self.refsetupid = "LASEM_FORCE_Setup_ID.xml"
@@ -138,7 +138,7 @@ class FORCESettings_SDP(UserSettings):
         # OpenSim additional files
         self.additionalfilesfolder = "SDP"
         self.refexternalloads = "LASEM_FORCE_ExternalLoads.xml"
-        self.refreserveactuators = "LASEM_FORCE_Reserve_Actuators_WithUpper.xml"
+        self.refreserveactuators = "LASEM_FORCE_Reserve_Actuators.xml"
         self.refrraactuators = "LASEM_FORCE_RRA_Actuators_RUN.xml"
         self.refrratasks = "LASEM_FORCE_RRA_Tasks_RUN.xml"
         self.refcmcactuators = "LASEM_FORCEL_CMC_Actuators_RUN.xml"

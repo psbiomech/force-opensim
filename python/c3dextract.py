@@ -232,7 +232,7 @@ class TrialKey():
             
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = 6            
+            events["opensim_last_event_idx"] = 5            
             
         #
         # ###################################

@@ -54,6 +54,14 @@ def opensim_pipeline(meta, user, analyses):
             modelfullpath = ""
             modelfile = ""
             for trial in meta[subj]["trials"][group]:
+                
+                #****** FOR TESTING ONLY ******
+                trialre = re.compile("FAILTCRT01_STATIC01")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
+                #******************************
+                
                 if meta[subj]["trials"][group][trial]["usedstatic"]:
                     
                     # load the OsimKey
@@ -82,7 +90,7 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT01_SDP\d+")
+                trialre = re.compile("FAILTCRT01_SDP01")
                 if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -143,7 +151,7 @@ def run_opensim_scale(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
 
     print("\nCreating scaled model: %s" % subject)
     print("------------------------------------------------")
@@ -281,7 +289,7 @@ def run_opensim_scale(osimkey, user):
     except:
         print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_SCALE.log"))
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_SCALE.log"))
         print("------------------------------------------------\n")
     
     # ******************************    
@@ -304,9 +312,9 @@ def run_opensim_ik(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
 
-    print("Performing IK on trial: %s" % trial)
+    print("\nPerforming IK on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an IK Tool from a generic setup file
@@ -357,7 +365,7 @@ def run_opensim_ik(osimkey, user):
     except:
         print("---> ERROR: IK failed. Skipping IK for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_IK.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_IK.log")) 
         print("------------------------------------------------\n")
     
     # ******************************
@@ -380,9 +388,9 @@ def run_opensim_id(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing ID on trial: %s" % trial)
+    print("\nPerforming ID on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an ID Tool from a generic setup file
@@ -454,7 +462,7 @@ def run_opensim_id(osimkey, user):
     except:
         print("---> ERROR: ID failed. Skipping ID for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_ID.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_ID.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -477,9 +485,9 @@ def run_opensim_so(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing SO on trial: %s" % trial)
+    print("\nPerforming SO on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an generic AnalyzeTool from the template setup file (set the flag
@@ -608,7 +616,7 @@ def run_opensim_so(osimkey, user):
     except:
         print("---> ERROR: SO failed. Skipping SO for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_SO.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_SO.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -631,9 +639,9 @@ def run_opensim_rra(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing RRA on trial: %s" % trial)
+    print("\nPerforming RRA on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an RRA Tool from a generic setup file
@@ -755,7 +763,7 @@ def run_opensim_rra(osimkey, user):
         for i in range(user.rraiter):
             
             # clear log file
-            open("out.log", "w").close()
+            open(user.logfile, "w").close()
             
             # set tool name based on current iteration
             rraiter = "RRA_" + str(i + 1)
@@ -798,7 +806,7 @@ def run_opensim_rra(osimkey, user):
             except:
                 print("---> ERROR: RRA iteration %d failed. Skipping RRA for %s." % (i + 1, trial))
             else:
-                shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_" + rraiter + ".log"))                     
+                shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_" + rraiter + ".log"))                     
 
  
             # update the RRA model segment masses, print the new model and
@@ -837,9 +845,9 @@ def run_opensim_cmc(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing CMC on trial: %s" % trial)
+    print("\nPerforming CMC on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create a CMC Tool from a generic setup file
@@ -1020,7 +1028,7 @@ def run_opensim_cmc(osimkey, user):
     except:
         print("---> ERROR: CMC failed. Skipping CMC for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_CMC.log"))
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_CMC.log"))
         print("------------------------------------------------\n")
     
     # ******************************
@@ -1043,9 +1051,9 @@ def run_opensim_jr(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing JR on trial: %s" % trial)
+    print("\nPerforming JR on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an generic AnalyzeTool from the template setup file (set the flag
@@ -1214,7 +1222,7 @@ def run_opensim_jr(osimkey, user):
     except:
         print("---> ERROR: JR failed. Skipping JR for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_JR.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_JR.log")) 
         print("------------------------------------------------\n")
 
     # ******************************

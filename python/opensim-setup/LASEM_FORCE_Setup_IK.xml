@@ -48,13 +48,13 @@
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
 					<apply>true</apply>
 					<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
-					<weight>15</weight>
+					<weight>50</weight>
 				</IKMarkerTask>
 				<IKMarkerTask name="LASI">
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
 					<apply>true</apply>
 					<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
-					<weight>15</weight>
+					<weight>50</weight>
 				</IKMarkerTask>
 				<IKMarkerTask name="P2">
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
@@ -168,7 +168,7 @@
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
 					<apply>true</apply>
 					<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
-					<weight>10</weight>
+					<weight>15</weight>
 				</IKMarkerTask>
 				<IKMarkerTask name="LTHLP">
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
@@ -234,7 +234,7 @@
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
 					<apply>true</apply>
 					<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
-					<weight>1</weight>
+					<weight>10</weight>
 				</IKMarkerTask>
 				<IKMarkerTask name="RTHLP">
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
@@ -300,7 +300,7 @@
 					<!--Whether or not this task will be used during inverse kinematics solve.-->
 					<apply>true</apply>
 					<!--Weight given to a marker or coordinate for solving inverse kinematics problems.-->
-					<weight>1</weight>
+					<weight>10</weight>
 				</IKMarkerTask>
 			</objects>
 			<groups />

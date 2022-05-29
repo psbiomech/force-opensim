@@ -1,0 +1,486 @@
+[2022-05-29 14:23:50.262] [info] Loaded model FAILTCRT01 from file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\FAILTCRT01.osim
+[2022-05-29 14:23:50.264] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-29 14:23:50.264] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-29 14:23:50.264] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-29 14:23:50.264] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-29 14:23:50.264] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-29 14:23:50.264] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-29 14:23:50.265] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-29 14:23:50.266] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-29 14:23:50.267] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-29 14:23:50.268] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-29 14:23:50.269] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-29 14:23:50.270] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-29 14:23:50.271] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.272] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-29 14:23:50.362] [info] AbstractTool FAILTCRT01_SDP01 loading model C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\FAILTCRT01.osim
+[2022-05-29 14:23:50.436] [info] Loaded model FAILTCRT01 from file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\FAILTCRT01.osim
+[2022-05-29 14:23:50.437] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-29 14:23:50.437] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-29 14:23:50.437] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-29 14:23:50.437] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-29 14:23:50.438] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-29 14:23:50.439] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-29 14:23:50.440] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-29 14:23:50.441] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-29 14:23:50.442] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.443] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-29 14:23:50.444] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-29 14:23:50.445] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-29 14:23:50.445] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-29 14:23:50.445] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-29 14:23:50.596] [info] Adding force object set from FAILTCRT01_SDP01_Reserve_Actuators.xml
+[2022-05-29 14:23:50.635] [info] ExternalLoads 'ExternalLoads' was renamed and is being reset to 'externalloads'.
+[2022-05-29 14:23:50.790] [info] Storage: read data file = C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\FAILTCRT01_SDP01_grf.mot (nr=4990 nc=19)
+[2022-05-29 14:23:50.863] [info] ExternalForce::Right Data source being set to FAILTCRT01_SDP01_grf.mot
+[2022-05-29 14:23:50.863] [info] ExternalForce::Left Data source being set to FAILTCRT01_SDP01_grf.mot
+[2022-05-29 14:23:50.878] [info] Loading coordinates from file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\ik\FAILTCRT01_SDP01_ik.mot'.
+[2022-05-29 14:23:50.878] [info] Storage: read data file = C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\ik\FAILTCRT01_SDP01_ik.mot (nr=195 nc=40)
+[2022-05-29 14:23:50.885] [info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
+[2022-05-29 14:23:54.440] [info] Found 389 state vectors with time stamps ranging from 0.0499999 to 3.93.
+[2022-05-29 14:23:54.440] [info] Executing the analyses from 1.05 to 2.93...
+[2022-05-29 14:23:54.676] [info] Storage: read data file = C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\FAILTCRT01_SDP01_grf.mot (nr=4990 nc=19)
+[2022-05-29 14:23:54.753] [info] ExternalForce::Right Data source being set to FAILTCRT01_SDP01_grf.mot
+[2022-05-29 14:23:54.753] [info] ExternalForce::Left Data source being set to FAILTCRT01_SDP01_grf.mot
+[2022-05-29 14:23:54.848] [info] Storage: read data file = C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\FAILTCRT01_SDP01_grf.mot (nr=4990 nc=19)
+[2022-05-29 14:23:54.921] [info] ExternalForce::Right Data source being set to FAILTCRT01_SDP01_grf.mot
+[2022-05-29 14:23:54.921] [info] ExternalForce::Left Data source being set to FAILTCRT01_SDP01_grf.mot
+[2022-05-29 14:23:56.278] [cout] [info] time = 1.05 Performance = 224.334 Constraint violation = 1.44967e-12
+[2022-05-29 14:23:56.282] [info] Bounds for 'addbrev_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'addlong_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'addmagDist_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'addmagIsch_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'addmagMid_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'addmagProx_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'bflh140_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'bfsh140_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'edl_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'ehl_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'fdl_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'fhl_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'gaslat140_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'gasmed_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'glmax1_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'glmax2_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'glmax3_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'glmed1_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'glmed2_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.282] [info] Bounds for 'glmed3_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmin1_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmin2_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmin3_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'grac_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'iliacus_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'perbrev_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'perlong_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'piri_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'psoas_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'recfem_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'sart_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'semimem_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'semiten_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'soleus_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'tfl_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'tibant_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'tibpost_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'vasint_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'vaslat140_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'vasmed_r': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'addbrev_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'addlong_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'addmagDist_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'addmagIsch_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'addmagMid_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'addmagProx_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'bflh140_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'bfsh140_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'edl_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'ehl_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'fdl_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'fhl_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'gaslat140_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'gasmed_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmax1_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmax2_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmax3_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmed1_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmed2_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmed3_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmin1_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmin2_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'glmin3_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'grac_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'iliacus_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'perbrev_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'perlong_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'piri_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'psoas_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'recfem_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'sart_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'semimem_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'semiten_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'soleus_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'tfl_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'tibant_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'tibpost_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'vasint_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'vaslat140_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'vasmed_l': 0.01 to 1.0.
+[2022-05-29 14:23:56.283] [info] Bounds for 'lumbar_ext': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'lumbar_bend': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'lumbar_rot': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'shoulder_flex_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'shoulder_add_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'shoulder_rot_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'elbow_flex_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'pro_sup_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'wrist_flex_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'wrist_dev_r': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'shoulder_flex_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'shoulder_add_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'shoulder_rot_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'elbow_flex_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'pro_sup_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'wrist_flex_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'wrist_dev_l': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'FX': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'FY': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'FZ': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'MX': -inf to inf.
+[2022-05-29 14:23:56.283] [info] Bounds for 'MY': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'MZ': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_hip_flexion_r': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_hip_adduction_r': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_hip_rotation_r': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_knee_angle_r': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_subtalar_angle_r': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_ankle_angle_r': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_hip_flexion_l': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_hip_adduction_l': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_hip_rotation_l': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_knee_angle_l': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_subtalar_angle_l': -inf to inf.
+[2022-05-29 14:23:56.284] [info] Bounds for 'reserve_ankle_angle_l': -inf to inf.
+[2022-05-29 14:23:56.668] [cout] [info] time = 1.06 Performance = 227.104 Constraint violation = 7.74157e-12
+[2022-05-29 14:23:57.065] [cout] [info] time = 1.07 Performance = 211.271 Constraint violation = 1.25574e-12
+[2022-05-29 14:23:57.425] [cout] [info] time = 1.08 Performance = 183.549 Constraint violation = 1.37378e-12
+[2022-05-29 14:23:57.775] [cout] [info] time = 1.09 Performance = 152.888 Constraint violation = 1.04665e-12
+[2022-05-29 14:23:58.170] [cout] [info] time = 1.1 Performance = 124.643 Constraint violation = 1.845e-12
+[2022-05-29 14:23:58.579] [cout] [info] time = 1.11 Performance = 100.13 Constraint violation = 9.44869e-13
+[2022-05-29 14:23:58.959] [cout] [info] time = 1.12 Performance = 78.7665 Constraint violation = 4.1889e-13
+[2022-05-29 14:23:59.337] [cout] [info] time = 1.13 Performance = 60.2734 Constraint violation = 7.57902e-13
+[2022-05-29 14:23:59.754] [cout] [info] time = 1.14 Performance = 45.1082 Constraint violation = 3.81175e-13
+[2022-05-29 14:24:00.181] [cout] [info] time = 1.15 Performance = 34.4118 Constraint violation = 8.08115e-13
+[2022-05-29 14:24:00.561] [cout] [info] time = 1.16 Performance = 27.5926 Constraint violation = 6.54582e-13
+[2022-05-29 14:24:00.937] [cout] [info] time = 1.17 Performance = 23.9243 Constraint violation = 6.30083e-13
+[2022-05-29 14:24:01.351] [cout] [info] time = 1.18 Performance = 22.3171 Constraint violation = 5.47337e-13
+[2022-05-29 14:24:01.718] [cout] [info] time = 1.19 Performance = 21.4775 Constraint violation = 2.95181e-13
+[2022-05-29 14:24:02.129] [cout] [info] time = 1.2 Performance = 20.8092 Constraint violation = 2.28003e-13
+[2022-05-29 14:24:02.571] [cout] [info] time = 1.21 Performance = 20.0325 Constraint violation = 4.9849e-13
+[2022-05-29 14:24:02.977] [cout] [info] time = 1.22 Performance = 19.8429 Constraint violation = 1.50970e-12
+[2022-05-29 14:24:03.361] [cout] [info] time = 1.23 Performance = 20.411 Constraint violation = 5.17919e-13
+[2022-05-29 14:24:03.785] [cout] [info] time = 1.24 Performance = 21.2782 Constraint violation = 1.10561e-12
+[2022-05-29 14:24:04.221] [cout] [info] time = 1.25 Performance = 22.2295 Constraint violation = 1.91196e-13
+[2022-05-29 14:24:04.659] [cout] [info] time = 1.26 Performance = 22.0617 Constraint violation = 1.84342e-12
+[2022-05-29 14:24:05.042] [cout] [info] time = 1.27 Performance = 21.6273 Constraint violation = 2.73811e-12
+[2022-05-29 14:24:05.478] [cout] [info] time = 1.28 Performance = 20.88 Constraint violation = 1.24222e-12
+[2022-05-29 14:24:05.949] [cout] [info] time = 1.29 Performance = 20.1225 Constraint violation = 2.90797e-11
+[2022-05-29 14:24:06.409] [cout] [info] time = 1.3 Performance = 19.2487 Constraint violation = 1.84494e-11
+[2022-05-29 14:24:06.823] [cout] [info] time = 1.31 Performance = 17.55 Constraint violation = 3.46721e-12
+[2022-05-29 14:24:07.275] [cout] [info] time = 1.32 Performance = 14.828 Constraint violation = 2.27965e-11
+[2022-05-29 14:24:07.750] [cout] [info] time = 1.33 Performance = 12.6512 Constraint violation = 9.67144e-12
+[2022-05-29 14:24:08.145] [cout] [info] time = 1.34 Performance = 12.4412 Constraint violation = 5.48525e-13
+[2022-05-29 14:24:08.581] [cout] [info] time = 1.35 Performance = 11.8389 Constraint violation = 9.79030e-13
+[2022-05-29 14:24:09.027] [cout] [info] time = 1.36 Performance = 10.2809 Constraint violation = 4.75867e-13
+[2022-05-29 14:24:09.405] [cout] [info] time = 1.37 Performance = 8.93728 Constraint violation = 2.73159e-12
+[2022-05-29 14:24:09.808] [cout] [info] time = 1.38 Performance = 8.95525 Constraint violation = 1.37584e-12
+[2022-05-29 14:24:10.216] [cout] [info] time = 1.39 Performance = 12.0683 Constraint violation = 4.86521e-13
+[2022-05-29 14:24:10.604] [cout] [info] time = 1.4 Performance = 22.1734 Constraint violation = 5.36479e-13
+[2022-05-29 14:24:11.013] [cout] [info] time = 1.41 Performance = 43.692 Constraint violation = 9.32659e-13
+[2022-05-29 14:24:11.442] [cout] [info] time = 1.42 Performance = 78.633 Constraint violation = 9.23939e-13
+[2022-05-29 14:24:11.800] [cout] [info] time = 1.43 Performance = 122.001 Constraint violation = 2.49661e-12
+[2022-05-29 14:24:12.198] [cout] [info] time = 1.44 Performance = 163.888 Constraint violation = 1.05478e-12
+[2022-05-29 14:24:12.619] [cout] [info] time = 1.45 Performance = 196.179 Constraint violation = 1.28898e-12
+[2022-05-29 14:24:12.968] [cout] [info] time = 1.46 Performance = 217.89 Constraint violation = 3.04077e-12
+[2022-05-29 14:24:13.353] [cout] [info] time = 1.47 Performance = 232.125 Constraint violation = 9.42023e-13
+[2022-05-29 14:24:13.758] [cout] [info] time = 1.48 Performance = 244.339 Constraint violation = 8.01045e-13
+[2022-05-29 14:24:14.150] [cout] [info] time = 1.49 Performance = 256.347 Constraint violation = 1.02159e-12
+[2022-05-29 14:24:14.519] [cout] [info] time = 1.5 Performance = 269.663 Constraint violation = 9.2484e-13
+[2022-05-29 14:24:14.928] [cout] [info] time = 1.51 Performance = 283.002 Constraint violation = 2.17822e-12
+[2022-05-29 14:24:15.371] [cout] [info] time = 1.52 Performance = 293.422 Constraint violation = 1.83214e-12
+[2022-05-29 14:24:15.738] [cout] [info] time = 1.53 Performance = 299.192 Constraint violation = 1.83504e-12
+[2022-05-29 14:24:16.127] [cout] [info] time = 1.54 Performance = 299.099 Constraint violation = 2.16141e-12
+[2022-05-29 14:24:16.537] [cout] [info] time = 1.55 Performance = 293.397 Constraint violation = 1.48339e-12
+[2022-05-29 14:24:16.890] [cout] [info] time = 1.56 Performance = 285.347 Constraint violation = 6.71483e-12
+[2022-05-29 14:24:17.265] [cout] [info] time = 1.57 Performance = 279.802 Constraint violation = 3.30384e-12
+[2022-05-29 14:24:17.669] [cout] [info] time = 1.58 Performance = 280.143 Constraint violation = 9.55927e-13
+[2022-05-29 14:24:18.020] [cout] [info] time = 1.59 Performance = 294.141 Constraint violation = 1.45057e-12
+[2022-05-29 14:24:18.398] [cout] [info] time = 1.6 Performance = 330.136 Constraint violation = 3.16418e-12
+[2022-05-29 14:24:18.790] [cout] [info] time = 1.61 Performance = 399.419 Constraint violation = 1.53101e-11
+[2022-05-29 14:24:19.148] [cout] [info] time = 1.62 Performance = 520.485 Constraint violation = 2.95947e-12
+[2022-05-29 14:24:19.536] [cout] [info] time = 1.63 Performance = 717.882 Constraint violation = 3.39328e-11
+[2022-05-29 14:24:19.952] [cout] [info] time = 1.64 Performance = 1015.72 Constraint violation = 9.87042e-11
+[2022-05-29 14:24:20.344] [cout] [info] time = 1.65 Performance = 1281.35 Constraint violation = 1.29963e-12
+[2022-05-29 14:24:20.719] [cout] [info] time = 1.66 Performance = 1224.07 Constraint violation = 1.07016e-11
+[2022-05-29 14:24:21.127] [cout] [info] time = 1.67 Performance = 672.445 Constraint violation = 3.49222e-11
+[2022-05-29 14:24:21.567] [cout] [info] time = 1.68 Performance = 128.688 Constraint violation = 8.78824e-12
+[2022-05-29 14:24:21.955] [cout] [info] time = 1.69 Performance = 138.059 Constraint violation = 1.01183e-11
+[2022-05-29 14:24:22.376] [cout] [info] time = 1.7 Performance = 381.544 Constraint violation = 3.51107e-12
+[2022-05-29 14:24:22.731] [cout] [info] time = 1.71 Performance = 275.929 Constraint violation = 8.85329e-12
+[2022-05-29 14:24:23.129] [cout] [info] time = 1.72 Performance = 59.4211 Constraint violation = 4.63931e-12
+[2022-05-29 14:24:23.557] [cout] [info] time = 1.73 Performance = 103.951 Constraint violation = 9.02959e-13
+[2022-05-29 14:24:23.966] [cout] [info] time = 1.74 Performance = 207.638 Constraint violation = 7.15814e-11
+[2022-05-29 14:24:24.317] [cout] [info] time = 1.75 Performance = 149.959 Constraint violation = 2.95445e-12
+[2022-05-29 14:24:24.711] [cout] [info] time = 1.76 Performance = 52.773 Constraint violation = 7.35465e-12
+[2022-05-29 14:24:25.111] [cout] [info] time = 1.77 Performance = 40.0729 Constraint violation = 1.98134e-12
+[2022-05-29 14:24:25.571] [cout] [info] time = 1.78 Performance = 74.8358 Constraint violation = 4.53359e-12
+[2022-05-29 14:24:25.997] [cout] [info] time = 1.79 Performance = 85.4189 Constraint violation = 5.60250e-12
+[2022-05-29 14:24:26.339] [cout] [info] time = 1.8 Performance = 84.318 Constraint violation = 2.92337e-12
+[2022-05-29 14:24:26.745] [cout] [info] time = 1.81 Performance = 68.8462 Constraint violation = 1.97837e-12
+[2022-05-29 14:24:27.246] [cout] [info] time = 1.82 Performance = 51.8671 Constraint violation = 1.89765e-12
+[2022-05-29 14:24:27.779] [cout] [info] time = 1.83 Performance = 38.7204 Constraint violation = 2.77221e-12
+[2022-05-29 14:24:28.288] [cout] [info] time = 1.84 Performance = 31.3877 Constraint violation = 1.28338e-12
+[2022-05-29 14:24:28.706] [cout] [info] time = 1.85 Performance = 29.4704 Constraint violation = 6.5746e-13
+[2022-05-29 14:24:29.059] [cout] [info] time = 1.86 Performance = 30.8898 Constraint violation = 2.7985e-12
+[2022-05-29 14:24:29.428] [cout] [info] time = 1.87 Performance = 33.2594 Constraint violation = 5.56158e-13
+[2022-05-29 14:24:29.885] [cout] [info] time = 1.88 Performance = 34.6979 Constraint violation = 1.06046e-12
+[2022-05-29 14:24:30.237] [cout] [info] time = 1.89 Performance = 33.4615 Constraint violation = 6.22042e-13
+[2022-05-29 14:24:30.640] [cout] [info] time = 1.9 Performance = 29.0487 Constraint violation = 2.30945e-12
+[2022-05-29 14:24:31.022] [cout] [info] time = 1.91 Performance = 22.1769 Constraint violation = 1.4322e-12
+[2022-05-29 14:24:31.401] [cout] [info] time = 1.92 Performance = 15.4701 Constraint violation = 1.40145e-12
+[2022-05-29 14:24:31.850] [cout] [info] time = 1.93 Performance = 11.3959 Constraint violation = 9.98181e-13
+[2022-05-29 14:24:32.323] [cout] [info] time = 1.94 Performance = 10.9666 Constraint violation = 1.50147e-12
+[2022-05-29 14:24:32.735] [cout] [info] time = 1.95 Performance = 13.0925 Constraint violation = 1.92113e-12
+[2022-05-29 14:24:33.227] [cout] [info] time = 1.96 Performance = 15.6193 Constraint violation = 5.3749e-13
+[2022-05-29 14:24:33.623] [cout] [info] time = 1.97 Performance = 16.9993 Constraint violation = 1.8995e-12
+[2022-05-29 14:24:34.094] [cout] [info] time = 1.98 Performance = 16.9789 Constraint violation = 1.92698e-12
+[2022-05-29 14:24:34.535] [cout] [info] time = 1.99 Performance = 16.1627 Constraint violation = 1.44632e-12
+[2022-05-29 14:24:34.898] [cout] [info] time = 2.0 Performance = 15.2247 Constraint violation = 6.70170e-13
+[2022-05-29 14:24:35.323] [cout] [info] time = 2.01 Performance = 14.4556 Constraint violation = 8.01705e-13
+[2022-05-29 14:24:35.743] [cout] [info] time = 2.02 Performance = 13.8802 Constraint violation = 9.09968e-13
+[2022-05-29 14:24:36.114] [cout] [info] time = 2.03 Performance = 13.5473 Constraint violation = 1.07084e-12
+[2022-05-29 14:24:36.464] [cout] [info] time = 2.04 Performance = 13.5417 Constraint violation = 2.75857e-12
+[2022-05-29 14:24:36.858] [cout] [info] time = 2.05 Performance = 13.7089 Constraint violation = 1.45425e-12
+[2022-05-29 14:24:37.251] [cout] [info] time = 2.06 Performance = 14.0824 Constraint violation = 2.78672e-12
+[2022-05-29 14:24:37.660] [cout] [info] time = 2.07 Performance = 14.5313 Constraint violation = 1.90583e-12
+[2022-05-29 14:24:38.037] [cout] [info] time = 2.08 Performance = 14.8866 Constraint violation = 1.89631e-12
+[2022-05-29 14:24:38.404] [cout] [info] time = 2.09 Performance = 14.8112 Constraint violation = 1.40836e-12
+[2022-05-29 14:24:38.797] [cout] [info] time = 2.1 Performance = 14.0608 Constraint violation = 1.40184e-12
+[2022-05-29 14:24:39.167] [cout] [info] time = 2.11 Performance = 12.7259 Constraint violation = 2.34173e-12
+[2022-05-29 14:24:39.548] [cout] [info] time = 2.12 Performance = 11.1606 Constraint violation = 5.73829e-13
+[2022-05-29 14:24:39.950] [cout] [info] time = 2.13 Performance = 9.7418 Constraint violation = 1.88256e-12
+[2022-05-29 14:24:40.384] [cout] [info] time = 2.14 Performance = 8.77604 Constraint violation = 1.40794e-12
+[2022-05-29 14:24:40.774] [cout] [info] time = 2.15 Performance = 8.33583 Constraint violation = 1.01237e-12
+[2022-05-29 14:24:41.147] [cout] [info] time = 2.16 Performance = 8.19375 Constraint violation = 1.39731e-12
+[2022-05-29 14:24:41.520] [cout] [info] time = 2.17 Performance = 8.04056 Constraint violation = 5.40359e-13
+[2022-05-29 14:24:41.929] [cout] [info] time = 2.18 Performance = 7.84851 Constraint violation = 6.90901e-13
+[2022-05-29 14:24:42.357] [cout] [info] time = 2.19 Performance = 7.99103 Constraint violation = 5.14784e-13
+[2022-05-29 14:24:42.766] [cout] [info] time = 2.2 Performance = 8.83713 Constraint violation = 9.49341e-13
+[2022-05-29 14:24:43.125] [cout] [info] time = 2.21 Performance = 10.1147 Constraint violation = 6.37146e-13
+[2022-05-29 14:24:43.525] [cout] [info] time = 2.22 Performance = 10.9309 Constraint violation = 2.82907e-13
+[2022-05-29 14:24:43.934] [cout] [info] time = 2.23 Performance = 9.93833 Constraint violation = 3.49487e-13
+[2022-05-29 14:24:44.366] [cout] [info] time = 2.24 Performance = 6.98414 Constraint violation = 1.82969e-12
+[2022-05-29 14:24:44.813] [cout] [info] time = 2.25 Performance = 5.83232 Constraint violation = 2.77773e-12
+[2022-05-29 14:24:45.219] [cout] [info] time = 2.26 Performance = 16.3112 Constraint violation = 1.88043e-12
+[2022-05-29 14:24:45.643] [cout] [info] time = 2.27 Performance = 53.4226 Constraint violation = 1.29912e-12
+[2022-05-29 14:24:46.067] [cout] [info] time = 2.28 Performance = 132.872 Constraint violation = 1.97010e-12
+[2022-05-29 14:24:46.503] [cout] [info] time = 2.29 Performance = 264.411 Constraint violation = 4.83239e-12
+[2022-05-29 14:24:46.927] [cout] [info] time = 2.3 Performance = 316.195 Constraint violation = 5.52043e-12
+[2022-05-29 14:24:47.371] [cout] [info] time = 2.31 Performance = 171.65 Constraint violation = 3.34343e-11
+[2022-05-29 14:24:47.812] [cout] [info] time = 2.32 Performance = 28.3617 Constraint violation = 9.49036e-13
+[2022-05-29 14:24:48.252] [cout] [info] time = 2.33 Performance = 29.5786 Constraint violation = 2.75198e-12
+[2022-05-29 14:24:48.723] [cout] [info] time = 2.34 Performance = 98.9827 Constraint violation = 2.77371e-12
+[2022-05-29 14:24:49.113] [cout] [info] time = 2.35 Performance = 103.819 Constraint violation = 4.59106e-12
+[2022-05-29 14:24:49.512] [cout] [info] time = 2.36 Performance = 57.9961 Constraint violation = 1.46163e-12
+[2022-05-29 14:24:49.950] [cout] [info] time = 2.37 Performance = 33.8309 Constraint violation = 2.31911e-12
+[2022-05-29 14:24:50.405] [cout] [info] time = 2.38 Performance = 41.0895 Constraint violation = 2.36026e-12
+[2022-05-29 14:24:50.844] [cout] [info] time = 2.39 Performance = 44.8283 Constraint violation = 9.4284e-13
+[2022-05-29 14:24:51.242] [cout] [info] time = 2.4 Performance = 36.4836 Constraint violation = 5.58649e-13
+[2022-05-29 14:24:51.659] [cout] [info] time = 2.41 Performance = 33.8104 Constraint violation = 6.46163e-13
+[2022-05-29 14:24:52.082] [cout] [info] time = 2.42 Performance = 45.8896 Constraint violation = 1.94598e-12
+[2022-05-29 14:24:52.518] [cout] [info] time = 2.43 Performance = 62.7297 Constraint violation = 2.87321e-13
+[2022-05-29 14:24:52.921] [cout] [info] time = 2.44 Performance = 69.7264 Constraint violation = 5.76942e-13
+[2022-05-29 14:24:53.352] [cout] [info] time = 2.45 Performance = 65.797 Constraint violation = 5.15127e-13
+[2022-05-29 14:24:53.804] [cout] [info] time = 2.46 Performance = 58.4793 Constraint violation = 1.51361e-12
+[2022-05-29 14:24:54.228] [cout] [info] time = 2.47 Performance = 54.3847 Constraint violation = 5.18604e-13
+[2022-05-29 14:24:54.608] [cout] [info] time = 2.48 Performance = 48.1387 Constraint violation = 3.57761e-13
+[2022-05-29 14:24:54.987] [cout] [info] time = 2.49 Performance = 40.9852 Constraint violation = 5.44979e-13
+[2022-05-29 14:24:55.379] [cout] [info] time = 2.5 Performance = 33.9831 Constraint violation = 3.38475e-13
+[2022-05-29 14:24:55.811] [cout] [info] time = 2.51 Performance = 27.8089 Constraint violation = 3.02968e-13
+[2022-05-29 14:24:56.214] [cout] [info] time = 2.52 Performance = 23.5259 Constraint violation = 3.97707e-13
+[2022-05-29 14:24:56.633] [cout] [info] time = 2.53 Performance = 21.9204 Constraint violation = 2.97479e-13
+[2022-05-29 14:24:57.029] [cout] [info] time = 2.54 Performance = 22.4365 Constraint violation = 4.51824e-13
+[2022-05-29 14:24:57.435] [cout] [info] time = 2.55 Performance = 23.182 Constraint violation = 4.19314e-13
+[2022-05-29 14:24:57.834] [cout] [info] time = 2.56 Performance = 22.4797 Constraint violation = 4.92326e-13
+[2022-05-29 14:24:58.235] [cout] [info] time = 2.57 Performance = 20.3264 Constraint violation = 5.28031e-13
+[2022-05-29 14:24:58.633] [cout] [info] time = 2.58 Performance = 17.9766 Constraint violation = 6.16902e-13
+[2022-05-29 14:24:59.026] [cout] [info] time = 2.59 Performance = 16.5523 Constraint violation = 9.44579e-13
+[2022-05-29 14:24:59.408] [cout] [info] time = 2.6 Performance = 16.3137 Constraint violation = 3.00505e-13
+[2022-05-29 14:24:59.860] [cout] [info] time = 2.61 Performance = 16.4634 Constraint violation = 4.02896e-13
+[2022-05-29 14:25:00.268] [cout] [info] time = 2.62 Performance = 15.9611 Constraint violation = 3.58358e-13
+[2022-05-29 14:25:00.644] [cout] [info] time = 2.63 Performance = 14.348 Constraint violation = 2.52223e-13
+[2022-05-29 14:25:01.053] [cout] [info] time = 2.64 Performance = 11.9746 Constraint violation = 1.03285e-12
+[2022-05-29 14:25:01.437] [cout] [info] time = 2.65 Performance = 9.45891 Constraint violation = 1.83055e-12
+[2022-05-29 14:25:01.856] [cout] [info] time = 2.66 Performance = 7.51794 Constraint violation = 2.30173e-13
+[2022-05-29 14:25:02.274] [cout] [info] time = 2.67 Performance = 6.60407 Constraint violation = 9.44013e-13
+[2022-05-29 14:25:02.663] [cout] [info] time = 2.68 Performance = 6.73338 Constraint violation = 5.03631e-13
+[2022-05-29 14:25:03.057] [cout] [info] time = 2.69 Performance = 7.37463 Constraint violation = 1.37776e-12
+[2022-05-29 14:25:03.440] [cout] [info] time = 2.7 Performance = 8.32748 Constraint violation = 9.22414e-13
+[2022-05-29 14:25:03.884] [cout] [info] time = 2.71 Performance = 9.90019 Constraint violation = 1.82291e-12
+[2022-05-29 14:25:04.302] [cout] [info] time = 2.72 Performance = 12.5417 Constraint violation = 1.847e-12
+[2022-05-29 14:25:04.714] [cout] [info] time = 2.73 Performance = 16.0349 Constraint violation = 1.82488e-12
+[2022-05-29 14:25:05.081] [cout] [info] time = 2.74 Performance = 19.2837 Constraint violation = 9.44877e-13
+[2022-05-29 14:25:05.502] [cout] [info] time = 2.75 Performance = 21.0835 Constraint violation = 9.34328e-13
+[2022-05-29 14:25:05.955] [cout] [info] time = 2.76 Performance = 20.9649 Constraint violation = 4.56024e-12
+[2022-05-29 14:25:06.315] [cout] [info] time = 2.77 Performance = 19.2911 Constraint violation = 2.00685e-13
+[2022-05-29 14:25:06.757] [cout] [info] time = 2.78 Performance = 16.8858 Constraint violation = 4.55596e-12
+[2022-05-29 14:25:07.166] [cout] [info] time = 2.79 Performance = 14.7462 Constraint violation = 2.77244e-12
+[2022-05-29 14:25:07.600] [cout] [info] time = 2.8 Performance = 13.5644 Constraint violation = 3.64447e-12
+[2022-05-29 14:25:08.043] [cout] [info] time = 2.81 Performance = 13.4806 Constraint violation = 2.74841e-12
+[2022-05-29 14:25:08.429] [cout] [info] time = 2.82 Performance = 14.082 Constraint violation = 6.37234e-12
+[2022-05-29 14:25:08.840] [cout] [info] time = 2.83 Performance = 14.9912 Constraint violation = 1.06999e-12
+[2022-05-29 14:25:09.259] [cout] [info] time = 2.84 Performance = 16.1487 Constraint violation = 1.89726e-12
+[2022-05-29 14:25:09.680] [cout] [info] time = 2.85 Performance = 18.153 Constraint violation = 2.77109e-12
+[2022-05-29 14:25:10.129] [cout] [info] time = 2.86 Performance = 22.2549 Constraint violation = 3.66624e-12
+[2022-05-29 14:25:10.549] [cout] [info] time = 2.87 Performance = 29.9311 Constraint violation = 2.7659e-12
+[2022-05-29 14:25:10.917] [cout] [info] time = 2.88 Performance = 42.6971 Constraint violation = 1.22838e-12
+[2022-05-29 14:25:11.342] [cout] [info] time = 2.89 Performance = 62.7895 Constraint violation = 2.7662e-12
+[2022-05-29 14:25:11.782] [cout] [info] time = 2.9 Performance = 93.4805 Constraint violation = 4.77629e-12
+[2022-05-29 14:25:12.213] [cout] [info] time = 2.91 Performance = 140.9 Constraint violation = 8.25134e-12
+[2022-05-29 14:25:12.634] [cout] [info] time = 2.92 Performance = 211.51 Constraint violation = 1.96051e-12
+[2022-05-29 14:25:13.025] [cout] [info] time = 2.93 Performance = 312.652 Constraint violation = 2.88823e-12
+[2022-05-29 14:25:13.027] [info] Printing results of investigation FAILTCRT01_SDP01 to C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01\so
