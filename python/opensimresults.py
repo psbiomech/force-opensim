@@ -324,6 +324,10 @@ def export_opensim_results(meta, user, analyses):
                     task = osimresultskey.task
                     condition = osimresultskey.condition
                     
+                    # events
+                    events_times = "[" + "; ".join(["%.2f" % t for t in osimresultskey.events["time"].tolist()]) + "]"
+                    events_labels = "[" + "; ".join(osimresultskey.events["labels"]) + "]"
+                    
                     # foot
                     for f, foot in enumerate(["r","l"]):
                         
@@ -344,13 +348,13 @@ def export_opensim_results(meta, user, analyses):
                             for v, variable in enumerate(varheader):
                                 
                                 # ignore time
-                                if v == 0: continue
+                                #if v == 0: continue
     
-                                # data for the variable
+                                # data for the variable (includes time)
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, group, trial, task, condition, foot, leg_task, ans, variable] + drow.tolist()
+                                csvrow = [subj, group, trial, task, condition, foot, leg_task, events_times, events_labels, ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -361,7 +365,7 @@ def export_opensim_results(meta, user, analyses):
 
     # create empty dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "group", "trial", "task", "condition", "foot", "leg_task", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "group", "trial", "task", "condition", "foot", "leg_task", "events_times", "events_labels", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

@@ -27,7 +27,7 @@ class UserSettings():
         
         # data folders
         self.rootpath = r"C:\Users\Owner\Documents\data\FORCe"
-        self.infolder = [r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim"]
+        self.infolder = [r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim", r"C:\Users\Owner\Documents\data\FORCe\inputdatabase\ForceMaster_LTUSymptomatics\3.2. OpenSim_C3D_Good"]
         self.outfolder = "outputdatabase"
         self.trialgroupfolders = [""]    
 
@@ -97,7 +97,6 @@ class FORCESettings_SDP(UserSettings):
         
         # file prefixes
         self.subjprefix = "FAILT"
-        self.subjgroups = ["SYMP", "CTRL"]
         
         # static trial info
         self.staticprefix = "STATIC"
@@ -110,7 +109,7 @@ class FORCESettings_SDP(UserSettings):
                         
         # file name format regex pattern:
         #   (subjprefix)(num code)_(trialprefix)(num code)
-        self.fnpat = "(FAILTCRT|FAILT)(\d+)_(STATIC|SDP)(\d+)([A-Za-z]*)" #"(FAILTCRT|FAILT)(\d+)_([A-Za-z]+)(\d+)([A-Za-z]*)"
+        self.fnpat = "(FAILTCRT|FAILT)(\d+)_(STATIC|SDP)(\d*)([A-Za-z]*)" #"(FAILTCRT|FAILT)(\d+)_([A-Za-z]+)(\d+)([A-Za-z]*)"
         self.tasktoknum = 3   # the token + 1 that represents the task name/type
         
         # output samples

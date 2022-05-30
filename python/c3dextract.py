@@ -13,7 +13,6 @@ import pyc3dserver as c3d
 import pickle as pk
 import opensimpipeline as osp
 import os
-import re
 
 
 
