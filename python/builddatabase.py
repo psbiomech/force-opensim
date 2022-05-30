@@ -69,19 +69,22 @@ def build_database(user, task):
                 groupfolderlist = glob.glob(groupinpath)
                 triallist = [os.path.splitext(os.path.split(f)[1])[0] for f in groupfolderlist]
                 
+                # skip groups that don't have a least one static trial and at
+                # least one required dynamic file
+                hasstatic = any([user.staticprefix.casefold() in t.casefold() for t in triallist])
+                hasdynamic = any([any([c.casefold() in t.casefold() for c in user.trialprefixes["sdp"]]) for t in triallist])
+                if not(hasstatic) or not(hasdynamic): continue
+                
                 # trials (for selected task only)
                 for m, trial in enumerate(triallist):            
                     
                     trial = trial.upper()
                     
-                    # file name tokens, check for tokens that do not match and
-                    # skip, report in list for checking as this is usually a typo
+                    # file name tokens, skip those that don't match regex
                     trialtoks = fnpatobj.fullmatch(trial)
-                    if trialtoks is None:
-                        failedfiles.append(trial)
-                        continue
+                    if trialtoks is None: continue
                     
-                    # get meta data
+                    # build meta data dict
                     trialprefix = trialtoks.group(user.tasktoknum)                    
                     if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]):                                   
                         meta[subj]["trials"][group][trial] = {}                    
@@ -100,7 +103,7 @@ def build_database(user, task):
                             meta[subj]["trials"][group][trial]["isstatic"] = True
                             if trial.casefold().endswith(user.staticused.casefold()):
                                 meta[subj]["trials"][group][trial]["usedstatic"] = True
-                                
+                    
                                 
                 # determine which file to use as static trial in OpenSim, in most
                 # cases use the static file set in the user settings, if not found,
@@ -113,19 +116,23 @@ def build_database(user, task):
                     elif user.staticprefix.casefold() in trial.casefold():
                         meta[subj]["trials"][group][trial]["usedstatic"] = True
                         break
-                                
-        # create subdfolders if required and copy C3D files into output database
+                    
+        # create subdfolders if required, copy C3D files into output database
         if not os.path.exists(outpath): os.makedirs(outpath)
         for subj in meta:
-            if subj == "project": continue
-            if not os.path.exists(meta[subj]["outpath"]): os.makedirs(meta[subj]["outpath"])
-            for group in meta[subj]["trials"]:
-                if not os.path.exists(os.path.join(meta[subj]["outpath"], group)): os.makedirs(os.path.join(meta[subj]["outpath"], group))
-                for trial in  meta[subj]["trials"][group]:
+            for group in meta[subj]["trials"]:                
+                for trial in meta[subj]["trials"][group]:
                     trialoutpath = meta[subj]["trials"][group][trial]["outpath"]
+                    if not os.path.exists(meta[subj]["outpath"]): os.makedirs(meta[subj]["outpath"])
+                    if not os.path.exists(os.path.join(meta[subj]["outpath"], group)): os.makedirs(os.path.join(meta[subj]["outpath"], group))
                     if not os.path.exists(trialoutpath): os.makedirs(trialoutpath)
                     shutil.copy(os.path.join(meta[subj]["trials"][group][trial]["inpath"], meta[subj]["trials"][group][trial]["c3dfile"]), trialoutpath)
                 
+        # clean up, remove empty subject meta dict keys
+        for subj in subjlist:
+            if not any([bool(meta[subj]["trials"][g]) for g in meta[subj]["trials"]]):
+                meta.pop(subj)
+                        
     # save the metadata dict
     with open(os.path.join(outpath, user.project + ".pkl"),"wb") as fid: pk.dump(meta, fid)
     

@@ -158,7 +158,7 @@ class OsimResultsKey():
 
                 
                 # run stride cycle on ipsilateral leg, stance on contralateral
-                if self.task.casefold() == "run_stridecycle":
+                elif self.task.casefold() == "run_stridecycle":
                     
                     # time window depends on leg task
                     if self.events["leg_task"][f] == "run_stridecycle":
@@ -180,6 +180,14 @@ class OsimResultsKey():
                     t0 = self.events["time"][e0]
                     t1 = self.events["time"][e1]
                     
+                
+                # step down and pivot
+                elif self.task.casefold() == "sdp":
+                    e0 = 0
+                    e1 = 5
+                    t0 = self.events["time"][e0]
+                    t1 = self.events["time"][e1]                    
+
                     
                 #
                 # ###################################
@@ -224,6 +232,7 @@ def opensim_results_batch_process(meta, analyses, nsamp):
     
     # extract OpenSim data
     osimkey = {}
+    failedfiles = []
     for subj in meta:
     
         print("%s" % "*" * 30)
@@ -242,26 +251,31 @@ def opensim_results_batch_process(meta, analyses, nsamp):
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
-            
-                print("Dynamic trial: %s" % trial)
-            
-                # load the trial OsimKey
-                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                pkfile = os.path.join(c3dpath,trial + "_osimkey.pkl")
-                with open(pkfile,"rb") as fid:
-                    osimkey = pk.load(fid)
+
+                try:
+                            
+                    # load the trial OsimKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_osimkey.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimkey = pk.load(fid)
+                        
+                    # get the OpenSim results
+                    osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
                     
-                # get the OpenSim results
-                osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
-                
-                # save OsimResultsKey to file
-                with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
-                    pk.dump(osimresultskey, f)
-                    
-    
+                    # save OsimResultsKey to file
+                    with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
+                        pk.dump(osimresultskey, f)
+                                    
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                else:
+                    print("Dynamic trial: %s" % trial)
+                          
     print("\n")                
     
-    return None
+    return failedfiles
     
     
 
@@ -278,6 +292,7 @@ def export_opensim_results(meta, user, analyses):
         
     # extract OpenSim data
     print("Collating data into lists...\n")
+    failedfiles = []
     for subj in meta:
     
         print("%s" % "*" * 30)
@@ -297,47 +312,52 @@ def export_opensim_results(meta, user, analyses):
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
             
-                print("Dynamic trial: %s" % trial)
-            
-                # load the trial OsimResultsKey
-                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
-                with open(pkfile,"rb") as fid:
-                    osimresultskey = pk.load(fid)
-                    
-                # trial task and condition
-                task = osimresultskey.task
-                condition = osimresultskey.condition
+                try:
                 
-                # foot
-                for f, foot in enumerate(["r","l"]):
-                    
-                    # leg task
-                    leg_task = osimresultskey.events["leg_task"][f]
-                    
-                    # analysis
-                    for ans in analyses:
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
                         
-                        # ignore scaling
-                        if ans.casefold() == "scale": continue
+                    # trial task and condition
+                    task = osimresultskey.task
+                    condition = osimresultskey.condition
                     
-                        # data array
-                        data = osimresultskey.results["split"][ans][foot]["data"]
-                        varheader = osimresultskey.results["split"][ans][foot]["headers"]
-                    
-                        # variable
-                        for v, variable in enumerate(varheader):
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        # leg task
+                        leg_task = osimresultskey.events["leg_task"][f]
+                        
+                        # analysis
+                        for ans in analyses:
                             
-                            # ignore time
-                            if v == 0: continue
-
-                            # data for the variable
-                            drow = data[:, v]
-
-                            # create new line of data
-                            csvrow = [subj, group, trial, task, condition, foot, leg_task, ans, variable] + drow.tolist()
-                            csvdata.append(csvrow)
-
+                            # ignore scaling
+                            if ans.casefold() == "scale": continue
+                        
+                            # data array
+                            data = osimresultskey.results["split"][ans][foot]["data"]
+                            varheader = osimresultskey.results["split"][ans][foot]["headers"]
+                        
+                            # variable
+                            for v, variable in enumerate(varheader):
+                                
+                                # ignore time
+                                if v == 0: continue
+    
+                                # data for the variable
+                                drow = data[:, v]
+    
+                                # create new line of data
+                                csvrow = [subj, group, trial, task, condition, foot, leg_task, ans, variable] + drow.tolist()
+                                csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                else:
+                    print("Dynamic trial: %s" % trial)
 
     # create empty dataframe
     print("\nCreating dataframe...")
@@ -354,7 +374,7 @@ def export_opensim_results(meta, user, analyses):
     
     print("\n")
    
-    return csvdf
+    return failedfiles
 
 
 

@@ -27,7 +27,7 @@ class UserSettings():
         
         # data folders
         self.rootpath = r"C:\Users\Owner\Documents\data\FORCe"
-        self.infolder = [r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim", r"C:\Users\Owner\Documents\data\FORCe\inputdatabase\ForceMaster_LTUSymptomatics\3.2. OpenSim_C3D_Good"]
+        self.infolder = [r"inputdatabase\ForceMaster_LTUControls\3.2. OpenSim"]
         self.outfolder = "outputdatabase"
         self.trialgroupfolders = [""]    
 
@@ -48,7 +48,7 @@ class UserSettings():
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-models"
-        self.refmodelfile = "LASEM_FORCE_ReferenceModel_Unclamped.osim"
+        self.refmodelfile = "LASEM_FORCE_ReferenceModel_PelvisUnclamped.osim"
 
         # OpenSim setup files and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-setup"
@@ -110,7 +110,7 @@ class FORCESettings_SDP(UserSettings):
                         
         # file name format regex pattern:
         #   (subjprefix)(num code)_(trialprefix)(num code)
-        self.fnpat = "(FAILTCRT|FAILT)(\d+)_([A-Za-z]+)(\d+)([A-Za-z]*)"
+        self.fnpat = "(FAILTCRT|FAILT)(\d+)_(STATIC|SDP)(\d+)([A-Za-z]*)" #"(FAILTCRT|FAILT)(\d+)_([A-Za-z]+)(\d+)([A-Za-z]*)"
         self.tasktoknum = 3   # the token + 1 that represents the task name/type
         
         # output samples

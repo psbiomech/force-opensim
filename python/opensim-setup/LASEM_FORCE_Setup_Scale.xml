@@ -375,10 +375,6 @@
 									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
 									<markers> C7 P2</markers>
 								</MarkerPair>
-								<MarkerPair>
-									<!--Names of two markers, the distance between which is used to compute a body scale factor.-->
-									<markers> C7 P2</markers>
-								</MarkerPair>
 							</objects>
 							<groups />
 						</MarkerPairSet>

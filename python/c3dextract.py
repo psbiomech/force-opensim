@@ -67,6 +67,11 @@ class TrialKey():
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
         
+        # if general events exist, rename to GEN
+        elif (c3dkey.meta["EVENT"]["USED"] == 2) and ([g == 1 for g in c3dkey.meta["EVENT"]["GENERIC_FLAGS"]]):
+            events["labels"] = ["GEN", "GEN"]
+            events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
+                                
         else:
             
             # build events list and time
@@ -624,10 +629,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT02_STATIC\d+")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("FAILTCRT42_STATIC04")
+                # if not trialre.match(trial):
+                #     #print("%s ---> SKIP" % trial)
+                #     continue
                 #******************************
                 
                 # ignore dynamic trials
@@ -649,6 +654,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 except:
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
+                    raise
             
             #
             # ###################################            
@@ -665,10 +671,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                trialre = re.compile("FAILTCRT02_SDP\d+")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("FAILTCRT42_SDP\d+")
+                # if not trialre.match(trial):
+                #     #print("%s ---> SKIP" % trial)
+                #     continue
                 #******************************
                 
                 # ignore static trials

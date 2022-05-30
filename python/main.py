@@ -5,12 +5,7 @@ Process and run LASEM FORCE project data through OpenSim
 @author: Prasanna Sritharan
 """
 
-import c3dextract as c3dex
-import builddatabase as bd
-import usersettings as uset
-import labsetup as labs
-import opensimpipeline as osp
-import opensimresults as osr
+
 import pickle as pk
 import os
 import datetime
@@ -31,12 +26,16 @@ print("\n")
 
 # %% SET THE LAB
 
+import labsetup as labs
+
 print("Loading lab info...", end="")
 lasem = labs.LabKeyLasemForceSDP()
 print("Done.\n")
 
 
 # %% USER SETTINGS
+
+import usersettings as uset
 
 print("Loading user settings... ", end="")
 user = uset.FORCESettings_SDP()
@@ -45,33 +44,43 @@ print("Done.\n")
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
-print("Building new output database... ", end="")
-forcedb, failedfiles_bd = bd.build_database(user, "sdp")
-print("Done.\n")
+# import builddatabase as bd
 
-# print("Loading existing output database... ", end="")
-# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-# with open(dbfilepath,"rb") as fid:
-#     forcedb = pk.load(fid)
+# print("Building new output database... ", end="")
+# forcedb, failedfilesBD = bd.build_database(user, "sdp")
 # print("Done.\n")
+
+print("Loading existing output database... ", end="")
+dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+with open(dbfilepath,"rb") as fid:
+    forcedb = pk.load(fid)
+print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-print("Extracting C3D data, creating OpenSim files...\n")
-failedfiles_c3d = c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
-print("\nC3D data extract done.\n")
+# import c3dextract as c3dex
+
+# print("Extracting C3D data, creating OpenSim files...\n")
+# failedfilesC3D = c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
+# print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
+import opensimpipeline as osp
+
 print("Running OpenSim model scaling: SCALE...\n")
-osp.opensim_pipeline(forcedb, user, ["scale"])
+failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
 print("\nOpenSim model scaling (SCALE) completed.\n")
 
-print("Running OpenSim analyses: IK, ID, SO...\n")
-osp.opensim_pipeline(forcedb, user, ["ik", "id", "so"])
-print("\nOpenSim analyses (IK, ID, SO) completed.\n")
+print("Running OpenSim analyses: IK, ID...\n")
+failed_ik_id_so = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
+print("\nOpenSim analyses (IK, ID) completed.\n")
+
+print("Running OpenSim analyses: SO...\n")
+failed_so = osp.opensim_pipeline(forcedb, user, ["so"])
+print("\nOpenSim analyses (SO) completed.\n")
 
 # print("Running OpenSim analyses: RRA, CMC...\n")
 # osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
@@ -88,16 +97,15 @@ print("\nOpenSim analyses (IK, ID, SO) completed.\n")
 
 # %% LOAD AND FORMAT RESULTS
 
+import opensimresults as osr
+
 # print("Converting OpenSim results to Pickle...\n")
-# osr.opensim_results_batch_process(traildb, ["scale", "ik", "id", "so"], 101)
+# failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id", "so"], 101)
 # print("\nOpenSim results converted to Pickle.\n")
 
-
-# %% COLLATE RESULTS FOR RSTATS ANALYSIS
-
-# print("Exporting OpenSim results to CSV...\n")
-# osr.export_opensim_results(traildb, user, ["scale", "ik", "id", "so"])
-# print("CSV export complete.\n")
+print("Exporting OpenSim results to CSV...\n")
+failed_export = osr.export_opensim_results(forcedb, user, ["ik", "id", "so"])
+print("CSV export complete.\n")
 
 
 # %% END
