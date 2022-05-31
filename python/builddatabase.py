@@ -101,70 +101,50 @@ def build_database(user, task):
                             meta[subj]["trials"][group][trial]["task"] = "static"
                             meta[subj]["trials"][group][trial]["condition"] = "static"
                             meta[subj]["trials"][group][trial]["isstatic"] = True
-                            if trial.casefold().endswith(user.staticused.casefold()):
-                                meta[subj]["trials"][group][trial]["usedstatic"] = True
+                                                   
+                # determine which file to use as static trial in OpenSim, in
+                # most cases use the static file set in the user settings, if
+                # not found, then use the first available                        
+                hasusedstatic = any([meta[subj]["trials"][group][t]["usedstatic"] for t in meta[subj]["trials"][group].keys()])
+                if not hasusedstatic:
+                    for trial in meta[subj]["trials"][group]:             
+                        if trial.casefold().endswith(user.staticused.casefold()):
+                            meta[subj]["trials"][group][trial]["usedstatic"] = True                            
+                            break
+                        elif user.staticprefix.casefold() in trial.casefold():
+                            meta[subj]["trials"][group][trial]["usedstatic"] = True
+                            break
                     
-                                
-                # determine which file to use as static trial in OpenSim, in most
-                # cases use the static file set in the user settings, if not found,
-                # then use the first available, or manually override later
-                finaltriallist = meta[subj]["trials"][group].keys()           
-                for trial in finaltriallist:             
-                    if trial.casefold().endswith(user.staticused.casefold()):
-                        meta[subj]["trials"][group][trial]["usedstatic"] = True                            
-                        break
-                    elif user.staticprefix.casefold() in trial.casefold():
-                        meta[subj]["trials"][group][trial]["usedstatic"] = True
-                        break
-                    
+        # clean up, remove empty subject meta dict keys or those without at
+        # least one static and one dynamic trial
+        for subj in subjlist:
+            for group in user.trialgroupfolders:
+                hasstatic = any([meta[subj]["trials"][group][t]["isstatic"] for t in meta[subj]["trials"][group].keys()])
+                hasdynamic = any([not meta[subj]["trials"][group][t]["isstatic"] for t in meta[subj]["trials"][group].keys()])
+                if not (hasstatic and hasdynamic):            
+                    meta[subj]["trials"].pop(group)
+            if not meta[subj]["trials"]:
+                meta.pop(subj)
+                
         # create subdfolders if required, copy C3D files into output database
-        if not os.path.exists(outpath): os.makedirs(outpath)
+        if not os.path.exists(outpath):
+            os.makedirs(outpath)
         for subj in meta:
             for group in meta[subj]["trials"]:                
                 for trial in meta[subj]["trials"][group]:
                     trialoutpath = meta[subj]["trials"][group][trial]["outpath"]
-                    if not os.path.exists(meta[subj]["outpath"]): os.makedirs(meta[subj]["outpath"])
-                    if not os.path.exists(os.path.join(meta[subj]["outpath"], group)): os.makedirs(os.path.join(meta[subj]["outpath"], group))
-                    if not os.path.exists(trialoutpath): os.makedirs(trialoutpath)
+                    if not os.path.exists(meta[subj]["outpath"]):
+                        os.makedirs(meta[subj]["outpath"])
+                    if not os.path.exists(os.path.join(meta[subj]["outpath"], group)):
+                        os.makedirs(os.path.join(meta[subj]["outpath"], group))
+                    if not os.path.exists(trialoutpath):
+                        os.makedirs(trialoutpath)
                     shutil.copy(os.path.join(meta[subj]["trials"][group][trial]["inpath"], meta[subj]["trials"][group][trial]["c3dfile"]), trialoutpath)
-                
-        # clean up, remove empty subject meta dict keys
-        for subj in subjlist:
-            if not any([bool(meta[subj]["trials"][g]) for g in meta[subj]["trials"]]):
-                meta.pop(subj)
-                        
+                                        
     # save the metadata dict
-    with open(os.path.join(outpath, user.project + ".pkl"),"wb") as fid: pk.dump(meta, fid)
+    with open(os.path.join(outpath, user.project + ".pkl"), "wb") as fid:
+        pk.dump(meta, fid)
     
     return meta, failedfiles
 
-
-
-'''
------------------------------------
--------- MANUAL OVERRIDES ---------
------------------------------------
-'''
-
-
-'''
-manual_usedstatic(meta, user, subj, group, actual_static_trial, reset_first):
-    Some subjects may not have a static trial with the suffix designated in
-    user.staticused, e.g. user.staticused = "STATIC01", but subject SUBJ9 only
-    has one static SUBJ01_STATIC02, then this should be used for OpenSim. This 
-    function sets the usedstatic flag for this trial in the meta dict.
-'''
-def manual_usedstatic(meta, user, subj, group, actual_static_trial, reset_first):
-    
-    # reset all static trials
-    if reset_first:
-        triallist = meta[subj]["trials"][group].keys()
-        for trial in triallist:
-            if user.staticprefix.casefold() in trial.casefold():
-                meta[subj]["trials"][group][trial]["usedstatic"] = False
-            
-        
-    # set the required static trial
-    meta[subj]["trials"][group][actual_static_trial]["usedstatic"] = True
-    
 

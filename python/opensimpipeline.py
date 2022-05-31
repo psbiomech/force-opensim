@@ -61,7 +61,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                             
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT\d+_STATIC\d+")
+                # trialre = re.compile("FAILT01_STATIC01")
                 # if not trialre.match(trial):
                 #     #print("%s ---> SKIP" % trial)
                 #     continue
@@ -102,7 +102,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT02_SDP08")
+                # trialre = re.compile("FAILT01_STATIC01")
                 # if not trialre.match(trial):
                 #     #print("%s ---> SKIP" % trial)
                 #     continue
@@ -209,10 +209,12 @@ def run_opensim_scale(osimkey, user):
     modelscaler = tool.getModelScaler()
     modelscaler.setMarkerFileName(os.path.join(fpath, trial + "_markers.trc"))
     
-    # set time window
+    # set time window for scaling to 45%-55% of trial time
+    t0 = osimkey.events["time"][0] + (osimkey.events["time"][1] - osimkey.events["time"][0]) * 0.45
+    t1 = osimkey.events["time"][0] + (osimkey.events["time"][1] - osimkey.events["time"][0]) * 0.55
     twindow = opensim.ArrayDouble(0, 2)
-    twindow.set(0, 0.50)
-    twindow.set(1, 0.55)
+    twindow.set(0, t0)
+    twindow.set(1, t1)
     modelscaler.setTimeRange(twindow)
     
     # set output model file name

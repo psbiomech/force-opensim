@@ -6,8 +6,6 @@ Process and run LASEM FORCE project data through OpenSim
 """
 
 
-import pickle as pk
-import os
 import datetime
 
 
@@ -42,7 +40,7 @@ user = uset.FORCESettings_SDP()
 print("Done.\n")
 
 
-# %% META DATABASE (BUILD NEW OR LOAD EXISTING)
+# %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)
 
 import builddatabase as bd
 
@@ -50,20 +48,26 @@ print("Building new output database... ", end="")
 forcedb, failedfilesBD = bd.build_database(user, "sdp")
 print("Done.\n")
 
+
+# %% LOAD EXISTING META DATABASE
+
+# import pickle as pk
+# import os
+
 # print("Loading existing output database... ", end="")
 # dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-# with open(dbfilepath,"rb") as fid:
+# with open(dbfilepath, "rb") as fid:
 #     forcedb = pk.load(fid)
 # print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfilesC3D = c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfilesC3D = c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
@@ -74,13 +78,13 @@ print("Running OpenSim model scaling: SCALE...\n")
 failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
 print("\nOpenSim model scaling (SCALE) completed.\n")
 
-print("Running OpenSim analyses: IK, ID...\n")
-failed_ik_id_so = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
-print("\nOpenSim analyses (IK, ID) completed.\n")
+# print("Running OpenSim analyses: IK, ID...\n")
+# failed_ik_id_so = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
+# print("\nOpenSim analyses (IK, ID) completed.\n")
 
-print("Running OpenSim analyses: SO...\n")
-failed_so = osp.opensim_pipeline(forcedb, user, ["so"])
-print("\nOpenSim analyses (SO) completed.\n")
+# print("Running OpenSim analyses: SO...\n")
+# failed_so = osp.opensim_pipeline(forcedb, user, ["so"])
+# print("\nOpenSim analyses (SO) completed.\n")
 
 # print("Running OpenSim analyses: RRA, CMC...\n")
 # osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
