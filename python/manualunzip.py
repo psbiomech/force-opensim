@@ -22,6 +22,7 @@ fprefix = "FAILT"
 folderlist = glob.glob(os.path.join(srcdir, fprefix + "*"), recursive = True)
 subjlist = [os.path.split(f)[1] for f in folderlist]
 
+
 # parse folders
 failedfiles = []
 for n, subj in enumerate(subjlist):

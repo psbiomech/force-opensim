@@ -40,7 +40,7 @@ user = uset.FORCESettings_SDP()
 print("Done.\n")
 
 
-# %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)
+# %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)...
 
 import builddatabase as bd
 
@@ -49,7 +49,7 @@ forcedb, failedfilesBD = bd.build_database(user, "sdp")
 print("Done.\n")
 
 
-# %% LOAD EXISTING META DATABASE
+# %% ...OR LOAD EXISTING META DATABASE
 
 # import pickle as pk
 # import os
