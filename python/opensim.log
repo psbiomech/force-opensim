@@ -1,61 +1,61 @@
-[2022-05-31 08:31:56.131] [info] Processing subject FAILT01...
-[2022-05-31 08:31:56.136] [info] Step 1: Loading generic model
-[2022-05-31 08:31:56.263] [info] Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\force-moco\python\opensim-models\LASEM_FORCE_ReferenceModel_PelvisUnclamped.osim
-[2022-05-31 08:31:56.269] [warning] Couldn't find file 'l_pat.vtp'.
-[2022-05-31 08:31:56.490] [info] Step 2: Scaling generic model
-[2022-05-31 08:31:56.619] [info] Loaded marker file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01_STATIC01_markers.trc (52 markers, 300 frames)
-[2022-05-31 08:31:56.619] [info] Measurement 'PelvisXY'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RASI, P2): model = 0.197602, experimental = 0.202328
-[2022-05-31 08:31:56.620] [info] 	pair 1 (LASI, P1): model = 0.208990, experimental = 0.202039
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 0.995329
-[2022-05-31 08:31:56.620] [info] Measurement 'PelvisZ'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.22341
-[2022-05-31 08:31:56.620] [info] 	pair 1 (P2, P1): model = 0.084741, experimental = 0.104727
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 1.03481
-[2022-05-31 08:31:56.620] [info] Measurement 'ThighXY'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.467611
-[2022-05-31 08:31:56.620] [info] 	pair 1 (LASI, LLEPI): model = 0.509270, experimental = 0.477202
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 0.931717
-[2022-05-31 08:31:56.620] [info] Measurement 'ThighZ'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.137802
-[2022-05-31 08:31:56.620] [info] 	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.139547
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 1.18865
-[2022-05-31 08:31:56.620] [info] Measurement 'ShankXY'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RLEPI, RLMAL): model = 0.41578, experimental = 0.41473
-[2022-05-31 08:31:56.620] [info] 	pair 1 (LLEPI, LLMAL): model = 0.414582, experimental = 0.414070
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 0.99812
-[2022-05-31 08:31:56.620] [info] Measurement 'ShankZ'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0848363
-[2022-05-31 08:31:56.620] [info] 	pair 1 (LMMAL, LLMAL): model = 0.0835070, experimental = 0.0848718
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 1.01565
-[2022-05-31 08:31:56.620] [info] Measurement 'FootXY'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.204193
-[2022-05-31 08:31:56.620] [info] 	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.183167
-[2022-05-31 08:31:56.620] [info] 	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.193287
-[2022-05-31 08:31:56.620] [info] 	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.181596
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 0.829683
-[2022-05-31 08:31:56.620] [info] Measurement 'FootZ'
-[2022-05-31 08:31:56.620] [info] 	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.126035
-[2022-05-31 08:31:56.620] [info] 	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.126334
-[2022-05-31 08:31:56.620] [info] 	overall scale factor = 1.20017
-[2022-05-31 08:31:56.620] [info] Measurement 'TorsoX'
-[2022-05-31 08:31:56.621] [info] 	pair 0 (RASI, C7): model = 0.557483, experimental = 0.524621
-[2022-05-31 08:31:56.621] [info] 	pair 1 (LASI, C7): model = 0.55212, experimental = 0.524191
-[2022-05-31 08:31:56.621] [info] 	overall scale factor = 0.945234
-[2022-05-31 08:31:56.621] [info] Measurement 'TorsoY'
-[2022-05-31 08:31:56.621] [info] 	pair 0 (C7, RASI): model = 0.557483, experimental = 0.524621
-[2022-05-31 08:31:56.621] [info] 	pair 1 (C7, LASI): model = 0.55212, experimental = 0.524191
-[2022-05-31 08:31:56.621] [info] 	pair 2 (C7, P2): model = 0.501150, experimental = 0.424251
-[2022-05-31 08:31:56.621] [info] 	overall scale factor = 0.912341
-[2022-05-31 08:31:56.621] [info] Measurement 'TorsoZ'
-[2022-05-31 08:31:56.621] [info] 	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.314219
-[2022-05-31 08:31:56.621] [info] 	overall scale factor = 1.16253
-[2022-05-31 08:31:56.817] [info] Wrote model file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01.osim' from model.
-[2022-05-31 08:31:56.817] [info] Step 3: Placing markers on model
-[2022-05-31 08:31:56.877] [info] Loaded marker file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01_STATIC01_markers.trc (52 markers, 300 frames)
-[2022-05-31 08:31:56.878] [info] Averaged frames from time 1.48005 to 1.50995 in C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01_STATIC01_markers.trc (frames 149 to 152)
-[2022-05-31 08:31:56.878] [info] Deleted 0 unused markers from model FAILT01.
-[2022-05-31 08:31:57.129] [info] Frame at (t = 1.48005):	 total squared error = 0.0759022, marker error: RMS = 0.0397655, max = 0.182952 (LMFL)
-[2022-05-31 08:31:57.129] [info] Moved markers in model FAILT01 to match locations in marker file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01_STATIC01_markers.trc'.
-[2022-05-31 08:31:57.172] [info] Wrote model file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01.osim' from model FAILT01.
-[2022-05-31 08:31:57.174] [info] Wrote marker file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT01\FAILT01_STATIC01\FAILT01_STATIC01_markers.xml' from model FAILT01.
+[2022-06-02 00:20:39.328] [info] Processing subject FAILT51...
+[2022-06-02 00:20:39.329] [info] Step 1: Loading generic model
+[2022-06-02 00:20:39.389] [info] Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\force-moco\python\opensim-models\LASEM_FORCE_ReferenceModel_PelvisUnclamped.osim
+[2022-06-02 00:20:39.392] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-06-02 00:20:39.557] [info] Step 2: Scaling generic model
+[2022-06-02 00:20:39.675] [info] Loaded marker file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc (50 markers, 300 frames)
+[2022-06-02 00:20:39.675] [info] Measurement 'PelvisXY'
+[2022-06-02 00:20:39.675] [info] 	pair 0 (RASI, P2): model = 0.197602, experimental = 0.227057
+[2022-06-02 00:20:39.675] [info] 	pair 1 (LASI, P1): model = 0.208990, experimental = 0.226572
+[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.11659
+[2022-06-02 00:20:39.675] [info] Measurement 'PelvisZ'
+[2022-06-02 00:20:39.675] [info] 	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.278048
+[2022-06-02 00:20:39.675] [info] 	pair 1 (P2, P1): model = 0.084741, experimental = 0.103646
+[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.13038
+[2022-06-02 00:20:39.675] [info] Measurement 'ThighXY'
+[2022-06-02 00:20:39.675] [info] 	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.509822
+[2022-06-02 00:20:39.675] [info] 	pair 1 (LASI, LLEPI): model = 0.509270, experimental = 0.51187
+[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.00757
+[2022-06-02 00:20:39.675] [info] Measurement 'ThighZ'
+[2022-06-02 00:20:39.675] [info] 	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.136869
+[2022-06-02 00:20:39.675] [info] 	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.133827
+[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.1596
+[2022-06-02 00:20:39.675] [info] Measurement 'ShankXY'
+[2022-06-02 00:20:39.675] [info] 	pair 0 (RLEPI, RLMAL): model = 0.41578, experimental = 0.442896
+[2022-06-02 00:20:39.675] [info] 	pair 1 (LLEPI, LLMAL): model = 0.414582, experimental = 0.432904
+[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.05471
+[2022-06-02 00:20:39.675] [info] Measurement 'ShankZ'
+[2022-06-02 00:20:39.675] [info] 	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0968728
+[2022-06-02 00:20:39.676] [info] 	pair 1 (LMMAL, LLMAL): model = 0.0835070, experimental = 0.0958414
+[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.15333
+[2022-06-02 00:20:39.676] [info] Measurement 'FootXY'
+[2022-06-02 00:20:39.676] [info] 	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.235657
+[2022-06-02 00:20:39.676] [info] 	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.223673
+[2022-06-02 00:20:39.676] [info] 	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.23564
+[2022-06-02 00:20:39.676] [info] 	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.219806
+[2022-06-02 00:20:39.676] [info] 	overall scale factor = 0.995771
+[2022-06-02 00:20:39.676] [info] Measurement 'FootZ'
+[2022-06-02 00:20:39.676] [info] 	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.129995
+[2022-06-02 00:20:39.676] [info] 	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.128517
+[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.22937
+[2022-06-02 00:20:39.676] [info] Measurement 'TorsoX'
+[2022-06-02 00:20:39.676] [info] 	pair 0 (RASI, C7): model = 0.557483, experimental = 0.593949
+[2022-06-02 00:20:39.676] [info] 	pair 1 (LASI, C7): model = 0.55212, experimental = 0.602497
+[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.07833
+[2022-06-02 00:20:39.676] [info] Measurement 'TorsoY'
+[2022-06-02 00:20:39.676] [info] 	pair 0 (C7, RASI): model = 0.557483, experimental = 0.593949
+[2022-06-02 00:20:39.676] [info] 	pair 1 (C7, LASI): model = 0.55212, experimental = 0.602497
+[2022-06-02 00:20:39.676] [info] 	pair 2 (C7, P2): model = 0.501150, experimental = 0.495735
+[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.04862
+[2022-06-02 00:20:39.676] [info] Measurement 'TorsoZ'
+[2022-06-02 00:20:39.676] [info] 	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.301938
+[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.1171
+[2022-06-02 00:20:40.001] [info] Wrote model file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51.osim' from model.
+[2022-06-02 00:20:40.001] [info] Step 3: Placing markers on model
+[2022-06-02 00:20:40.062] [info] Loaded marker file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc (50 markers, 300 frames)
+[2022-06-02 00:20:40.062] [info] Averaged frames from time 1.48005 to 1.50995 in C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc (frames 149 to 152)
+[2022-06-02 00:20:40.062] [info] Deleted 0 unused markers from model FAILT51.
+[2022-06-02 00:20:40.259] [info] Frame at (t = 1.48005):	 total squared error = 0.0312595, marker error: RMS = 0.0255194, max = 0.0627296 (LELB)
+[2022-06-02 00:20:40.259] [info] Moved markers in model FAILT51 to match locations in marker file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc'.
+[2022-06-02 00:20:40.297] [info] Wrote model file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51.osim' from model FAILT51.
+[2022-06-02 00:20:40.299] [info] Wrote marker file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.xml' from model FAILT51.

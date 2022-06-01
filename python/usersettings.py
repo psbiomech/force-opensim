@@ -127,6 +127,7 @@ class FORCESettings_SDP(UserSettings):
         self.fp_filter_butter_order = 4
         self.fp_filter_cutoff = 15
         self.fp_filter_threshold = 15
+        self.fp_smooth_transitions = False
         self.fp_smooth_cop_fixed_offset = 25   # required but not currently used
         self.fp_smooth_window = 20
         
@@ -238,6 +239,7 @@ class TRAILSettings_RUN(UserSettings):
         self.fp_filter_butter_order = 4
         self.fp_filter_cutoff = 15
         self.fp_filter_threshold = 15
+        self.fp_smooth_transitions = True
         self.fp_smooth_cop_fixed_offset = 25   # required but not currently used
         self.fp_smooth_window = 20
         

@@ -50,10 +50,10 @@ def opensim_pipeline(meta, user, analyses):
     failedfiles = []
     for subj in meta:
         
-        # copy analyses list for subject
-        analyses0 = analyses.copy()
-        
         for group in meta[subj]["trials"]:
+            
+            # copy analyses list for subject
+            analyses0 = [ans.casefold() for ans in analyses]
             
             # find the static trial for model scaling
             modelfullpath = ""
@@ -61,48 +61,59 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                             
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILT01_STATIC01")
+                # trialre = re.compile("FAILTCRT01_STATIC01")
                 # if not trialre.match(trial):
-                #     #print("%s ---> SKIP" % trial)
+                #     print("%s ---> SKIP" % trial)
                 #     continue
                 #******************************
-                
-                if meta[subj]["trials"][group][trial]["usedstatic"]:
 
-                    try:
-                    
-                        # load the OsimKey
-                        pklpath = meta[subj]["trials"][group][trial]["outpath"]
-                        pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
-                        with open(os.path.join(pklpath, pklfile),"rb") as fid: 
-                            osimkey = pk.load(fid)
+                # run the scale tool if the static trial is the trial to be
+                # used for scaling
+                if "scale" in analyses0:
+                    if meta[subj]["trials"][group][trial]["usedstatic"]:
+    
+                        try:
+                        
+                            # load the OsimKey
+                            pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                            pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                            with open(os.path.join(pklpath, pklfile),"rb") as fid: 
+                                osimkey = pk.load(fid)
+                                
+                            # create an OpenSim log folder
+                            logfolder = os.path.join(pklpath, user.triallogfolder)
+                            if not os.path.isdir(logfolder):
+                                os.makedirs(logfolder)
                             
-                        # create an OpenSim log folder
-                        logfolder = os.path.join(pklpath, user.triallogfolder)
-                        if not os.path.isdir(logfolder):
-                            os.makedirs(logfolder)
-                        
-                        # run the scale tool if requested
-                        if "scale" in analyses0:
+                            # run the scale tool
                             run_opensim_scale(osimkey, user)
+                            
+                            # get the full model path
+                            modelfile = meta[subj]["trials"][group][trial]["osim"]
+                            modelfullpathfile = os.path.join(pklpath, modelfile)
+                            
+                            # copy the model into the subject root folder
+                            subjrootpath = os.path.join(user.rootpath, user.outfolder, subj)
+                            shutil.copy(modelfullpathfile, subjrootpath)                            
+                            
+                            # once a model is created we can stop finding valid
+                            # static trials
                             analyses0.remove("scale")
-                        
-                        # get the full model path
-                        modelfile = meta[subj]["trials"][group][trial]["osim"]
-                        modelfullpath = os.path.join(pklpath, modelfile)
+                            break
+                
+                        except:
+                            print("%s ---> ***FAILED***" % trial)
+                            failedfiles.append(trial) 
             
-                    except:
-                        print("%s ---> ***FAILED***" % trial)
-                        failedfiles.append(trial)    
-            
-            # ignore dynamic trials if scale is the only required task
+            # if scale was the only analysis, then go to next group
             if not analyses0: continue
             
-            # find dynamic trials and run requested analyses
+            # find dynamic trials, always copy model into folder and run the
+            # requested analyses
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILT01_STATIC01")
+                # trialre = re.compile("FAILTCRT01_SDP01")
                 # if not trialre.match(trial):
                 #     #print("%s ---> SKIP" % trial)
                 #     continue
@@ -124,10 +135,15 @@ def opensim_pipeline(meta, user, analyses):
                             os.makedirs(logfolder)
                         
                         # copy the model into the trial folder
-                        shutil.copy(modelfullpath, pklpath)
+                        modelfile = meta[subj]["trials"][group][trial]["osim"]
+                        subjrootpathfile = os.path.join(user.rootpath, user.outfolder, subj, modelfile)
+                        shutil.copy(subjrootpathfile, pklpath)
                         
                         # run the required analyses
                         for ans in analyses0:
+                            
+                            # skip scale
+                            if ans == "scale": continue
                             
                             # create output folder
                             if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))

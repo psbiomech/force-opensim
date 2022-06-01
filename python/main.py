@@ -74,13 +74,13 @@ print("\nC3D data extract done.\n")
 
 import opensimpipeline as osp
 
-print("Running OpenSim model scaling: SCALE...\n")
-failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
-print("\nOpenSim model scaling (SCALE) completed.\n")
+# print("Running OpenSim model scaling: SCALE...\n")
+# failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
+# print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# print("Running OpenSim analyses: IK, ID...\n")
-# failed_ik_id_so = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
-# print("\nOpenSim analyses (IK, ID) completed.\n")
+print("Running OpenSim analyses: IK, ID...\n")
+failed_ik_id = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
+print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # failed_so = osp.opensim_pipeline(forcedb, user, ["so"])
@@ -103,12 +103,12 @@ print("\nOpenSim model scaling (SCALE) completed.\n")
 
 import opensimresults as osr
 
-# print("Converting OpenSim results to Pickle...\n")
-# failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id", "so"], 101)
-# print("\nOpenSim results converted to Pickle.\n")
+print("Converting OpenSim results to Pickle...\n")
+failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id"], 101)
+print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting OpenSim results to CSV...\n")
-failed_export = osr.export_opensim_results(forcedb, user, ["ik", "id", "so"])
+failed_export = osr.export_opensim_results(forcedb, user, ["ik", "id"])
 print("CSV export complete.\n")
 
 
