@@ -56,15 +56,13 @@ def opensim_pipeline(meta, user, analyses):
             analyses0 = [ans.casefold() for ans in analyses]
             
             # find the static trial for model scaling
-            modelfullpath = ""
-            modelfile = ""
             for trial in meta[subj]["trials"][group]:
                             
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT01_STATIC01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("FAILT01_STATIC02")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
                 #******************************
 
                 # run the scale tool if the static trial is the trial to be
@@ -113,10 +111,10 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT01_SDP01")
-                # if not trialre.match(trial):
-                #     #print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("FAILT01_SDP\d+")
+                if not trialre.match(trial):
+                    #print("%s ---> SKIP" % trial)
+                    continue
                 #******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:

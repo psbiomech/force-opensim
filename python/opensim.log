@@ -1,61 +1,106 @@
-[2022-06-02 00:20:39.328] [info] Processing subject FAILT51...
-[2022-06-02 00:20:39.329] [info] Step 1: Loading generic model
-[2022-06-02 00:20:39.389] [info] Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\force-moco\python\opensim-models\LASEM_FORCE_ReferenceModel_PelvisUnclamped.osim
-[2022-06-02 00:20:39.392] [warning] Couldn't find file 'l_pat.vtp'.
-[2022-06-02 00:20:39.557] [info] Step 2: Scaling generic model
-[2022-06-02 00:20:39.675] [info] Loaded marker file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc (50 markers, 300 frames)
-[2022-06-02 00:20:39.675] [info] Measurement 'PelvisXY'
-[2022-06-02 00:20:39.675] [info] 	pair 0 (RASI, P2): model = 0.197602, experimental = 0.227057
-[2022-06-02 00:20:39.675] [info] 	pair 1 (LASI, P1): model = 0.208990, experimental = 0.226572
-[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.11659
-[2022-06-02 00:20:39.675] [info] Measurement 'PelvisZ'
-[2022-06-02 00:20:39.675] [info] 	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.278048
-[2022-06-02 00:20:39.675] [info] 	pair 1 (P2, P1): model = 0.084741, experimental = 0.103646
-[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.13038
-[2022-06-02 00:20:39.675] [info] Measurement 'ThighXY'
-[2022-06-02 00:20:39.675] [info] 	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.509822
-[2022-06-02 00:20:39.675] [info] 	pair 1 (LASI, LLEPI): model = 0.509270, experimental = 0.51187
-[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.00757
-[2022-06-02 00:20:39.675] [info] Measurement 'ThighZ'
-[2022-06-02 00:20:39.675] [info] 	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.136869
-[2022-06-02 00:20:39.675] [info] 	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.133827
-[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.1596
-[2022-06-02 00:20:39.675] [info] Measurement 'ShankXY'
-[2022-06-02 00:20:39.675] [info] 	pair 0 (RLEPI, RLMAL): model = 0.41578, experimental = 0.442896
-[2022-06-02 00:20:39.675] [info] 	pair 1 (LLEPI, LLMAL): model = 0.414582, experimental = 0.432904
-[2022-06-02 00:20:39.675] [info] 	overall scale factor = 1.05471
-[2022-06-02 00:20:39.675] [info] Measurement 'ShankZ'
-[2022-06-02 00:20:39.675] [info] 	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0968728
-[2022-06-02 00:20:39.676] [info] 	pair 1 (LMMAL, LLMAL): model = 0.0835070, experimental = 0.0958414
-[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.15333
-[2022-06-02 00:20:39.676] [info] Measurement 'FootXY'
-[2022-06-02 00:20:39.676] [info] 	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.235657
-[2022-06-02 00:20:39.676] [info] 	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.223673
-[2022-06-02 00:20:39.676] [info] 	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.23564
-[2022-06-02 00:20:39.676] [info] 	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.219806
-[2022-06-02 00:20:39.676] [info] 	overall scale factor = 0.995771
-[2022-06-02 00:20:39.676] [info] Measurement 'FootZ'
-[2022-06-02 00:20:39.676] [info] 	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.129995
-[2022-06-02 00:20:39.676] [info] 	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.128517
-[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.22937
-[2022-06-02 00:20:39.676] [info] Measurement 'TorsoX'
-[2022-06-02 00:20:39.676] [info] 	pair 0 (RASI, C7): model = 0.557483, experimental = 0.593949
-[2022-06-02 00:20:39.676] [info] 	pair 1 (LASI, C7): model = 0.55212, experimental = 0.602497
-[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.07833
-[2022-06-02 00:20:39.676] [info] Measurement 'TorsoY'
-[2022-06-02 00:20:39.676] [info] 	pair 0 (C7, RASI): model = 0.557483, experimental = 0.593949
-[2022-06-02 00:20:39.676] [info] 	pair 1 (C7, LASI): model = 0.55212, experimental = 0.602497
-[2022-06-02 00:20:39.676] [info] 	pair 2 (C7, P2): model = 0.501150, experimental = 0.495735
-[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.04862
-[2022-06-02 00:20:39.676] [info] Measurement 'TorsoZ'
-[2022-06-02 00:20:39.676] [info] 	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.301938
-[2022-06-02 00:20:39.676] [info] 	overall scale factor = 1.1171
-[2022-06-02 00:20:40.001] [info] Wrote model file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51.osim' from model.
-[2022-06-02 00:20:40.001] [info] Step 3: Placing markers on model
-[2022-06-02 00:20:40.062] [info] Loaded marker file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc (50 markers, 300 frames)
-[2022-06-02 00:20:40.062] [info] Averaged frames from time 1.48005 to 1.50995 in C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc (frames 149 to 152)
-[2022-06-02 00:20:40.062] [info] Deleted 0 unused markers from model FAILT51.
-[2022-06-02 00:20:40.259] [info] Frame at (t = 1.48005):	 total squared error = 0.0312595, marker error: RMS = 0.0255194, max = 0.0627296 (LELB)
-[2022-06-02 00:20:40.259] [info] Moved markers in model FAILT51 to match locations in marker file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.trc'.
-[2022-06-02 00:20:40.297] [info] Wrote model file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51.osim' from model FAILT51.
-[2022-06-02 00:20:40.299] [info] Wrote marker file 'C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_STATIC01\FAILT51_STATIC01_markers.xml' from model FAILT51.
+[2022-06-02 03:53:45.443] [info] Loaded model FAILT51 from file C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_SDP10\FAILT51.osim
+[2022-06-02 03:53:45.444] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-02 03:53:45.444] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-02 03:53:45.444] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-02 03:53:45.445] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-02 03:53:45.446] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-06-02 03:53:45.447] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-06-02 03:53:45.448] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-06-02 03:53:45.448] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-06-02 03:53:45.448] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-06-02 03:53:45.448] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-06-02 03:53:45.448] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-06-02 03:53:45.449] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-06-02 03:53:45.450] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-06-02 03:53:45.451] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-06-02 03:53:45.452] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-06-02 03:53:45.453] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-06-02 03:53:45.454] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-06-02 03:53:45.651] [warning] ExternalLoades: external_loads_model_kinematics_file option is not supported anymore. Results may change.
+[2022-06-02 03:53:45.722] [cout] [info] 
+               MODEL: FAILT51
+         coordinates: 39
+              forces: 97
+           actuators: 97
+             muscles: 80
+            analyses: 0
+              probes: 0
+              bodies: 22
+              joints: 22
+         constraints: 2
+             markers: 48
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2022-06-02 03:53:45.722] [info] Running tool InverseDynamics...
+[2022-06-02 03:53:45.755] [info] ExternalLoads 'ExternalLoads' was renamed and is being reset to 'externalloads'.
+[2022-06-02 03:53:45.893] [info] Storage: read data file = C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_SDP10\FAILT51_SDP10_grf.mot (nr=5800 nc=19)
+[2022-06-02 03:53:45.981] [info] ExternalForce::Right Data source being set to FAILT51_SDP10_grf.mot
+[2022-06-02 03:53:45.981] [info] ExternalForce::Left Data source being set to FAILT51_SDP10_grf.mot
+[2022-06-02 03:53:46.029] [info] Storage: read data file = C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILT51\FAILT51_SDP10\ik\FAILT51_SDP10_ik.mot (nr=273 nc=40)
+[2022-06-02 03:53:46.041] [info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
+[2022-06-02 03:53:47.748] [info] InverseDynamicsTool: 267 time frames in 1 second(s).

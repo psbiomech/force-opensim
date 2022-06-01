@@ -7,6 +7,7 @@ Process and run LASEM FORCE project data through OpenSim
 
 
 import datetime
+import pandas as pd
 
 
 print("\n\n\n")
@@ -74,9 +75,9 @@ print("\nC3D data extract done.\n")
 
 import opensimpipeline as osp
 
-# print("Running OpenSim model scaling: SCALE...\n")
-# failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
+print("Running OpenSim model scaling: SCALE...\n")
+failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
 print("Running OpenSim analyses: IK, ID...\n")
 failed_ik_id = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
@@ -110,6 +111,18 @@ print("\nOpenSim results converted to Pickle.\n")
 print("Exporting OpenSim results to CSV...\n")
 failed_export = osr.export_opensim_results(forcedb, user, ["ik", "id"])
 print("CSV export complete.\n")
+
+
+# %% WRITE FAILED FILES
+
+# failedfilesBD_pd = pd.DataFrame(failedfilesBD)
+# failedfilesBD_pd.to_csv("failedfiles_BD.csv")
+
+# failedfilesC3D_pd = pd.DataFrame(failedfilesC3D)
+# failedfilesC3D_pd.to_csv("failedfiles_C3D.csv")
+
+# failedfiles_ik_id_pd = pd.DataFrame(failed_ik_id)
+# failedfiles_ik_id_pd.to_csv("failedfiles_ik_id.csv", header = False, index = False)
 
 
 # %% END
