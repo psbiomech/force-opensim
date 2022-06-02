@@ -17,7 +17,7 @@ osim  <- read_csv(file.path(srcfolder, datafolder, osimdatafile))
 # add trial leg
 osim <- osim %>% 
           mutate(first_event=str_extract(osim[["events_labels"]], "\\wFO"), step_leg=substr(first_event, 1, 1), .before=foot) %>% 
-          select(-c("first_event"))
+          select(-c("first_event", "condition"))
 
 # load participant data spreadsheet
 subjdatafile <- "FORCE-ParticipantData-All.txt"
@@ -47,14 +47,24 @@ osim <- osim %>%
           select(-c("leg_task")) %>% 
           bind_cols(subjinfomat) %>% 
           relocate(names(subjdata)[-1], .after=group) %>% 
-          mutate(group=if_else(grepl("CRT",subject), "CON", "SYM"),
+          mutate(group=if_else(grepl("CRT",subject), "CON", "FRC"),
                  aff_side=recode(aff_side, `0`="C", `1`="R", `2`="L", `3`="B", `-1`="N"), 
                  dom_foot=recode(dom_foot, `1`="R", `2`="L"),
+                 sex=recode(sex, `1`="M", `2`="F"),
                  foot=toupper(foot))
 
-# overwrite condition to be ispilateral or contralateral foot
+# label trials better
 osim <- osim %>% 
-          mutate(condition=if_else(tolower(step_leg)==tolower(foot), "IPSI", "CONTRA"))
+          mutate(data_limb=if_else(tolower(step_leg)==tolower(foot), "IPSI", "CONTRA"),
+                 ipsi_limb=if_else(tolower(aff_side)==tolower(step_leg) | (aff_side=="B"), "SYM", 
+                            if_else((group=="CON") & tolower(dom_foot)==tolower(step_leg), "DOM", 
+                            if_else((group=="CON") & tolower(dom_foot)!=tolower(step_leg), "NDOM", "ASYM"))),
+                 contra_limb=if_else(ipsi_limb=="ASYM", "SYM", 
+                             if_else(ipsi_limb=="DOM", "NDOM",
+                             if_else(ipsi_limb=="NDOM", "DOM", "ASYM")))) %>% 
+          relocate(c("ipsi_limb", "contra_limb", "data_limb"), .after=task)
 
+# write to file
+write_csv(osim, file.path(srcfolder, datafolder, "force_sdp_results_updated_sdp.csv"))
 
 
