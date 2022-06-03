@@ -43,23 +43,23 @@ print("Done.\n")
 
 # %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)...
 
-import builddatabase as bd
+# import builddatabase as bd
 
-print("Building new output database... ", end="")
-forcedb, failedfilesBD = bd.build_database(user, "sdp")
-print("Done.\n")
+# print("Building new output database... ", end="")
+# forcedb, failedfilesBD = bd.build_database(user, "sdp")
+# print("Done.\n")
 
 
 # %% ...OR LOAD EXISTING META DATABASE
 
-# import pickle as pk
-# import os
+import pickle as pk
+import os
 
-# print("Loading existing output database... ", end="")
-# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-# with open(dbfilepath, "rb") as fid:
-#     forcedb = pk.load(fid)
-# print("Done.\n")
+print("Loading existing output database... ", end="")
+dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+with open(dbfilepath, "rb") as fid:
+    forcedb = pk.load(fid)
+print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES

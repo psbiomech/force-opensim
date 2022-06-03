@@ -1,9 +1,10 @@
-### FORCE OPENSIM PROCESSING
+### FORCE - OPENSIM PROCESSING
 #
 # Prasanna Sritharan, May 2022
 
 
 library(tidyverse)
+
 
 # folders
 srcfolder <- "C:/Users/Owner/Documents/projects/force-moco/rstats"
@@ -42,7 +43,7 @@ for (r in 1:nrow(subjdata)){
   
 }
 
-# bind to osim data, set groups, rearrange and recode affected and dom_foot
+# bind to osim data, rearrange and recode affected and dom_foot
 osim <- osim %>% 
           select(-c("leg_task")) %>% 
           bind_cols(subjinfomat) %>% 
