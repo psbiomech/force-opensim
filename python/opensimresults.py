@@ -25,7 +25,7 @@ OsimResultsKey:
     to both BW and %BW*HT. Data is resample to the desired number of samples.
 '''
 class OsimResultsKey():
-    def __init__(self, osimkey, analyses, nsamp):
+    def __init__(self, osimkey, user, analyses, nsamp):
         self.subject = osimkey.subject
         self.trial = osimkey.trial
         self.age = osimkey.age
@@ -37,7 +37,7 @@ class OsimResultsKey():
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.__get_results_raw(osimkey, analyses, nsamp)
-        self.__get_results_split(analyses, nsamp)
+        self.__get_results_split(analyses, user, nsamp)
         return None
         
     def __get_results_raw(self, osimkey, analyses, nsamp):
@@ -90,40 +90,15 @@ class OsimResultsKey():
             
         return None
     
-    def __get_results_split(self, analyses, nsamp):
+    def __get_results_split(self, analyses, user, nsamp):
         
         # initialise dict
         results = {}
         
-        # left leg flip columns (incl. time): R, L
-        flip = {}
-        flip["ik"] = [3, 4, 7, 25, 26]
-        flip["id"] = [3, 4, 7, 15, 16]
-        flip["so"] = []
-        flip["rra"] = []
-        flip["cmc"] = []
-        flip["jr"] = []  
-        
-        # foot columns (incl. time): R, L
-        columns = {}
-        columns["ik"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], 
-                         [0, 1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 33, 34, 35, 36, 37, 38, 39]]
-        columns["id"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 20, 21, 22, 26, 28, 30, 32, 34, 36, 37], 
-                         [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 18, 19, 23, 24, 25, 27, 29, 31, 33, 35, 38, 39]]
-        columns["so"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90],
-                         [0, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 91, 92, 93, 94, 95, 96, 97]]
-        columns["rra"] = []
-        columns["cmc"] = []
-        columns["jr"] = []   
-        
-        # headers
-        headers = {}
-        headers["ik"] = ["time", "pelvis_tilt", "pelvis_list", "pelvis_rotation", "pelvis_tx", "pelvis_ty", "pelvis_tz", "hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "knee_angle_beta", "ankle_angle", "subtalar_angle", "mtp_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex", "arm_add", "arm_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
-        headers["id"] = ["time", "pelvis_tilt_moment", "pelvis_list_moment", "pelvis_rotation_moment", "pelvis_tx_force", "pelvis_ty_force", "pelvis_tz_force", "hip_flexion_moment", "hip_adduction_moment", "hip_rotation_moment", "lumbar_extension_moment", "lumbar_bending_moment", "lumbar_rotation_moment", "knee_angle_moment", "knee_angle_beta_force", "arm_flex_moment", "arm_add_moment", "arm_rot_moment", "ankle_angle_moment", "elbow_flex_moment", "subtalar_angle_moment", "pro_sup_moment", "mtp_angle_moment", "wrist_flex_moment", "wrist_dev_moment"]
-        headers["so"] = ["time", "addbrev", "addlong", "addmagDist", "addmagIsch", "addmagMid", "addmagProx", "bflh", "bfsh", "edl", "ehl", "fdl", "fhl", "gaslat", "gasmed", "glmax1", "glmax2", "glmax3", "glmed1", "glmed2", "glmed3", "glmin1", "glmin2", "glmin3", "grac", "iliacus", "perbrev", "perlong", "piri", "psoas", "recfem", "sart", "semimem", "semiten", "soleus", "tfl", "tibant", "tibpost", "vasint", "vaslat", "vasmed", "lumbar_ext", "lumbar_bend", "lumbar_rot", "shoulder_flex", "shoulder_add", "shoulder_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
-        headers["rra"] = []
-        headers["cmc"] = []
-        headers["jr"] = []       
+        # results processing parameters
+        flip = user.flip
+        columns = user.columns
+        headers = user.headers
         
         # get OpenSim data
         for ans in analyses:

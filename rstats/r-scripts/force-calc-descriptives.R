@@ -38,7 +38,6 @@ within_subject <- summary_mean_ws %>%
                     select(-row_number)
 
 
-
 # ******************************
 # BETWEEN GROUP MEAN AND SD
 
@@ -64,8 +63,6 @@ between_group <- summary_mean_bg %>%
                     relocate(statistic, .after=variable) %>% 
                     select(-row_number)
                     
-
-
 
 # ******************************
 # WRITE TO CSV

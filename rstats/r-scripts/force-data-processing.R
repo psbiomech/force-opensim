@@ -24,8 +24,6 @@ osim <- osim %>%
 subjdatafile <- "FORCE-ParticipantData-All.txt"
 subjdata <- read_delim(file.path(srcfolder, datafolder, subjdatafile), delim="\t")
 
-
-
 # iterate and add participant info
 subjinfomat <- NULL
 for (r in 1:nrow(subjdata)){
@@ -64,6 +62,20 @@ osim <- osim %>%
                              if_else(ipsi_limb=="DOM", "NDOM",
                              if_else(ipsi_limb=="NDOM", "DOM", "ASYM")))) %>% 
           relocate(c("ipsi_limb", "contra_limb", "data_limb"), .after=task)
+
+# convert event times to steps, and bind
+events <- osim %>% select(events_times)
+eventmat <- NULL
+for (ev in 1:nrow(events)) {
+  erow <- as.numeric(as_vector(str_split(str_sub(events[[1]][ev],2,-2), "; ")))
+  estep <- round(101 * (erow - erow[1]) / (erow[6] - erow[1]))
+  eventmat <- rbind(eventmat, estep)
+}
+eventmat <- as_tibble(eventmat)
+colnames(eventmat) <- lapply(1:6, function(x) {paste0("E", x)})
+osim <- osim %>% 
+          bind_cols(eventmat) %>% 
+          relocate(colnames(eventmat), .before=analysis)
 
 # write to file
 write_csv(osim, file.path(srcfolder, datafolder, "force_sdp_results_updated_sdp.csv"))

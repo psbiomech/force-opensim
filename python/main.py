@@ -7,7 +7,6 @@ Process and run LASEM FORCE project data through OpenSim
 
 
 import datetime
-import pandas as pd
 
 
 print("\n\n\n")
@@ -114,6 +113,8 @@ print("CSV export complete.\n")
 
 
 # %% WRITE FAILED FILES
+
+# import pandas as pd
 
 # failedfilesBD_pd = pd.DataFrame(failedfilesBD)
 # failedfilesBD_pd.to_csv("failedfiles_BD.csv")
