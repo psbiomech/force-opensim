@@ -650,10 +650,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT01_STATIC01")
-                # trialmatch = trialre.match(trial)
-                # if (not trialmatch):
-                #     continue
+                trialre = re.compile("FAILTCRT01_SDP07")
+                trialmatch = trialre.match(trial)
+                if (not trialmatch):
+                    continue
                 #******************************
                 
                 # ignore dynamic trials
@@ -691,10 +691,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                # trialre = re.compile("FAILTCRT01_STATIC01")
-                # trialmatch = trialre.match(trial)
-                # if (not trialmatch):
-                #     continue
+                trialre = re.compile("FAILTCRT01_SDP07")
+                trialmatch = trialre.match(trial)
+                if (not trialmatch):
+                    continue
                 #******************************
                 
                 # ignore static trials

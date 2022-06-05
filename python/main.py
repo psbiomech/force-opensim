@@ -104,7 +104,7 @@ print("\nOpenSim analyses (IK, ID) completed.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id"], 101)
+failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting OpenSim results to CSV...\n")

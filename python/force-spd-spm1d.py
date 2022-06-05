@@ -15,7 +15,7 @@ import pickle as pk
 
 
 # data file
-srcpath = r"C:\Users\Owner\Documents\projects\force-moco\rstats\r-output"
+srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder\r-output"
 srcfile = "force_sdp_normalised_descriptives_subject.csv"
 
 # output file
@@ -36,8 +36,8 @@ df = df0[df0["statistic"]=="mean"]
 # desired variables
 analyses = ["ik", "id"]
 osimvars = {}
-osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "ankle_angle", "pelvis_tilt", "pelvis_list", "pelvis_rotation", "lumbar_extension", "lumbar_bending", "lumbar_rotation"]
-osimvars["id"] = ["hip_flexion_moment", "hip_adduction_moment", "hip_rotation_moment", "knee_angle_moment", "ankle_angle_moment", "pelvis_tilt_moment", "pelvis_list_moment", "pelvis_rotation_moment", "lumbar_extension_moment", "lumbar_bending_moment", "lumbar_rotation_moment"]
+osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "ankle_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation"]
+osimvars["id"] = [k + "_moment" for k in osimvars["ik"]]
 leg = ["ipsi", "contra"]
 groups = ["SYM", "ASYM", "DOM", "NDOM"]
 pairs = {}
@@ -127,7 +127,8 @@ with open(os.path.join(outpath, outpkl),"wb") as f: pk.dump(sdp, f)
 
 # %% PLOT OUTPUT
 
-# plots
+# plot parameters
+nsubjs = [np.size(datamat["ipsi"]["ik"]["ankle_angle"][g], axis=0) for g in groups]
 eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
 eventlabels = ["IFO1", "IFS2", "CFO1", "CFS3", "IFO2", "IFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
@@ -136,15 +137,20 @@ limblabel= ["ipsilateral", "contralateral"]
 pairlabels = {}
 pairlabels["group"] = ["Control dominant", "Symptomatic"]
 pairlabels["limb"] = ["Asymptomatic", "Symptomatic"]
+pairnsubjs = {}
+pairnsubjs["group"] = [2, 0]
+pairnsubjs["limb"] = [1, 0]
 filelabels = ["dom-sym", "asym-sym"]
+
+# plots
 for p, pa in enumerate(pairs):
     for ln, lmb in enumerate(leg):
     
         # plot setup
         fig = plt.figure(constrained_layout=True, figsize=(50, 15))   
-        fig.suptitle("Step-down-pivot - " + limblabel[ln].title() + " limb - " + filelabels[p].upper().replace("-", " vs "), fontsize=20)
+        fig.suptitle("Step-down-pivot - %s (n%d vs n%d) - %s limb" % (filelabels[p].upper().replace("-", " vs "), nsubjs[pairnsubjs[pa][0]], nsubjs[pairnsubjs[pa][1]], limblabel[ln].title()), fontsize=20)
         heights = [2, 1, 0.5, 2, 1]
-        spec = fig.add_gridspec(nrows=5, ncols=11, height_ratios=heights)
+        spec = fig.add_gridspec(nrows=5, ncols=len(osimvars["ik"]), height_ratios=heights)
         
         # create plots
         x = range(101)
@@ -197,4 +203,4 @@ for p, pa in enumerate(pairs):
                 
                 
         # save to pdf
-        plt.savefig(os.path.join(outpath, outfigprefix + limblabel[ln] + "-" + filelabels[p] + ".pdf"))        
+        plt.savefig(os.path.join(outpath, outfigprefix + filelabels[p] + "-" + limblabel[ln] + ".pdf")) 

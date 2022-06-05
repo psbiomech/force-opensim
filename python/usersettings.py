@@ -179,10 +179,10 @@ class FORCESettings_SDP(UserSettings):
         # ******************************
         # OPENSIM RESULTS
         
-        # left leg flip columns (incl. time): R, L
+        # left leg flip columns (incl. time)
         self.results_flip = {}
-        self.results_flip["ik"] = [3, 4, 7, 25, 26]
-        self.results_flip["id"] = [3, 4, 7, 15, 16]
+        self.results_flip["ik"] = [2, 3, 6, 24, 25]
+        self.results_flip["id"] = [2, 3, 6, 14, 15]
         self.results_flip["so"] = []
         self.results_flip["rra"] = []
         self.results_flip["cmc"] = []
@@ -325,7 +325,7 @@ class TRAILSettings_RUN(UserSettings):
         # ******************************
         # OPENSIM RESULTS
         
-        # left leg flip columns (incl. time): R, L
+        # left leg flip columns (incl. time)
         self.results_flip = {}
         self.results_flip["ik"] = [3, 4, 7, 25, 26]
         self.results_flip["id"] = [3, 4, 7, 15, 16]
@@ -333,7 +333,7 @@ class TRAILSettings_RUN(UserSettings):
         self.results_flip["rra"] = []
         self.results_flip["cmc"] = []
         self.results_flip["jr"] = []  
-        
+                
         # foot columns (incl. time): R, L
         self.results_columns = {}
         self.results_columns["ik"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], 

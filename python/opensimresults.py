@@ -25,7 +25,7 @@ OsimResultsKey:
     to both BW and %BW*HT. Data is resample to the desired number of samples.
 '''
 class OsimResultsKey():
-    def __init__(self, osimkey, user, analyses, nsamp):
+    def __init__(self, osimkey, analyses, user, nsamp):
         self.subject = osimkey.subject
         self.trial = osimkey.trial
         self.age = osimkey.age
@@ -37,7 +37,7 @@ class OsimResultsKey():
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.__get_results_raw(osimkey, analyses, nsamp)
-        self.__get_results_split(analyses, user, nsamp)
+        self.__get_results_split(osimkey, analyses, user, nsamp)
         return None
         
     def __get_results_raw(self, osimkey, analyses, nsamp):
@@ -90,15 +90,15 @@ class OsimResultsKey():
             
         return None
     
-    def __get_results_split(self, analyses, user, nsamp):
+    def __get_results_split(self, osimkey, analyses, user, nsamp):
         
         # initialise dict
         results = {}
         
         # results processing parameters
-        flip = user.flip
-        columns = user.columns
-        headers = user.headers
+        flip = user.results_flip
+        columns = user.results_columns
+        headers = user.results_headers
         
         # get OpenSim data
         for ans in analyses:
@@ -113,17 +113,15 @@ class OsimResultsKey():
             for f, foot in enumerate(["r", "l"]):
                                 
                 # copy raw data
-                data0 = self.results["raw"][ans]["data"]
+                data0 = None
+                data0 = self.results["raw"][ans]["data"].copy()                
                 
-                # flip columns for left leg
-                if f == 2:
-                    data0[:, flip[ans]] = -1 * data0[:, flip[ans]]
-                    
-                # trim columns
-                data0 = data0[:, columns[ans][f]]
                 
                 # ###################################
-                # PROCESS EVENTS BASED ON TASK
+                # ADDITIONAL PROCESSING BASED ON TASK
+                #
+                # Includes left leg trial flipping, as the way this is done can
+                # be trial-dependent
                 
                 # match task and find time window for foot
                 
@@ -134,6 +132,10 @@ class OsimResultsKey():
                 
                 # run stride cycle on ipsilateral leg, stance on contralateral
                 elif self.task.casefold() == "run_stridecycle":
+                    
+                    # flip columns for left leg trials
+                    if f == 2:
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
                     
                     # time window depends on leg task
                     if self.events["leg_task"][f] == "run_stridecycle":
@@ -150,6 +152,12 @@ class OsimResultsKey():
                 
                 # run stance on both legs
                 elif self.task.casefold() == "run_stance":
+                    
+                    # flip columns for left leg trials
+                    if f == 2:
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                        
+                    # time window
                     e0 = self.events["labels"].index(foot.upper() + "FS")
                     e1 = self.events["labels"].index(foot.upper() + "FO")
                     t0 = self.events["time"][e0]
@@ -158,6 +166,12 @@ class OsimResultsKey():
                 
                 # step down and pivot
                 elif self.task.casefold() == "sdp":
+                    
+                    # flip columns for left-foot-first left-turning trials
+                    if osimkey.events["labels"][0][0].casefold() == "l":
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                    
+                    # time window
                     e0 = 0
                     e1 = 5
                     t0 = self.events["time"][e0]
@@ -166,6 +180,9 @@ class OsimResultsKey():
                     
                 #
                 # ###################################
+
+                # trim columns
+                data0 = data0[:, columns[ans][f]].copy()
                 
                 # trim rows (time window)
                 r00 = np.where(data0[:, 0] <= t0)[0]
@@ -202,7 +219,7 @@ class OsimResultsKey():
 opensim_results_batch_process(meta, analyses, nsamp):
     Batch process OpenSim results text files to OsimResultsKeys.
 '''
-def opensim_results_batch_process(meta, analyses, nsamp):
+def opensim_results_batch_process(meta, analyses, user, nsamp):
     
     # extract OpenSim data
     osimkey = {}
@@ -230,15 +247,15 @@ def opensim_results_batch_process(meta, analyses, nsamp):
                             
                     # load the trial OsimKey
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                    pkfile = os.path.join(c3dpath,trial + "_osimkey.pkl")
-                    with open(pkfile,"rb") as fid:
+                    pkfile = os.path.join(c3dpath, trial + "_osimkey.pkl")
+                    with open(pkfile, "rb") as fid:
                         osimkey = pk.load(fid)
                         
                     # get the OpenSim results
-                    osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
+                    osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp)
                     
                     # save OsimResultsKey to file
-                    with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
+                    with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:
                         pk.dump(osimresultskey, f)
                                     
                 except:
@@ -320,9 +337,6 @@ def export_opensim_results(meta, user, analyses):
                         
                             # variable
                             for v, variable in enumerate(varheader):
-                                
-                                # ignore time
-                                #if v == 0: continue
     
                                 # data for the variable (includes time)
                                 drow = data[:, v]
