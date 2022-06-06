@@ -18,7 +18,8 @@ osim  <- read_csv(file.path(srcfolder, osimdatafile))
 # WITHIN SUBJECT MEAN AND SD
 
 # group
-osim <- osim %>% group_by(subject, data_limb, ipsi_limb, contra_limb, analysis, variable)
+osim <- osim %>% 
+          group_by(subject, data_limb, ipsi_limb, contra_limb, analysis, variable)
 
 # descriptives for temporal variables
 summary_mean_ws <- osim %>% 
@@ -67,9 +68,9 @@ between_group <- summary_mean_bg %>%
 # WRITE TO CSV
 
 # within subject
-within_subject <- within_subject %>% select(-c("age", "mass", "bw", "bwht"))
+within_subject <- within_subject %>% select(-c("age", "mass", "height", "bw", "bwht"))
 write_csv(within_subject, file.path(srcfolder, outfolder, "force_sdp_normalised_descriptives_subject.csv"))
 
 # between group
-between_group <- between_group %>% select(-c("age", "mass", "bw", "bwht"))
+between_group <- between_group %>% select(-c("age", "mass", "height", "bw", "bwht"))
 write_csv(between_group, file.path(srcfolder, outfolder, "force_sdp_normalised_descriptives_group.csv"))

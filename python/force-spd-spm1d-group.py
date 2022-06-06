@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Run SPMt 1-D analyses: FORCE step-down-pivot
+Run SPMt 1-D analyses: FORCE step-down-pivot (FORCE vs controls)
 
 @author: Prasanna Sritharan, June 2022
 """
@@ -40,9 +40,6 @@ osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", 
 osimvars["id"] = [k + "_moment" for k in osimvars["ik"]]
 leg = ["ipsi", "contra"]
 groups = ["SYM", "ASYM", "DOM", "NDOM"]
-pairs = {}
-pairs["group"] = ["DOM", "SYM"]
-pairs["limb"] = ["ASYM", "SYM"]
 
 
 # split into smaller data frames for analysis
@@ -80,6 +77,11 @@ events["desc"]["total"]["sd"] = np.std(descmat, axis=0)
 
 
 # %% RUN ANALYSES :DESCRIPTIVES, SPM{t}
+
+# comparisons
+pairs = {}
+pairs["group"] = ["DOM", "SYM"]
+pairs["limb"] = ["ASYM", "SYM"]
 
 # calculate descriptives from file
 desc = {}

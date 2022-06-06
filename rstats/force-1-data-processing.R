@@ -13,7 +13,7 @@ outfolder <- "r-output"
 osimdatafile <- "force_sdp_results_all_sdp.csv"
 osim  <- read_csv(file.path(srcfolder, osimdatafile))
 
-# add trial leg
+# add trial leg, and recode sex to numeric
 osim <- osim %>% 
           mutate(first_event=str_extract(osim[["events_labels"]], "\\wFO"), step_leg=substr(first_event, 1, 1), .before=foot) %>% 
           select(-c("first_event", "condition"))
@@ -39,7 +39,8 @@ for (r in 1:nrow(subjdata)){
   
 }
 
-# bind to osim data, rearrange and recode affected and dom_foot
+# bind to osim data, rearrange and recode affected and dom_foot, for sex create
+# new variable as the numeric codes are required for summarise
 osim <- osim %>% 
           select(-c("leg_task")) %>% 
           bind_cols(subjinfomat) %>% 
@@ -47,8 +48,8 @@ osim <- osim %>%
           mutate(group=if_else(grepl("CRT",subject), "CON", "FRC"),
                  aff_side=recode(aff_side, `0`="C", `1`="R", `2`="L", `3`="B", `-1`="N"), 
                  dom_foot=recode(dom_foot, `1`="R", `2`="L"),
-                 sex=recode(sex, `1`="M", `2`="F"),
-                 foot=toupper(foot))
+                 foot=toupper(foot)) %>% 
+          mutate(sex0=recode(sex, `1`="M", `2`="F"), .after=sex)
 
 # label trials better
 osim <- osim %>% 
