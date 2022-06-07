@@ -21,8 +21,8 @@ srcfile = "force_sdp_normalised_descriptives_subject.csv"
 # output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outpkl = "force-sdp-spm1dt-sex-4s.pkl"
-outfigprefix = "force-sdp-spm1dt-"
+outpkl = "force-sdp-spm1dF-sex-4s.pkl"
+outfigprefix = "force-sdp-spm1dF-"
 
 
 # %% PREPARE DATA
@@ -146,9 +146,9 @@ eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
 eventlabels = ["IFO1", "IFS2", "CFO1", "CFS3", "IFO2", "IFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
-limblabel= ["ipsilateral", "contralateral"]
+limblabel= ["pivot", "non-pivot"]
 grouplabels = {}
-grouplabels["sex"] = ['symptomatic male', 'symptomatic female', 'control dominant male', 'control dominant female']
+grouplabels["sex"] = ['symptomatic male', 'symptomatic female', 'control male', 'control female']
 pairnsubjs = {}
 pairnsubjs["sex"] = [0, 1]
 filelabels = ["male-female"]
@@ -163,7 +163,7 @@ for ln, lmb in enumerate(leg):
     
     # plot setup
     fig = plt.figure(constrained_layout=True, figsize=(50, 15))   
-    fig.suptitle("Step-down-pivot - sym male, sym female, ctrl dom male, ctrl dom female (%d, %d, %d, %d)), %s limb" % (nsubjs[0], nsubjs[1], nsubjs[2], nsubjs[3], limblabel[ln]), fontsize=20)
+    fig.suptitle("Step-down-pivot - sym male, sym female, ctrl male, ctrl female (%d, %d, %d, %d)), %s limb" % (nsubjs[0], nsubjs[1], nsubjs[2], nsubjs[3], limblabel[ln]), fontsize=20)
     heights = [2, 1, 0.5, 2, 1]
     spec = fig.add_gridspec(nrows=5, ncols=len(osimvars["ik"]), height_ratios=heights)       
         

@@ -135,14 +135,14 @@ eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
 eventlabels = ["IFO1", "IFS2", "CFO1", "CFS3", "IFO2", "IFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
-limblabel= ["ipsilateral", "contralateral"]
+limblabel= ["pivot", "non-pivot"]
 pairlabels = {}
-pairlabels["group"] = ["Control dominant", "Symptomatic"]
-pairlabels["limb"] = ["Asymptomatic", "Symptomatic"]
+pairlabels["group"] = ["control", "symptomatic"]
+pairlabels["limb"] = ["asymptomatic", "symptomatic"]
 pairnsubjs = {}
 pairnsubjs["group"] = [2, 0]
 pairnsubjs["limb"] = [1, 0]
-filelabels = ["dom-sym", "asym-sym"]
+filelabels = ["ctrl-sym", "asym-sym"]
 
 # plots
 for p, pa in enumerate(pairs):
