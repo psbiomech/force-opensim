@@ -186,7 +186,7 @@ class FORCESettings_SDP(UserSettings):
         self.results_flip["so"] = []
         self.results_flip["rra"] = []
         self.results_flip["cmc"] = []
-        self.results_flip["jr"] = []  
+        self.results_flip["jr"] = [66, 67, 68, 75, 76, 77, 84, 85, 86, 93, 94, 95, 102, 103, 104, 111, 112, 113, 120, 121, 122]  
         
         # foot columns (incl. time): R, L
         self.results_columns = {}
@@ -198,7 +198,8 @@ class FORCESettings_SDP(UserSettings):
                                       [0, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 91, 92, 93, 94, 95, 96, 97]]
         self.results_columns["rra"] = []
         self.results_columns["cmc"] = []
-        self.results_columns["jr"] = []   
+        self.results_columns["jr"] = [[0, 10, 11, 12, 13, 14, 15, 19, 20, 21, 22, 23, 24, 28, 29, 30, 31, 32, 33, 37, 38, 39, 40, 41, 42, 46, 47, 48, 49, 50, 51, 55, 56, 57, 58, 59, 60, 118, 119, 120, 121, 122, 123],
+                                      [0, 64, 65, 66, 69, 68, 69, 73, 74, 75, 76, 77, 78, 82, 83, 84, 85, 86, 87, 91, 92, 93, 94, 95, 96, 100, 101, 102, 103, 104, 105, 109, 110, 111, 112, 113, 114, 118, 119, 120, 121, 122, 123]]
         
         # headers
         self.results_headers = {}
@@ -207,7 +208,7 @@ class FORCESettings_SDP(UserSettings):
         self.results_headers["so"] = ["time", "addbrev", "addlong", "addmagDist", "addmagIsch", "addmagMid", "addmagProx", "bflh", "bfsh", "edl", "ehl", "fdl", "fhl", "gaslat", "gasmed", "glmax1", "glmax2", "glmax3", "glmed1", "glmed2", "glmed3", "glmin1", "glmin2", "glmin3", "grac", "iliacus", "perbrev", "perlong", "piri", "psoas", "recfem", "sart", "semimem", "semiten", "soleus", "tfl", "tibant", "tibpost", "vasint", "vaslat", "vasmed", "lumbar_ext", "lumbar_bend", "lumbar_rot", "shoulder_flex", "shoulder_add", "shoulder_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
         self.results_headers["rra"] = []
         self.results_headers["cmc"] = []
-        self.results_headers["jr"] = []          
+        self.results_headers["jr"] = ["time", "hip_on_femur_in_femur_fx", "hip_on_femur_in_femur_fy", "hip_on_femur_in_femur_fz", "hip_on_femur_in_femur_mx", "hip_on_femur_in_femur_my", "hip_on_femur_in_femur_mz", "walker_knee_on_tibia_in_tibia_fx", "walker_knee_on_tibia_in_tibia_fy", "walker_knee_on_tibia_in_tibia_fz", "walker_knee_on_tibia_in_tibia_mx", "walker_knee_on_tibia_in_tibia_my", "walker_knee_on_tibia_in_tibia_mz", "patellofemoral_on_patella_in_patella_fx", "patellofemoral_on_patella_in_patella_fy", "patellofemoral_on_patella_in_patella_fz", "patellofemoral_on_patella_in_patella_mx", "patellofemoral_on_patella_in_patella_my", "patellofemoral_on_patella_in_patella_mz", "ankle_on_talus_in_talus_fx", "ankle_on_talus_in_talus_fy", "ankle_on_talus_in_talus_fz", "ankle_on_talus_in_talus_mx", "ankle_on_talus_in_talus_my", "ankle_on_talus_in_talus_mz", "subtalar_on_calcn_in_calcn_fx", "subtalar_on_calcn_in_calcn_fy", "subtalar_on_calcn_in_calcn_fz", "subtalar_on_calcn_in_calcn_mx", "subtalar_on_calcn_in_calcn_my", "subtalar_on_calcn_in_calcn_mz", "mtp_on_toes_in_toes_fx", "mtp_on_toes_in_toes_fy", "mtp_on_toes_in_toes_fz", "mtp_on_toes_in_toes_mx", "mtp_on_toes_in_toes_my", "mtp_on_toes_in_toes_mz", "back_on_torso_in_torso_fx", "back_on_torso_in_torso_fy", "back_on_torso_in_torso_fz", "back_on_torso_in_torso_mx", "back_on_torso_in_torso_my", "back_on_torso_in_torso_mz"]          
         
 
         

@@ -52,7 +52,7 @@ class OsimResultsKey():
         filext["so"] = "_so_force.sto"
         filext["rra"] = []
         filext["cmc"] = []
-        filext["jr"] = []
+        filext["jr"] = "_jr_ReactionLoads.sto"
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -63,7 +63,7 @@ class OsimResultsKey():
         headnum["so"] = 10
         headnum["rra"] = []
         headnum["cmc"] = []
-        headnum["jr"] = []
+        headnum["jr"] = 9
        
         # get OpenSim data
         for ans in analyses:
@@ -260,7 +260,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                                     
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
-                    failedfiles.append(trial)
+                    failedfiles.append(trial)                    
                 else:
                     print("Dynamic trial: %s" % trial)
                           

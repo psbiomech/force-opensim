@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Run SPMt 1-D analyses: FORCE step-down-pivot by sex across all groups
+Run SPMt 1-D analyses: FORCE step-down-pivot IK ID by sex across all groups
 
 @author: Prasanna Sritharan, June 2022
 """
@@ -21,8 +21,8 @@ srcfile = "force_sdp_normalised_descriptives_subject.csv"
 # output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outpkl = "force-sdp-spm1dF-sex-4s.pkl"
-outfigprefix = "force-sdp-spm1dF-"
+outpkl = "force-sdp-spm1dF-ikid-sex-4s.pkl"
+outfigprefix = "force-sdp-spm1dF-ikid-"
 
 
 # %% PREPARE DATA
@@ -59,7 +59,7 @@ for lg in leg:
                 gpdata = vadata[vadata[lg + "_limb"] == gp]
                 for sx in sex:
                     sxdata = gpdata[gpdata["sex"] == sx]    
-                    sxdata = sxdata.drop(sxdata.columns[range(0, 14)], axis = 1)
+                    sxdata = sxdata.drop(sxdata.columns[range(0, 16)], axis = 1)
                     datamat[lg][an][va][gp][sexstr[sx - 1]] = sxdata.to_numpy()
 
 

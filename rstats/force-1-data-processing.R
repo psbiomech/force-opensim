@@ -31,7 +31,7 @@ for (r in 1:nrow(subjdata)){
   subjrows <- osim %>% filter(subject == subj) 
   
   # get the subject info and repeat rows
-  subjinfo <- subjdata[r,][-1]
+  subjinfo <- subjdata[r,]
   subjinforep <- subjinfo[rep(1, each=nrow(subjrows)),]
   
   # bind
@@ -43,8 +43,8 @@ for (r in 1:nrow(subjdata)){
 # new variable as the numeric codes are required for summarise
 osim <- osim %>% 
           select(-c("leg_task")) %>% 
-          bind_cols(subjinfomat) %>% 
-          relocate(names(subjdata)[-1], .after=group) %>% 
+          bind_cols(subjinfomat[-1]) %>% 
+          relocate(names(subjinfomat[-1]), .after=group) %>% 
           mutate(group=if_else(grepl("CRT",subject), "CON", "FRC"),
                  aff_side=recode(aff_side, `0`="C", `1`="R", `2`="L", `3`="B", `-1`="N"), 
                  dom_foot=recode(dom_foot, `1`="R", `2`="L"),

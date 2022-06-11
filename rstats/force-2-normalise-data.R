@@ -19,18 +19,34 @@ g = 9.81
 osimnorm <- osim %>% 
               mutate(bw=mass*g, bwht=bw*height, .after=height)
 
-# parse data line by line and normalise if require (this is inefficient, need
-# to find a way to use tidyverse to do this quickly)
+# parse data line by line and normalise if required (this is inefficient, need
+# to find a way to use tidyverse to do this quickly, prob mutate across)
 tcolidx = which(grepl("^t\\d+", names(osimnorm)))
 rows = nrow(osimnorm)
 for (r in 1:rows) {
   
-  # inverse dynamics
-  if ((osimnorm$analysis[r]=="id") & (osimnorm$variable[r]!="time")) {
-    if (grepl("^pelvis_t\\w_force", osimnorm$variable[r])) {
-      osimnorm[r, tcolidx] = osimnorm[r, tcolidx] / osimnorm$bw[r] 
-    } else {
-      osimnorm[r, tcolidx] = 100 * osimnorm[r, tcolidx] / osimnorm$bwht[r]  
+  if (osimnorm$variable[r]!="time") {
+  
+    # inverse dynamics
+    if (osimnorm$analysis[r]=="id") {
+      if (grepl("^pelvis_t\\w_force", osimnorm$variable[r])) {
+        osimnorm[r, tcolidx] = osimnorm[r, tcolidx] / osimnorm$bw[r] 
+      } else {
+        osimnorm[r, tcolidx] = 100 * osimnorm[r, tcolidx] / osimnorm$bwht[r]  
+      }
+      
+    # static optimisation muscle forces
+    } else if (osimnorm$analysis[r]=="so") {
+      osimnorm[r, tcolidx] = osimnorm[r, tcolidx] / osimnorm$bw[r]
+  
+    # joint reaction forces and moments
+    } else if (osimnorm$analysis[r]=="jr") {
+      if (grepl(".+_f[xyz]$", osimnorm$variable[r])) {
+        osimnorm[r, tcolidx] = osimnorm[r, tcolidx] / osimnorm$bw[r]
+      } else {
+        osimnorm[r, tcolidx] = 100 * osimnorm[r, tcolidx] / osimnorm$bwht[r] 
+      }
+      
     }
     
   }

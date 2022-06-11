@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Run SPMt 1-D analyses: FORCE step-down-pivot by sex fwithin groups
+Run SPMt 1-D analyses: FORCE step-down-pivot JR by sex within groups
 
 @author: Prasanna Sritharan, June 2022
 """
@@ -21,8 +21,8 @@ srcfile = "force_sdp_normalised_descriptives_subject.csv"
 # output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outpkl = "force-sdp-spm1dt-sex-2s.pkl"
-outfigprefix = "force-sdp-spm1dt-"
+outpkl = "force-sdp-spm1dt-jr-sex.pkl"
+outfigprefix = "force-sdp-spm1dt-jr-"
 
 
 # %% PREPARE DATA
@@ -34,10 +34,9 @@ df0 = pd.read_csv(os.path.join(srcpath, srcfile))
 df = df0[df0["statistic"]=="mean"]
 
 # desired variables
-analyses = ["ik", "id"]
+analyses = ["jr"]
 osimvars = {}
-osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "ankle_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation"]
-osimvars["id"] = [k + "_moment" for k in osimvars["ik"]]
+osimvars["jr"] = ["hip_on_femur_in_femur_fx", "hip_on_femur_in_femur_fy", "hip_on_femur_in_femur_fz", "walker_knee_on_tibia_in_tibia_fx", "walker_knee_on_tibia_in_tibia_fy", "walker_knee_on_tibia_in_tibia_fz", "patellofemoral_on_patella_in_patella_fx", "patellofemoral_on_patella_in_patella_fy", "patellofemoral_on_patella_in_patella_fz", "ankle_on_talus_in_talus_fx", "ankle_on_talus_in_talus_fy", "ankle_on_talus_in_talus_fz", "subtalar_on_calcn_in_calcn_fx", "subtalar_on_calcn_in_calcn_fy", "subtalar_on_calcn_in_calcn_fz", "mtp_on_toes_in_toes_fx", "mtp_on_toes_in_toes_fy", "mtp_on_toes_in_toes_fz", "back_on_torso_in_torso_fx", "back_on_torso_in_torso_fy", "back_on_torso_in_torso_fz"]
 leg = ["ipsi", "contra"]
 groups = ["SYM", "ASYM", "DOM", "NDOM"]
 sex = [1, 2]
@@ -60,7 +59,7 @@ for lg in leg:
                 gpdata = vadata[vadata[lg + "_limb"] == gp]
                 for sx in sex:
                     sxdata = gpdata[gpdata["sex"] == sx]    
-                    sxdata = sxdata.drop(sxdata.columns[range(0, 14)], axis = 1)
+                    sxdata = sxdata.drop(sxdata.columns[range(0, 16)], axis = 1)
                     datamat[lg][an][va][gp][sexstr[sx - 1]] = sxdata.to_numpy()
 
 
@@ -85,9 +84,7 @@ events["desc"]["total"]["sd"] = np.std(descmat, axis=0)
 #
 # Compare M vs F within groups
 
-# comparisons
-pairs = {}
-pairs["sex"] = ["M", "F"]
+
 
 # calculate descriptives from file
 desc = {}
@@ -104,6 +101,11 @@ for lg in leg:
                     desc[lg][an][va][gp][sxs]["mean"] = np.mean(datamat[lg][an][va][gp][sxs], axis = 0)
                     desc[lg][an][va][gp][sxs]["sd"] = np.std(datamat[lg][an][va][gp][sxs], axis = 0)
 
+
+
+# comparisons
+pairs = {}
+pairs["sex"] = ["M", "F"]
 
 # run SPM{t} and inference across all legs, analyses, variables and group pairs
 spmt = {}
@@ -141,6 +143,8 @@ with open(os.path.join(outpath, outpkl),"wb") as f: pk.dump(sdp, f)
 # %% PLOT OUTPUT
 
 # plot parameters
+jrplots = [["hip_on_femur_in_femur_fx", "hip_on_femur_in_femur_fy", "hip_on_femur_in_femur_fz", "walker_knee_on_tibia_in_tibia_fx", "walker_knee_on_tibia_in_tibia_fy", "walker_knee_on_tibia_in_tibia_fz", "patellofemoral_on_patella_in_patella_fx", "patellofemoral_on_patella_in_patella_fy", "patellofemoral_on_patella_in_patella_fz"], 
+           ["ankle_on_talus_in_talus_fx", "ankle_on_talus_in_talus_fy", "ankle_on_talus_in_talus_fz", "subtalar_on_calcn_in_calcn_fx", "subtalar_on_calcn_in_calcn_fy", "subtalar_on_calcn_in_calcn_fz", "back_on_torso_in_torso_fx", "back_on_torso_in_torso_fy", "back_on_torso_in_torso_fz"]]
 eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
 eventlabels = ["IFO1", "IFS2", "CFO1", "CFS3", "IFO2", "IFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
@@ -151,12 +155,15 @@ pairlabels["sex"] = ["male", "female"]
 pairnsubjs = {}
 pairnsubjs["sex"] = [0, 1]
 filelabels = ["male-female"]
+jrtitles = [["hip_X", "hip_Y", "hip_Z", "knee_X", "knee_Y", "knee_Z", "pf_X", "pf_Y", "pf_Z"],
+            ["ankle_X", "ankle_Y", "ankle_Z", "subtalar_X", "subtalar_Y", "subtalar_Z", "back_X", "back_Y", "back_Z"]]
+
 
 # plots
 for gp in groups:
     
     # number of M vs F per group
-    nsubjs = [np.size(datamat["ipsi"]["ik"]["ankle_angle"][gp][sxs], axis=0) for sxs in sexstr]
+    nsubjs = [np.size(datamat["ipsi"]["jr"]["hip_on_femur_in_femur_fx"][gp][sxs], axis=0) for sxs in sexstr]
     
     for p, pa in enumerate(pairs):
         for ln, lmb in enumerate(leg):
@@ -165,35 +172,33 @@ for gp in groups:
             fig = plt.figure(constrained_layout=True, figsize=(50, 15))   
             fig.suptitle("Step-down-pivot - %s (n%d vs n%d) - %s %s limb" % (filelabels[p].upper().replace("-", " vs "), nsubjs[pairnsubjs[pa][0]], nsubjs[pairnsubjs[pa][1]], gp, limblabel[ln]), fontsize=20)
             heights = [2, 1, 0.5, 2, 1]
-            spec = fig.add_gridspec(nrows=5, ncols=len(osimvars["ik"]), height_ratios=heights)
+            spec = fig.add_gridspec(nrows=5, ncols=len(jrplots[0]), height_ratios=heights)
             
             # create plots
             x = range(101)
-            for col in range(len(osimvars["ik"])):        
+            for col in range(len(jrplots[0])):        
                 
                 # mean + sd
                 for r, row in enumerate([0, 3]):        
-                    
-                    an = analyses[r]
-                    
+
                     # mean
-                    m0 = desc[lmb][an][osimvars[an][col]][gp][pairs[pa][0]]["mean"]
-                    m1 = desc[lmb][an][osimvars[an][col]][gp][pairs[pa][1]]["mean"]
+                    m0 = desc[lmb]["jr"][jrplots[r][col]][gp][pairs[pa][0]]["mean"]
+                    m1 = desc[lmb]["jr"][jrplots[r][col]][gp][pairs[pa][1]]["mean"]
                     
                     # upper
-                    u0 = m0 + desc[lmb][an][osimvars[an][col]][gp][pairs[pa][0]]["sd"]
-                    u1 = m1 + desc[lmb][an][osimvars[an][col]][gp][pairs[pa][1]]["sd"]
+                    u0 = m0 + desc[lmb]["jr"][jrplots[r][col]][gp][pairs[pa][0]]["sd"]
+                    u1 = m1 + desc[lmb]["jr"][jrplots[r][col]][gp][pairs[pa][1]]["sd"]
                     
                     # lower
-                    l0 = m0 - desc[lmb][an][osimvars[an][col]][gp][pairs[pa][0]]["sd"]
-                    l1 = m1 - desc[lmb][an][osimvars[an][col]][gp][pairs[pa][1]]["sd"]       
+                    l0 = m0 - desc[lmb]["jr"][jrplots[r][col]][gp][pairs[pa][0]]["sd"]
+                    l1 = m1 - desc[lmb]["jr"][jrplots[r][col]][gp][pairs[pa][1]]["sd"]       
                     
                     # plot
-                    ax = fig.add_subplot(spec[row, col], title=osimvars[an][col].replace("_", "-"))
+                    ax = fig.add_subplot(spec[row, col], title=jrtitles[r][col].replace("_", "-"))
                     if (row == 0) and (col == 0):
-                        ax.set_ylabel("Angle (deg)")
+                        ax.set_ylabel("Force (BW)")
                     elif (row == 3) and (col == 0):
-                        ax.set_ylabel("Moment (%BW*HT)")   
+                        ax.set_ylabel("Force (BW)")   
                     ax.fill_between(x, l0, u0, alpha=0.4)
                     ax.fill_between(x, l1, u1, alpha=0.4)
                     ax.plot(x, m0, label=pairlabels[pa][0], linewidth=2.0)
@@ -208,13 +213,11 @@ for gp in groups:
                 # SPM inference
                 for r, row in enumerate([1, 4]):  
                     
-                    an = analyses[r]
-                    
                     # plot
                     ax = fig.add_subplot(spec[row, col], xlabel="% task")
                     if col == 0: ax.set_ylabel("SPM{t}") 
                     for v in range(1, 5): ax.axvline(x=eventlist[v], linewidth=1.0, linestyle=":", color="k")
-                    spmtinf[lmb][an][osimvars[an][col]][gp][pa].plot(plot_ylabel=False)
+                    spmtinf[lmb]["jr"][jrplots[r][col]][gp][pa].plot(plot_ylabel=False)
                     
                     
             # save to pdf
