@@ -42,7 +42,7 @@ for (r in 1:nrow(subjdata)){
 # bind to osim data, rearrange and recode affected and dom_foot, for sex create
 # new variable as the numeric codes are required for summarise
 osim <- osim %>% 
-          select(-c("leg_task")) %>% 
+          select(-leg_task) %>% 
           bind_cols(subjinfomat[-1]) %>% 
           relocate(names(subjinfomat[-1]), .after=group) %>% 
           mutate(group=if_else(grepl("CRT",subject), "CON", "FRC"),
@@ -61,6 +61,12 @@ osim <- osim %>%
                              if_else(ipsi_limb=="DOM", "NDOM",
                              if_else(ipsi_limb=="NDOM", "DOM", "ASYM")))) %>% 
           relocate(c("ipsi_limb", "contra_limb", "data_limb"), .after=task)
+
+# recode SHOMRI scores from R-L to IPSI-CONTRA
+osim <- osim %>%
+          mutate(shomri_ipsi=if_else(step_leg=="R", r_shomri_total, l_shomri_total),
+                 shomri_contra=if_else(step_leg=="R", l_shomri_total, r_shomri_total),
+                 .after=l_shomri_total)
 
 # convert event times to steps, and bind
 events <- osim %>% select(events_times)

@@ -55,4 +55,4 @@ for (r in 1:rows) {
     
 
 # write to file
-write_csv(osimnorm, file.path(srcfolder, "force_sdp_results_normalised_sdp.csv"))
+write_csv(osimnorm, file.path(srcfolder, "force_sdp_results_updated_normalised_sdp.csv"))

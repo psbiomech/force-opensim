@@ -10,7 +10,7 @@ srcfolder <- "C:/Users/Owner/Documents/data/FORCe/outputdatabase/csvfolder"
 outfolder <- "r-output"
 
 # updated OpenSim data spreadsheet
-osimdatafile <- "force_sdp_results_normalised_sdp.csv"
+osimdatafile <- "force_sdp_results_updated_normalised_sdp.csv"
 osim  <- read_csv(file.path(srcfolder, osimdatafile))
 
 
@@ -68,9 +68,9 @@ between_group <- summary_mean_bg %>%
 # WRITE TO CSV
 
 # within subject
-within_subject <- within_subject %>% select(-c("age", "mass", "height", "bw", "bwht"))
+within_subject <- within_subject %>% select(-c("age", "mass", "height", "bw", "bwht", "r_shomri_total", "l_shomri_total"))
 write_csv(within_subject, file.path(srcfolder, outfolder, "force_sdp_normalised_descriptives_subject.csv"))
 
 # between group
-between_group <- between_group %>% select(-c("age", "mass", "height", "bw", "bwht"))
+between_group <- between_group %>% select(-c("age", "mass", "height", "bw", "bwht", "r_shomri_total", "l_shomri_total"))
 write_csv(between_group, file.path(srcfolder, outfolder, "force_sdp_normalised_descriptives_group.csv"))
