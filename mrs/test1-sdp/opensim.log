@@ -1,0 +1,1372 @@
+[2022-06-16 08:52:26.060] [info] Loaded model FAILTCRT01 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01.osim
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 08:52:26.062] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 08:52:26.063] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 08:52:26.064] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 08:52:26.064] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 08:52:26.064] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 08:52:26.064] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 08:52:26.064] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-06-16 08:52:26.065] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.066] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-06-16 08:52:26.067] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-06-16 08:52:26.068] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-06-16 08:52:26.069] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.070] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-06-16 08:52:26.361] [info] Loaded model FAILTCRT01 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01.osim
+[2022-06-16 08:52:26.361] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 08:52:26.362] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 08:52:26.363] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-06-16 08:52:26.364] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-06-16 08:52:26.365] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-06-16 08:52:26.366] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-06-16 08:52:26.367] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.368] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-06-16 08:52:26.452] [info] AbstractTool FAILTCRT01_SDP01_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01.osim
+[2022-06-16 08:52:26.533] [info] Loaded model FAILTCRT01 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01.osim
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 08:52:26.534] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 08:52:26.535] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-06-16 08:52:26.536] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-06-16 08:52:26.537] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-06-16 08:52:26.538] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.539] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-06-16 08:52:26.540] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-06-16 08:52:26.682] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 08:52:26.776] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01_SDP01_ik.mot'.
+[2022-06-16 08:52:26.777] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01_SDP01_ik.mot (nr=195 nc=40)
+[2022-06-16 08:52:28.727] [info] Found 195 state vectors with time stamps ranging from 1.02 to 2.96.
+[2022-06-16 08:52:28.728] [info] Executing the analyses from 1.06 to 2.92...
+[2022-06-16 08:52:54.266] [info] Printing results of investigation FAILTCRT01_SDP01_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\test-out\MuscleAnalysis
+[2022-06-16 09:00:12.311] [info] Loaded model FAILTCRT01 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test1-sdp\FAILTCRT01.osim
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:00:12.312] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:00:12.313] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-06-16 09:00:12.314] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-06-16 09:00:12.315] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-06-16 09:00:12.316] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-06-16 09:00:12.317] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-06-16 09:00:12.318] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-06-16 09:00:12.319] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-06-16 09:00:12.319] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-06-16 09:00:12.319] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-06-16 09:15:23.280] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:23.281] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:15:23.281] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:15:23.281] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:15:23.281] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:15:23.282] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:15:23.283] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:15:23.283] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:15:23.283] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:15:23.283] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:15:23.283] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:15:23.283] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:15:23.522] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:15:23.523] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:15:23.524] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:15:23.525] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:15:23.525] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:15:23.525] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:15:23.618] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:23.679] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:23.680] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:15:23.680] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:15:23.681] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:15:23.682] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:15:23.848] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:15:23.942] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:15:23.942] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:15:24.822] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:15:24.822] [info] Executing the analyses from 1.05 to 1.05...
+[2022-06-16 09:15:25.069] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:15:54.502] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:54.502] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:15:54.503] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:15:54.504] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:15:55.163] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:55.164] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:15:55.164] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:15:55.164] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:15:55.165] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:15:55.166] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:15:55.239] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:55.290] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:15:55.291] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:15:55.292] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:15:55.407] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:15:55.499] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:15:55.499] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:15:56.339] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:15:56.339] [info] Executing the analyses from 0.0 to 1.05...
+[2022-06-16 09:16:07.238] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:17:10.280] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:17:10.281] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:17:10.281] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:17:10.281] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:17:10.281] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:17:10.282] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:17:10.283] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:17:10.469] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:17:10.470] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:17:10.471] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:17:10.472] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:17:10.568] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:17:10.626] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:17:10.627] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:17:10.627] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:17:10.627] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:17:10.628] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:17:10.629] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:17:10.752] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:17:10.829] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:17:10.829] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:17:11.626] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:17:11.627] [info] Executing the analyses from 0.0106061 to 1.05...
+[2022-06-16 09:17:21.569] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:18:31.327] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:18:31.327] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:18:31.328] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:18:31.329] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:18:31.330] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:18:31.573] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:18:31.573] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:18:31.573] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:18:31.574] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:18:31.575] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:18:31.665] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:18:31.737] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:18:31.738] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:18:31.738] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:18:31.739] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:18:31.740] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:18:31.857] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:18:31.929] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:18:31.929] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:18:32.772] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:18:32.772] [info] Executing the analyses from 0.0106061 to 1.05...
+[2022-06-16 09:18:42.344] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:20:01.427] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:01.428] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:20:01.429] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:20:01.430] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:20:01.700] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:20:01.701] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:20:01.702] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:20:01.783] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:01.843] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:01.843] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:20:01.843] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:20:01.844] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:20:01.845] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:20:02.001] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:20:02.091] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:20:02.091] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:20:02.987] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:20:02.987] [info] Executing the analyses from 0.0106061 to 1.05...
+[2022-06-16 09:20:09.086] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:20:25.008] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:20:25.009] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:20:25.010] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:20:25.011] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:20:25.011] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:20:25.267] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:25.268] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:20:25.268] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:20:25.268] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:20:25.268] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:20:25.268] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:20:25.268] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:20:25.269] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:20:25.270] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:20:25.270] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:20:25.270] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:20:25.270] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:20:25.270] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:20:25.358] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:25.415] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:20:25.416] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:20:25.417] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:20:25.418] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:20:25.418] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:20:25.553] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:20:25.628] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:20:25.628] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:20:26.564] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:20:26.564] [info] Executing the analyses from 0.0212121 to 1.05...
+[2022-06-16 09:20:32.433] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:26:08.628] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:26:08.629] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:26:08.629] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:26:08.629] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:26:08.629] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:26:08.630] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:26:08.631] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:26:08.631] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:26:08.631] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:26:08.631] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:26:08.631] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:26:08.863] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:26:08.864] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:26:08.864] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:26:08.864] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:26:08.864] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:26:08.865] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:26:08.866] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:26:08.867] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:26:08.867] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:26:08.991] [info] AbstractTool PFOA1_COND1_TRIAL1_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:26:09.084] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:26:09.085] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:26:09.085] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:26:09.085] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:26:09.085] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:26:09.085] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:26:09.085] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:26:09.086] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:26:09.087] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:26:09.087] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:26:09.087] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:26:09.087] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:26:09.087] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:26:09.087] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:26:09.246] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:26:09.360] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot'.
+[2022-06-16 09:26:09.360] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL1_ik.mot (nr=100 nc=26)
+[2022-06-16 09:26:10.227] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.05.
+[2022-06-16 09:26:10.227] [info] Executing the analyses from 0.0530303 to 0.99697...
+[2022-06-16 09:26:15.358] [info] Printing results of investigation PFOA1_COND1_TRIAL1_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:28:31.257] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:28:31.258] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:28:31.258] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:28:31.258] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:28:31.259] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:28:31.260] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:33:09.573] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:33:09.574] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:33:09.574] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:33:09.575] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:33:09.576] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:33:09.800] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:33:09.801] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:33:09.802] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:33:09.910] [info] AbstractTool PFOA1_COND1_TRIAL2_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:33:09.971] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:33:09.972] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:33:09.973] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:33:10.106] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:33:10.195] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL2_ik.mot'.
+[2022-06-16 09:33:10.195] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL2_ik.mot (nr=100 nc=26)
+[2022-06-16 09:33:11.029] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.069.
+[2022-06-16 09:33:11.029] [info] Executing the analyses from 0.0539899 to 1.0474...
+[2022-06-16 09:33:16.119] [info] Printing results of investigation PFOA1_COND1_TRIAL2_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:35:59.245] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:35:59.246] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:35:59.246] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:35:59.247] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:35:59.248] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:35:59.249] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:35:59.249] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:37:44.712] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:37:44.713] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:37:44.713] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:37:44.713] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:37:44.714] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:37:44.715] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:37:44.715] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:37:44.715] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:37:44.715] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:37:44.715] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:37:44.715] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:37:44.716] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:37:44.716] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:37:45.030] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:37:45.031] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:37:45.031] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:37:45.031] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:37:45.031] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:37:45.032] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:37:45.033] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:37:45.033] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:37:45.033] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:37:45.033] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:37:45.033] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:37:45.113] [info] AbstractTool PFOA1_COND1_TRIAL2_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:37:45.160] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:37:45.161] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:37:45.161] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:37:45.161] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:37:45.161] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:37:45.161] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:37:45.162] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:37:45.163] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:37:45.163] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:37:45.163] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:37:45.163] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:37:45.276] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:37:45.368] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL2_ik.mot'.
+[2022-06-16 09:37:45.368] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL2_ik.mot (nr=100 nc=26)
+[2022-06-16 09:37:46.260] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.069.
+[2022-06-16 09:37:46.260] [info] Executing the analyses from 0.0539899 to 1.0474...
+[2022-06-16 09:37:51.621] [info] Printing results of investigation PFOA1_COND1_TRIAL2_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:40:03.996] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:40:03.997] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:40:03.997] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:40:03.997] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:40:03.998] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:40:03.999] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:40:04.000] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:40:04.000] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:40:04.000] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:40:04.000] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:42:47.408] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:42:47.409] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:42:47.409] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:42:47.409] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:42:47.409] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:42:47.409] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:42:47.409] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:42:47.410] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:42:47.411] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:42:47.620] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:42:47.621] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:42:47.621] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:42:47.621] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:42:47.621] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:42:47.621] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:42:47.621] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:42:47.622] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:42:47.623] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:42:47.737] [info] AbstractTool PFOA1_COND1_TRIAL6_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:42:47.830] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:42:47.831] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:42:47.832] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:42:47.833] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:42:48.020] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:42:48.093] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot'.
+[2022-06-16 09:42:48.093] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot (nr=100 nc=26)
+[2022-06-16 09:42:49.061] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.06.
+[2022-06-16 09:42:49.061] [info] Executing the analyses from 0.0535354 to 1.04929...
+[2022-06-16 09:42:54.661] [info] Printing results of investigation PFOA1_COND1_TRIAL6_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:43:18.944] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:18.945] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:43:18.945] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:43:18.946] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:43:18.947] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:43:18.948] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:43:19.161] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:19.162] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:43:19.162] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:43:19.162] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:43:19.163] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:43:19.164] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:43:19.251] [info] AbstractTool PFOA1_COND1_TRIAL6_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:19.309] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:43:19.311] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:43:19.312] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:43:19.313] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:43:19.313] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:43:19.437] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:43:19.508] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot'.
+[2022-06-16 09:43:19.508] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot (nr=100 nc=26)
+[2022-06-16 09:43:20.410] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.06.
+[2022-06-16 09:43:20.411] [info] Executing the analyses from 0.0 to 1.06...
+[2022-06-16 09:43:26.772] [info] Printing results of investigation PFOA1_COND1_TRIAL6_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:43:38.997] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:38.998] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:43:38.998] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:43:38.998] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:43:38.998] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:43:38.999] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:43:39.000] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:43:39.240] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:39.241] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:43:39.241] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:43:39.241] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:43:39.242] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:43:39.243] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:43:39.244] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:43:39.244] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:43:39.244] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:43:39.354] [info] AbstractTool PFOA1_COND1_TRIAL6_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:39.425] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:43:39.426] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:43:39.426] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:43:39.426] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:43:39.426] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:43:39.426] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:43:39.426] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:43:39.427] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:43:39.428] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:43:39.601] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:43:39.707] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot'.
+[2022-06-16 09:43:39.707] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot (nr=100 nc=26)
+[2022-06-16 09:43:41.161] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.06.
+[2022-06-16 09:43:41.162] [info] Executing the analyses from 0.0535354 to 1.06...
+[2022-06-16 09:43:50.369] [info] Printing results of investigation PFOA1_COND1_TRIAL6_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:44:02.961] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:44:02.961] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:44:02.961] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:44:02.962] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:44:02.963] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:44:03.133] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:44:03.135] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:44:03.136] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:44:03.227] [info] AbstractTool PFOA1_COND1_TRIAL6_ik loading model C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:44:03.280] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:44:03.281] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:44:03.281] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:44:03.281] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:44:03.281] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:44:03.281] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:44:03.282] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:44:03.283] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:44:03.283] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:44:03.283] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:44:03.283] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:44:03.283] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-06-16 09:44:03.409] [info] No external loads will be applied (external loads file not specified).
+[2022-06-16 09:44:03.488] [info] Loading coordinates from file 'C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot'.
+[2022-06-16 09:44:03.488] [info] Storage: read data file = C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1_COND1_TRIAL6_ik.mot (nr=100 nc=26)
+[2022-06-16 09:44:04.343] [info] Found 100 state vectors with time stamps ranging from 0.0 to 1.06.
+[2022-06-16 09:44:04.343] [info] Executing the analyses from 0.0535354 to 1.00646...
+[2022-06-16 09:44:09.501] [info] Printing results of investigation PFOA1_COND1_TRIAL6_ik to C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\test-out\MuscleAnalysis
+[2022-06-16 09:46:28.101] [info] Loaded model PFOA1 from file C:\Users\Owner\Documents\projects\force-moco\mrs\test2-walk\PFOA1.osim
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-06-16 09:46:28.103] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_patella.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-06-16 09:46:28.104] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-06-16 09:46:28.105] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-06-16 09:46:28.105] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-06-16 09:46:28.105] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
