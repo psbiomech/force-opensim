@@ -169,7 +169,6 @@ class TrialKey():
             # kinetics (e.g., ID, SO, RRA and CMC)
             events["opensim_last_event_idx"] = 4
             
-
         # run stance phase only, both legs
         elif task.casefold().startswith("run_stance"):
                                         
@@ -650,7 +649,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT01_SDP07")
+                trialre = re.compile("FAILTCRT01_SDP01")
                 trialmatch = trialre.match(trial)
                 if (not trialmatch):
                     continue
@@ -691,7 +690,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                trialre = re.compile("FAILTCRT01_SDP07")
+                trialre = re.compile("FAILTCRT01_SDP01")
                 trialmatch = trialre.match(trial)
                 if (not trialmatch):
                     continue
