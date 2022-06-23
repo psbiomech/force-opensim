@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-MOCO: WALKING 2D EXAMPLE - TRACKING
+MOCO: WALKING 2D EXAMPLE - TRACKING & PREDICTION
 
 @author: Prasanna Sritharan, June 2022
 
@@ -77,13 +77,12 @@ def gait_tracking():
     # **********************************
     # SET GOALS
         
-    # Symmetry: This goal allows us to simulate only one step with left-right
-    # symmetry that we can then double to create two steps, one on each leg
-    # (IFO>IFS>CFO>CFS). Note that this is not actually a full gait cycle
-    # (IFO>IFS>CFO>CFS>IFO)
+    # Symmetry:
+    # This goal allows us to simulate only one step with left-right symmetry that
+    # we can then double to create two steps, one on each leg (IFO>IFS>CFO>CFS).
+    # Note that this is not actually a full gait cycle (IFO>IFS>CFO>CFS>IFO).
     symmetryGoal = osim.MocoPeriodicityGoal("symmetry_goal")
     problem.addGoal(symmetryGoal)
-    
     
     # Enforce periodic symmetry
     model = modelProcessor.process()
@@ -116,18 +115,19 @@ def gait_tracking():
     symmetryGoal.addStatePair(osim.MocoPeriodicityGoalPair("/jointset/groundPelvis/pelvis_tx/speed"))                
     
     # Lumbar control has periodic symmetry. The other controls don't need 
-    # symmetry enforces as they are all muscle excitations. Their behaviour will be
+    # symmetry enforced as they are all muscle excitations. Their behaviour will be
     # contstrained by the periodicity imposed on their respective activations.
     symmetryGoal.addControlPair(osim.MocoPeriodicityGoalPair('/lumbarAct'))
     
     
-    # Get a reference to the MocoControlGoal that is added to a MocoTrack problem
-    # by default and adjust the weight
-    effort = osim.MocoControlGoal().safeDownCast(problem.updGoal("control_effort"))
+    # Effort: 
+    # Get a reference to the MocoControlGoal that is added to a MocoTrack 
+    # problem by default and adjust the weight
+    effort = osim.MocoControlGoal.safeDownCast(problem.updGoal("control_effort"))
     effort.setWeight(10.0)
     
     
-    # Add a contact tracking goal:
+    # Ground contact: 
     # Track the left and right vertical and fore-aft GRFs
     contact_r = ["contactHeel_r", "contactFront_r"]
     contact_l = ["contactHeel_l", "contactFront_l"]
@@ -280,7 +280,7 @@ def gait_prediction(tracking_solution):
     
     # Lumbar control has periodic symmetry. The other controls don't need 
     # symmetry enforces as they are all muscle excitations. Their behaviour will be
-    # contstrained by the periodicity imposed on their respective activations.
+    # modulated by the periodicity imposed on their respective activations.
     symmetryGoal.addControlPair(osim.MocoPeriodicityGoalPair('/lumbarAct'))
     
     # Specify the desired average walk speed, add as a goal
