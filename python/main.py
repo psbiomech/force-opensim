@@ -72,7 +72,7 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-import opensimpipeline as osp
+# import opensimpipeline as osp
 
 # print("Running OpenSim model scaling: SCALE...\n")
 # failed_scale = osp.opensim_pipeline(forcedb, user, ["scale"])
@@ -90,9 +90,9 @@ import opensimpipeline as osp
 # failed_rra_cmc = osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
 # print("\nOpenSim analyses (RRA, CMC) completed.\n")
 
-print("Running OpenSim analyses: JR...\n")
-failed_jr = osp.opensim_pipeline(forcedb, user, ["jr"])
-print("\nOpenSim analyses (JR) completed.\n")
+# print("Running OpenSim analyses: JR...\n")
+# failed_jr = osp.opensim_pipeline(forcedb, user, ["jr"])
+# print("\nOpenSim analyses (JR) completed.\n")
 
 #****** FOR TESTING ONLY ******
 # osp.opensim_pipeline(forcedb, user, ["ik"])
@@ -101,15 +101,15 @@ print("\nOpenSim analyses (JR) completed.\n")
 
 # %% LOAD AND FORMAT RESULTS
 
-import opensimresults as osr
+# import opensimresults as osr
 
-print("Converting OpenSim results to Pickle...\n")
-failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id", "so", "jr"], user, 101)
-print("\nOpenSim results converted to Pickle.\n")
+# print("Converting OpenSim results to Pickle...\n")
+# failed_results = osr.opensim_results_batch_process(forcedb, ["ik", "id", "so", "jr"], user, 101)
+# print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting OpenSim results to CSV...\n")
-failed_export = osr.export_opensim_results(forcedb, user, ["ik", "id", "so", "jr"])
-print("CSV export complete.\n")
+# print("Exporting OpenSim results to CSV...\n")
+# failed_export = osr.export_opensim_results(forcedb, user, ["ik", "id", "so", "jr"])
+# print("CSV export complete.\n")
 
 
 
@@ -128,6 +128,16 @@ print("CSV export complete.\n")
 
 # failedfiles_so_pd = pd.DataFrame(failed_so)
 # failedfiles_so_pd.to_csv("failedfiles_ik_id.csv", header = False, index = False)
+
+
+# %% ANALYSES
+
+import analyses as an
+
+print("Running post-hoc analyses...\n")
+failedfiles_analyses = an.analyses_batch_process(forcedb, user)
+print("Analyses complete.\n")
+
 
 
 # %% END

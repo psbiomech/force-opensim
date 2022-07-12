@@ -42,16 +42,16 @@ class UserSettings():
         # OPENSIM PARAMETERS
         
         # OpenSim log file
-        self.logfilepath = r"C:\Users\Owner\Documents\projects\force-moco\python"
+        self.logfilepath = r"C:\Users\Owner\Documents\projects\force-opensim\python"
         self.triallogfolder = "log"
         self.logfile = "opensim.log"
         
         # OpenSim reference model
-        self.refmodelpath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-models"
+        self.refmodelpath = r"C:\Users\Owner\Documents\projects\force-opensim\python\opensim-models"
         self.refmodelfile = "LASEM_FORCE_ReferenceModel_PelvisUnclamped.osim"
 
         # OpenSim setup files and folders
-        self.refsetuppath = r"C:\Users\Owner\Documents\projects\force-moco\python\opensim-setup"
+        self.refsetuppath = r"C:\Users\Owner\Documents\projects\force-opensim\python\opensim-setup"
         self.refsetupscale = "LASEM_FORCE_Setup_Scale.xml"
         self.refsetupik = "LASEM_FORCE_Setup_IK.xml"
         self.refsetupid = "LASEM_FORCE_Setup_ID.xml"
@@ -67,6 +67,9 @@ class UserSettings():
         self.rracode = "rra"
         self.cmccode = "cmc"
         self.jrcode = "jr"
+        
+        # limb code
+        self.leg = ["r", "l"]
         
         
         
