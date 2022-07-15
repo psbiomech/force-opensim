@@ -230,7 +230,6 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
-        print("\n")
         
         for group in meta[subj]["trials"]:
             
@@ -290,7 +289,6 @@ def export_opensim_results(meta, user, analyses):
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
-        print("\n")
                 
         for group in meta[subj]["trials"]:
             
@@ -352,7 +350,7 @@ def export_opensim_results(meta, user, analyses):
                 else:
                     print("Dynamic trial: %s" % trial)
 
-    # create empty dataframe
+    # create dataframe
     print("\nCreating dataframe...")
     headers = ["subject", "group", "trial", "task", "condition", "foot", "leg_task", "events_times", "events_labels", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
