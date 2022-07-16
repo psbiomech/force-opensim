@@ -59,7 +59,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                             
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILT34_STATIC\d+")
+                trialre = re.compile("FAILTCRT05_SDP05")
                 if not trialre.match(trial):
                     # print("%s ---> SKIP" % trial)
                     continue
@@ -111,7 +111,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILT34_SDP\d+")
+                trialre = re.compile("FAILTCRT05_SDP05")
                 if not trialre.match(trial):
                     #print("%s ---> SKIP" % trial)
                     continue

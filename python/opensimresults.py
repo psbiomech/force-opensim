@@ -312,17 +312,29 @@ def export_opensim_results(meta, user, analyses):
                         
                     # trial task and condition
                     task = osimresultskey.task
-                    condition = osimresultskey.condition
+
+                    # pivot leg
+                    pivot_leg = osimresultskey.events["labels"][0][0].lower()
                     
-                    # events
-                    events_times = "[" + "; ".join(["%.2f" % t for t in osimresultskey.events["time"].tolist()]) + "]"
-                    events_labels = "[" + "; ".join(osimresultskey.events["labels"]) + "]"
+                    # generic event labels:
+                    #   PFO1: pivot limb foot off FP1
+                    #   PFS2: pivot limb foot strike FP2
+                    #   NFO1: non-pivot limb foot off FP1
+                    #   etc...
+                    events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+                    
+                    # event timing
+                    events_times = osimresultskey.events["time"]
+                    events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
                     
                     # foot
                     for f, foot in enumerate(["r","l"]):
-                        
-                        # leg task
-                        leg_task = osimresultskey.events["leg_task"][f]
+
+                        # pivot leg or non-pivot leg data
+                        if foot == pivot_leg:
+                            data_leg_role = "pivot"
+                        else:
+                            data_leg_role = "nonpivot"
                         
                         # analysis
                         for ans in analyses:
@@ -341,7 +353,7 @@ def export_opensim_results(meta, user, analyses):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, group, trial, task, condition, foot, leg_task, events_times, events_labels, ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, task, foot, data_leg_role] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -352,12 +364,12 @@ def export_opensim_results(meta, user, analyses):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "group", "trial", "task", "condition", "foot", "leg_task", "events_times", "events_labels", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "task", "data_leg", "data_leg_role"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + task + ".csv"
+    csvfile = user.csvfileprefix + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)

@@ -86,9 +86,9 @@ print("Running OpenSim analyses: SO...\n")
 osp.opensim_pipeline(forcedb, user, ["so"])
 print("\nOpenSim analyses (SO) completed.\n")
 
-# print("Running OpenSim analyses: RRA, CMC...\n")
-# osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
-# print("\nOpenSim analyses (RRA, CMC) completed.\n")
+# # print("Running OpenSim analyses: RRA, CMC...\n")
+# # osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
+# # print("\nOpenSim analyses (RRA, CMC) completed.\n")
 
 print("Running OpenSim analyses: JR...\n")
 osp.opensim_pipeline(forcedb, user, ["jr"])
@@ -115,15 +115,15 @@ print("CSV export complete.\n")
 
 # %% ANALYSES
 
-import analyses as an
+# import analyses as an
 
-print("Running post-hoc analyses...\n")
-an.analyses_batch_process(forcedb, user)
-print("Analyses complete.\n")
+# print("Running post-hoc analyses...\n")
+# an.analyses_batch_process(forcedb, user)
+# print("Analyses complete.\n")
 
-print("Exporting analysis results...\n")
-an.export_joint_angular_impulse(forcedb, user)
-print("Analyses results export complete.\n")
+# print("Exporting analysis results...\n")
+# an.export_joint_angular_impulse(forcedb, user)
+# print("Analyses results export complete.\n")
 
 
 

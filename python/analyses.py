@@ -288,10 +288,10 @@ def export_joint_angular_impulse(meta, user):
     
     
     # create dataframe
+    # appearing in the output
     print("\nCreating dataframe...")
     headers = ["subject", "group", "trial", "movement", "foot", "leg_task", "type", "window", "variable", "net", "positive", "negative"]
     csvdf = pd.DataFrame(csvdata, columns = headers)
-
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
