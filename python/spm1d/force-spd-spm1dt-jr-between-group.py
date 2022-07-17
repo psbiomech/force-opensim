@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Run SPMt 1-D analyses: FORCE step-down-pivot JR (FORCE vs controls)
+Run SPMt 1-D analyses: FORCE step-down-pivot JR between groups
 
 @author: Prasanna Sritharan, June 2022
 """
@@ -16,12 +16,12 @@ import pickle as pk
 
 # data file
 srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder\r-output"
-srcfile = "force_sdp_normalised_descriptives_subject.csv"
+srcfile = "force_sdp_results_descriptives_by_subject.csv"
 
 # output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outpkl = "force-sdp-spm1dt-jr-group.pkl"
+outpkl = "force-sdp-spm1dt-jr-between-group.pkl"
 outfigprefix = "force-sdp-spm1dt-jr-"
 
 
@@ -37,15 +37,15 @@ df = df0[df0["statistic"]=="mean"]
 analyses = ["jr"]
 osimvars = {}
 osimvars["jr"] = ["hip_on_femur_in_femur_fx", "hip_on_femur_in_femur_fy", "hip_on_femur_in_femur_fz", "walker_knee_on_tibia_in_tibia_fx", "walker_knee_on_tibia_in_tibia_fy", "walker_knee_on_tibia_in_tibia_fz", "patellofemoral_on_patella_in_patella_fx", "patellofemoral_on_patella_in_patella_fy", "patellofemoral_on_patella_in_patella_fz", "ankle_on_talus_in_talus_fx", "ankle_on_talus_in_talus_fy", "ankle_on_talus_in_talus_fz", "subtalar_on_calcn_in_calcn_fx", "subtalar_on_calcn_in_calcn_fy", "subtalar_on_calcn_in_calcn_fz", "mtp_on_toes_in_toes_fx", "mtp_on_toes_in_toes_fy", "mtp_on_toes_in_toes_fz", "back_on_torso_in_torso_fx", "back_on_torso_in_torso_fy", "back_on_torso_in_torso_fz"]
-leg = ["ipsi", "contra"]
-groups = ["SYM", "ASYM", "DOM", "NDOM"]
+leg = ["pivot", "nonpivot"]
+groups = ["sym", "asym", "dom", "ndom"]
 
 
 # split into smaller data frames for analysis
 datamat = {}
 for lg in leg:
     datamat[lg] = {}
-    legdata = df[df["data_limb"]==lg.upper()]
+    legdata = df[df["data_leg_role"]==lg]
     for an in analyses:        
         datamat[lg][an] = {}
         andata = legdata[legdata["analysis"]==an]
@@ -53,19 +53,19 @@ for lg in leg:
             datamat[lg][an][va] = {}
             vadata = andata[andata["variable"]==va]
             for gp in groups:            
-                gpdata = vadata[vadata[lg + "_limb"]==gp]
-                gpdata = gpdata.drop(gpdata.columns[range(0, 16)], axis = 1)
+                gpdata = vadata[vadata["data_leg_type"]==gp]
+                gpdata = gpdata.loc[:, "t1":"t101"]
                 datamat[lg][an][va][gp] = gpdata.to_numpy()
 
 
-# # event times
+# event times
 events = {}
 events["data"] = {}
 events["desc"] = {}
 descmat = np.zeros((4,6))
 for gn, g in enumerate(groups):
-    dfreduced = df.loc[(df["analysis"]=="ik") & (df["variable"]=="time") & (df["data_limb"]=="IPSI") & (df["ipsi_limb"]==g)]    
-    events["data"][g] = dfreduced[["E" + str(e + 1) for e in range(6)]]
+    dfreduced = df.loc[(df["analysis"]=="ik") & (df["variable"]=="time") & (df["data_leg_role"]=="pivot") & (df["data_leg_type"]==g)]    
+    events["data"][g] = dfreduced.loc[:, "es1_PFO1":"es6_PFS4"]
     events["desc"][g] = {}
     events["desc"][g]["mean"] = np.round(np.mean(events["data"][g].to_numpy(), axis=0))
     events["desc"][g]["sd"] = np.round(np.std(events["data"][g].to_numpy(), axis=0))
@@ -79,8 +79,8 @@ events["desc"]["total"]["sd"] = np.std(descmat, axis=0)
 
 # comparisons
 pairs = {}
-pairs["group"] = ["DOM", "SYM"]
-pairs["limb"] = ["ASYM", "SYM"]
+pairs["group"] = ["dom", "sym"]
+pairs["limb"] = ["asym", "sym"]
 
 # calculate descriptives from file
 desc = {}
@@ -131,12 +131,12 @@ with open(os.path.join(outpath, outpkl),"wb") as f: pk.dump(sdp, f)
 # plot parameters
 jrplots = [["hip_on_femur_in_femur_fx", "hip_on_femur_in_femur_fy", "hip_on_femur_in_femur_fz", "walker_knee_on_tibia_in_tibia_fx", "walker_knee_on_tibia_in_tibia_fy", "walker_knee_on_tibia_in_tibia_fz", "patellofemoral_on_patella_in_patella_fx", "patellofemoral_on_patella_in_patella_fy", "patellofemoral_on_patella_in_patella_fz"], 
            ["ankle_on_talus_in_talus_fx", "ankle_on_talus_in_talus_fy", "ankle_on_talus_in_talus_fz", "subtalar_on_calcn_in_calcn_fx", "subtalar_on_calcn_in_calcn_fy", "subtalar_on_calcn_in_calcn_fz", "back_on_torso_in_torso_fx", "back_on_torso_in_torso_fy", "back_on_torso_in_torso_fz"]]
-nsubjs = [np.size(datamat["ipsi"]["jr"]["hip_on_femur_in_femur_fx"][g], axis=0) for g in groups]
+nsubjs = [np.size(datamat["pivot"]["jr"]["hip_on_femur_in_femur_fx"][g], axis=0) for g in groups]
 eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
-eventlabels = ["IFO1", "IFS2", "CFO1", "CFS3", "IFO2", "IFS4"]
+eventlabels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
-limblabel= ["pivot", "non-pivot"]
+limblabel= ["pivot", "nonpivot"]
 pairlabels = {}
 pairlabels["group"] = ["control", "symptomatic"]
 pairlabels["limb"] = ["asymptomatic", "symptomatic"]

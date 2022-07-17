@@ -236,9 +236,9 @@ def export_joint_angular_impulse(meta, user):
                         
                         # pivot leg or non-pivot leg data
                         if foot == pivot_leg:
-                            legtask = "pivot"
+                            data_leg_role = "pivot"
                         else:
-                            legtask = "nonpivot"
+                            data_leg_role = "nonpivot"
                         
                         # joint angular impulse full results for leg
                         full_results = osimresultskey.results["analyses"]["joint_angular_impulse"][foot]
@@ -261,7 +261,7 @@ def export_joint_angular_impulse(meta, user):
                                     neg = full_results["net"]["neg"][v]
 
                                     # csv row
-                                    csvrow = [subj, group, trial, movement, foot, legtask, implabel, winlabel, varlabel, net, pos, neg]
+                                    csvrow = [subj, group, trial, movement, foot, data_leg_role, implabel, winlabel, varlabel, net, pos, neg]
                                     csvdata.append(csvrow)
                                     
                             elif implabel == "windows":
@@ -277,7 +277,7 @@ def export_joint_angular_impulse(meta, user):
                                         neg = full_results["windows"][winlabel]["neg"][v]
     
                                         # csv row
-                                        csvrow = [subj, group, trial, movement, foot, legtask, implabel, winlabel, varlabel, net, pos, neg]
+                                        csvrow = [subj, group, trial, movement, foot, data_leg_role, implabel, winlabel, varlabel, net, pos, neg]
                                         csvdata.append(csvrow)                                    
                                     
                 except:
@@ -290,12 +290,12 @@ def export_joint_angular_impulse(meta, user):
     # create dataframe
     # appearing in the output
     print("\nCreating dataframe...")
-    headers = ["subject", "group", "trial", "movement", "foot", "leg_task", "type", "window", "variable", "net", "positive", "negative"]
+    headers = ["subject", "group", "trial", "movement", "data_leg", "data_leg_role", "period", "window", "variable", "net", "positive", "negative"]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.project.lower() + "_joint_angular_impulse_all.csv"
+    csvfile = user.project.lower() + "_joint_angular_impulse_all_trials.csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)

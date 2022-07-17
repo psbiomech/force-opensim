@@ -16,12 +16,12 @@ import pickle as pk
 
 # data file
 srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder\r-output"
-srcfile = "force_sdp_normalised_descriptives_subject.csv"
+srcfile = "force_sdp_results_descriptives_by_subject.csv"
 
 # output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outpkl = "force-sdp-spm1dt-ikid-group.pkl"
+outpkl = "force-sdp-spm1dt-ikid-between-group.pkl"
 outfigprefix = "force-sdp-spm1dt-ikid-"
 
 
@@ -38,15 +38,15 @@ analyses = ["ik", "id"]
 osimvars = {}
 osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "ankle_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation"]
 osimvars["id"] = [k + "_moment" for k in osimvars["ik"]]
-leg = ["ipsi", "contra"]
-groups = ["SYM", "ASYM", "DOM", "NDOM"]
+leg = ["pivot", "nonpivot"]
+groups = ["sym", "asym", "dom", "ndom"]
 
 
 # split into smaller data frames for analysis
 datamat = {}
 for lg in leg:
     datamat[lg] = {}
-    legdata = df[df["data_limb"]==lg.upper()]
+    legdata = df[df["data_leg_role"]==lg]
     for an in analyses:        
         datamat[lg][an] = {}
         andata = legdata[legdata["analysis"]==an]
@@ -54,19 +54,19 @@ for lg in leg:
             datamat[lg][an][va] = {}
             vadata = andata[andata["variable"]==va]
             for gp in groups:            
-                gpdata = vadata[vadata[lg + "_limb"]==gp]
-                gpdata = gpdata.drop(gpdata.columns[range(0, 16)], axis = 1)
+                gpdata = vadata[vadata["data_leg_type"]==gp]
+                gpdata = gpdata.loc[:, "t1":"t101"]
                 datamat[lg][an][va][gp] = gpdata.to_numpy()
 
 
-# # event times
+# event time steps
 events = {}
 events["data"] = {}
 events["desc"] = {}
 descmat = np.zeros((4,6))
 for gn, g in enumerate(groups):
-    dfreduced = df.loc[(df["analysis"]=="ik") & (df["variable"]=="time") & (df["data_limb"]=="IPSI") & (df["ipsi_limb"]==g)]    
-    events["data"][g] = dfreduced[["E" + str(e + 1) for e in range(6)]]
+    dfreduced = df.loc[(df["analysis"]=="ik") & (df["variable"]=="time") & (df["data_leg_role"]=="pivot") & (df["data_leg_type"]==g)]    
+    events["data"][g] = dfreduced.loc[:, "es1_PFO1":"es6_PFS4"]
     events["desc"][g] = {}
     events["desc"][g]["mean"] = np.round(np.mean(events["data"][g].to_numpy(), axis=0))
     events["desc"][g]["sd"] = np.round(np.std(events["data"][g].to_numpy(), axis=0))
@@ -76,12 +76,13 @@ events["desc"]["total"]["mean"] = np.mean(descmat, axis=0)
 events["desc"]["total"]["sd"] = np.std(descmat, axis=0)
 
 
+
 # %% RUN ANALYSES :DESCRIPTIVES, SPM{t}
 
 # comparisons
 pairs = {}
-pairs["group"] = ["DOM", "SYM"]
-pairs["limb"] = ["ASYM", "SYM"]
+pairs["group"] = ["dom", "sym"]
+pairs["limb"] = ["asym", "sym"]
 
 # calculate descriptives from file
 desc = {}
@@ -130,12 +131,12 @@ with open(os.path.join(outpath, outpkl),"wb") as f: pk.dump(sdp, f)
 # %% PLOT OUTPUT
 
 # plot parameters
-nsubjs = [np.size(datamat["ipsi"]["ik"]["ankle_angle"][g], axis=0) for g in groups]
+nsubjs = [np.size(datamat["pivot"]["ik"]["ankle_angle"][g], axis=0) for g in groups]
 eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
-eventlabels = ["IFO1", "IFS2", "CFO1", "CFS3", "IFO2", "IFS4"]
+eventlabels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
-limblabel= ["pivot", "non-pivot"]
+limblabel= ["pivot", "nonpivot"]
 pairlabels = {}
 pairlabels["group"] = ["control", "symptomatic"]
 pairlabels["limb"] = ["asymptomatic", "symptomatic"]

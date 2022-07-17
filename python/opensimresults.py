@@ -323,8 +323,8 @@ def export_opensim_results(meta, user, analyses):
                     #   etc...
                     events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
                     
-                    # event timing
-                    events_times = osimresultskey.events["time"]
+                    # event timing: relative time and time steps
+                    events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
                     events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
                     
                     # foot
