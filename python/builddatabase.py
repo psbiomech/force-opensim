@@ -72,7 +72,7 @@ def build_database(user, task):
                 # skip groups that don't have a least one static trial and at
                 # least one required dynamic file
                 hasstatic = any([user.staticprefix.casefold() in t.casefold() for t in triallist])
-                hasdynamic = any([any([c.casefold() in t.casefold() for c in user.trialprefixes["sdp"]]) for t in triallist])
+                hasdynamic = any([any([c.casefold() in t.casefold() for c in user.trialprefixes[task]]) for t in triallist])
                 if not(hasstatic) or not(hasdynamic): continue
                 
                 # trials (for selected task only)
