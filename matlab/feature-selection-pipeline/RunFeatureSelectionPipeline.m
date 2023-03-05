@@ -6,41 +6,38 @@
 % principal components, and therefore results from the new run can
 % differ substantially from those obtained on a previous run.
 
-% user settings
+% User settings
 addpath('..');
 user = getUserScriptSettings();
 outpath = user.FEATPATH;
 
-% load metadata
+% Load metadata
 aclr = loadMetaStruct();
-
-% collate OpenSim data into MAT files
-%aclr = collateDataMAT(aclr,'cmc','rra','_RRA_Model_RRA_2');
 
 
 %% FEATURE SELECTION PIPELINE
 
-% weighted PCA
-[pcadata,pcaweights,pcaout,pcainfo] = performWeightedPCA(aclr);
+% Weighted PCA
+[pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA(aclr);
 pcaw.pcadata = pcadata;
 pcaw.pcaweights = pcaweights;
 pcaw.pcaout = pcaout;
 pcaw.pcainfo = pcainfo;
 
 % Parallel Analysis
-[pcsexplained,totalvalidpcs,totalvariance,paselected,paquantl] = performParallelAnalysis(pcadata,pcaweights,pcaout,pcainfo);
+[pcsexplained, totalvalidpcs, totalvariance, paselected, paquantl] = performParallelAnalysis(pcadata, pcaweights, pcaout, pcainfo);
 pa.pcsexplained = pcsexplained;
 pa.totalvalidpcs = totalvalidpcs;
 pa.totalvariance = totalvariance;
 pa.paselected = paselected;
 pa.paquantl = paquantl;
 
-% % feature selection
-% [final,weissind,training] = performFeatureSelection(paselected,pcainfo);
-% fs.final = final;
-% fs.weissind = weissind;
-% fs.training = training;
-% 
+% Feature selection
+[final,weissind,training] = performFeatureSelection(paselected,pcainfo);
+fs.final = final;
+fs.weissind = weissind;
+fs.training = training;
+
 % % t-tests, effect size and descriptives
 % ttable = performTTest(final,pcainfo);
 % tt.ttable = ttable;

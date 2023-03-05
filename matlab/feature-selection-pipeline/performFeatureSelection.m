@@ -1,11 +1,12 @@
-function [final,weissind,training] = performFeatureSelection(paselected,pcainfo)
+function [final, weissind, training] = performFeatureSelection(paselected, pcainfo)
 
 
 
-%PERFORMFEATURESELECTION Perform Feature Selection
-%   Prasanna Sritharan, Mario Andrés Muñoz, August 2020
+%PERFORMFEATURESELECTION Perform Feature Selection for FORCe SDP
+%   Prasanna Sritharan, February 2022
 %
-% Based on original scripts written by Mario Andrés Muñoz, 2013
+% Based on PCA scripts by Prasanna Sritharan for ACLR hopping 
+% (published AnnBiomedEng 2022)
 %
 % 1. Build training dataset
 % 2. Get upper and lower quantiles for later interpretation of PCs
@@ -17,10 +18,11 @@ function [final,weissind,training] = performFeatureSelection(paselected,pcainfo)
 % user settings
 addpath('..');
 user = getUserScriptSettings();
-outpath = user.FEATPATH;
+outpath = user.OUTPATH;
+limbs = user.LIMBS;
 
 
-fprintf('Weighted PCA on IK, ID and SO data.\n');
+fprintf('Feature selection on IK and ID data.\n');
 fprintf('------------------------------------------------\n'); 
 
 
@@ -32,7 +34,7 @@ fprintf('------------------------------------------------\n');
 fprintf('Preparing training data matrix from PCs selected using Parallel Analysis...\n');
 training.data = [];
 training.labels = {};
-for d={'so','ik','id'} 
+for d={'ik','id'} 
     label = pcainfo.(d{1}).label;
     for v=1:length(pcainfo.(d{1}).varnames)        
         varname = pcainfo.(d{1}).varnames{v};        

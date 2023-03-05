@@ -1,4 +1,4 @@
-function [pcadata,pcaweights,pcaout,pcainfo] = performWeightedPCA(refmodel)
+function [pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA(refmodel)
 
 %PERFORMWEIGHTEDPCA Undertake PCA analysis for FORCe SDP
 %   Prasanna Sritharan, February 2022
@@ -21,14 +21,14 @@ groups = user.GROUPS;
 subjprefix = user.SUBJPREFIX;
 modelparams = user.feature.(refmodel);
 
-
+fprintf('\nPerform Weighted PCA on raw data waveforms.\n');
 fprintf('------------------------------------------------\n'); 
 
 % Load FORCe SDP data into tables
 fprintf('Loading data into tables:\n');
-fprintf('---> Pivot leg\n');
+fprintf('---> Pivot limb\n');
 sdp.pivot = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_pivot.csv'));
-fprintf('---> Non-pivot leg\n');
+fprintf('---> Non-pivot limb\n');
 sdp.nonpivot = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_nonpivot.csv'));
 
 % Data tables
@@ -100,6 +100,7 @@ for b=1:2
     end
 
     % Store database info
+    pcainfo.(limbs{b}).observations.total = x-1;
     pcainfo.(limbs{b}).observations.(groups{1}) = ntrials(1);
     pcainfo.(limbs{b}).observations.(groups{2}) = ntrials(2);
     pcainfo.(limbs{b}).variables = size(pcadata.(limbs{b}).ik, 2);
