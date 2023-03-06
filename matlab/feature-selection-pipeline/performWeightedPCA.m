@@ -112,7 +112,7 @@ for b=1:2
         pcainfo.(limbs{b}).(d{1}).label = modelparams.(d{1}).label;
         pcainfo.(limbs{b}).(d{1}).varnames = modelparams.(d{1}).headers;
     end
-    pcainfo.(['is' groups{1}]) = [true(pcainfo.(limbs{b}).observations.(groups{1}), 1); false(pcainfo.(limbs{b}).observations.(groups{2}), 1)];
+    pcainfo.(limbs{b}).(['is' groups{1}]) = [true(pcainfo.(limbs{b}).observations.(groups{1}), 1); false(pcainfo.(limbs{b}).observations.(groups{2}), 1)];
 
 
     % Calculate weighting vector

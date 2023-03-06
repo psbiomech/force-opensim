@@ -11,14 +11,12 @@ addpath('..');
 user = getUserScriptSettings();
 outpath = user.FEATPATH;
 
-% Load metadata
-aclr = loadMetaStruct();
 
 
 %% FEATURE SELECTION PIPELINE
 
 % Weighted PCA
-[pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA(aclr);
+[pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA('rajagopal');
 pcaw.pcadata = pcadata;
 pcaw.pcaweights = pcaweights;
 pcaw.pcaout = pcaout;

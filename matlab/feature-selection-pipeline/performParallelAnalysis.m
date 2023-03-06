@@ -49,10 +49,10 @@ paquantl = struct;
 % Limbs
 for b=1:2
 
-    fprintf('\nHorn''s Parallel Analysis: %s LIMB\n', upper(limbs{b}))
+    fprintf('\nHorn''s Parallel Analysis: %s LIMB\n', upper(limbs{b}));
 
     % Perform Parallel Analysis per variable
-    fprintf('Performing Parallel Analysis...\n');
+    fprintf('---> Performing Parallel Analysis...\n');
     inc = 1;
 
     % Analysis
