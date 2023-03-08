@@ -94,8 +94,8 @@ for b=1:2
             % Get quantiles and indices of scores associated with top and
             % bottom quantiles
             paquantl.(limbs{b}).(d{1}).(varname).quantl = quantile(paselected.(limbs{b}).(d{1}).(varname).score, [.025 .25 .50 .75 .975]);
-            paquantl.(limbs{b}).(d{1}).(varname).bottom.idx = paselected.(limbs{b}).(d{1}).(varname).score<=paquantl.(limbs{b}).(d{1}).(varname).quantl(2, :);
-            paquantl.(limbs{b}).(d{1}).(varname).top.idx = paselected.(limbs{b}).(d{1}).(varname).score>=paquantl.(limbs{b}).(d{1}).(varname).quantl(4, :);        
+            paquantl.(limbs{b}).(d{1}).(varname).bottom.idx = paselected.(limbs{b}).(d{1}).(varname).score <= paquantl.(limbs{b}).(d{1}).(varname).quantl(2, :);
+            paquantl.(limbs{b}).(d{1}).(varname).top.idx = paselected.(limbs{b}).(d{1}).(varname).score >= paquantl.(limbs{b}).(d{1}).(varname).quantl(4, :);        
             
             % Get the data associated with the PC quantiles
             for bb=1:numvalidscores

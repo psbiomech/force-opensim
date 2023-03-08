@@ -31,20 +31,20 @@ pa.paselected = paselected;
 pa.paquantl = paquantl;
 
 % Feature selection
-[final,weissind,training] = performFeatureSelection(paselected,pcainfo);
+[final, weissind, training] = performFeatureSelection(paselected, pcainfo);
 fs.final = final;
 fs.weissind = weissind;
 fs.training = training;
 
-% % t-tests, effect size and descriptives
-% ttable = performTTest(final,pcainfo);
-% tt.ttable = ttable;
-% 
-% % correlation of PCs with original waveforms
-% [wavecorr,dataidx] = performWaveformCorr(final,pcainfo,pcadata,pcaweights);
-% wcorr.wavecorr = wavecorr;
-% wcorr.dataidx = dataidx;
-% 
+% t-tests, effect size and descriptives
+ttable = performTTest(final, pcainfo);
+tt.ttable = ttable;
+
+% correlation of PCs with original waveforms
+[wavecorr, dataidx] = performWaveformCorr(final, pcainfo, pcadata, pcaweights);
+wcorr.wavecorr = wavecorr;
+wcorr.dataidx = dataidx;
+
 % % associated features
 % [acorrtable,associdx] = performAssocFeatureSelection(final,training,pcainfo);
 % acorr.acorrtable = wavecorr;
