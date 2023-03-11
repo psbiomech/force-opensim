@@ -11,7 +11,7 @@ function ttable = performTTest(final, pcainfo)
 % User settings
 addpath('..');
 user = getUserScriptSettings();
-outpath = user.FEATPATH;
+outpath = user.OUTPATH1;
 limbs = user.LIMBS;
 groups = user.GROUPS;
 

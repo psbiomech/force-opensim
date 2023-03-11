@@ -18,7 +18,7 @@ function [final, weissind, training] = performFeatureSelection(paselected, pcain
 % user settings
 addpath('..');
 user = getUserScriptSettings();
-outpath = user.OUTPATH;
+outpath = user.OUTPATH1;
 limbs = user.LIMBS;
 groups = user.GROUPS;
 

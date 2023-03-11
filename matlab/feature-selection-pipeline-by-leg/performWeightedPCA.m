@@ -15,7 +15,7 @@ function [pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA(refmodel)
 addpath('..');
 user = getUserScriptSettings();
 csvpath = user.SRCPATH;
-outpath = user.OUTPATH;
+outpath = user.OUTPATH1;
 limbs = user.LIMBS;
 groups = user.GROUPS;
 subjprefix = user.SUBJPREFIX;

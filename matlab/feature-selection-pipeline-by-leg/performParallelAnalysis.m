@@ -10,7 +10,7 @@ function [pcsexplained, totalvalidpcs, totalvariance, paselected, paquantl] = pe
 % User settings
 addpath('..');
 user = getUserScriptSettings();
-outpath = user.OUTPATH;
+outpath = user.OUTPATH1;
 limbs = user.LIMBS;
 
 

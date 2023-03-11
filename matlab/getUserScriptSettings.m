@@ -10,8 +10,8 @@
 
 % folder paths: Lenovo laptop
 user.CODEROOT = 'C:\Users\Owner\Documents\data\FORCe\'; 
-user.OUTPATH = 'C:\Users\Owner\Documents\data\FORCe\pcaDatabase\';   % location of output database
-user.FEATPATH = 'C:\Users\Owner\Documents\data\FORCe\pcaDatabase\feature\'; % feature selection pipeline output path
+user.OUTPATH1 = 'C:\Users\Owner\Documents\data\FORCe\pcaDatabase\by-leg\';   % location of output database
+user.OUTPATH2 = 'C:\Users\Owner\Documents\data\FORCe\pcaDatabase\both-legs\';   % location of output database
 user.SRCPATH = 'C:\Users\Owner\Documents\data\FORCe\outputDatabase\csvfolder';   % location of source data
 
 
@@ -33,9 +33,9 @@ user.SEPARATOR = '_';   % file name separator between subject code and trial cod
 user.TRIALTYPE = {'static','dynamic'};  % trial type: static calibration trial, or dynamic gait trial
 
 
-%% FEATURE SELECTION PARAMETERS
+%% FEATURE SELECTION PARAMETERS: BY LEGS
 
-% gait2392 model
+% Rajagopal model
 user.feature.rajagopal.ik.label = 'angle';
 user.feature.rajagopal.ik.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation'};
 user.feature.rajagopal.ik.idx = [8:10 11 13 16:18];
@@ -43,6 +43,36 @@ user.feature.rajagopal.ik.idx = [8:10 11 13 16:18];
 user.feature.rajagopal.id.label = 'moment';
 user.feature.rajagopal.id.headers = {'hip_adduction_moment','hip_flexion_moment','hip_rotation_moment','knee_angle_moment','ankle_angle_moment','lumbar_bending_moment','lumbar_extension_moment','lumbar_rotation_moment'};
 user.feature.rajagopal.id.idx = [8:10 14 19 11:13];
+
+% user.feature.gait2392.so.pcacols = [];
+% user.feature.gait2392.so.flipcols = [];  % column indices *before* trimming to only PCA cols
+% user.feature.gait2392.so.mergecols = {{21:23,2:4,9:11,29,30:32,33:34,35},{64:66,45:47,51:54,72,73:75,76:77,78}};    % column indices *before* trimming to only PCA cols
+% user.feature.gait2392.so.label = 'force';
+% user.feature.gait2392.so.headers = {'gmax','gmed','hams','rf','vas','gas','sol'};
+% 
+% user.feature.gait2392.rra.pcacols = {[8:14 2:4 26:28],[17:23 2:4 26:28]};
+% user.feature.gait2392.rra.flipcols = [3 4 7 27 28];  % column indices *before* trimming to only PCA cols
+% user.feature.gait2392.rra.mergecols = [];       % column indices *before* trimming to only PCA cols
+% user.feature.gait2392.rra.label = 'angle';
+% user.feature.gait2392.rra.headers = {'hip_flex','hip_add','hip_rot','knee_angle','knee_rot','knee_add','ankle_angle','pelvis_tilt','pelvis_list','pelvis_rot','lumbar_ext','lumbar_bend','lumbar_rot'};
+% 
+% user.feature.gait2392.cmc.pcacols = [];
+% user.feature.gait2392.cmc.flipcols = [];  % column indices *before* trimming to only PCA cols
+% user.feature.gait2392.cmc.mergecols = {{21:23,2:4,9:11,29,30:32,33:34,35},{64:66,45:47,51:54,72,73:75,76:77,78}};    % column indices *before* trimming to only PCA cols
+% user.feature.gait2392.cmc.label = 'force';
+% user.feature.gait2392.cmc.headers = {'gmax','gmed','hams','rf','vas','gas','sol'};
+
+
+%% FEATURE SELECTION PARAMETERS: BOTH LEGS
+
+% Rajagopal model
+user.feature2.rajagopal.ik.label = 'angle';
+user.feature2.rajagopal.ik.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation', 'hip_adduction_np','hip_flexion_np','hip_rotation_np','knee_angle_np','ankle_angle_np','lumbar_bending_np','lumbar_extension_np','lumbar_rotation_np'};
+user.feature2.rajagopal.ik.idx = [8:10 11 13 16:18 33:35 36 38 41:43];
+
+user.feature2.rajagopal.id.label = 'moment';
+user.feature2.rajagopal.id.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation', 'hip_adduction_np','hip_flexion_np','hip_rotation_np','knee_angle_np','ankle_angle_np','lumbar_bending_np','lumbar_extension_np','lumbar_rotation_np'};
+user.feature2.rajagopal.id.idx = [8:10 14 19 11:13 33:35 39 44 36:38];
 
 % user.feature.gait2392.so.pcacols = [];
 % user.feature.gait2392.so.flipcols = [];  % column indices *before* trimming to only PCA cols
