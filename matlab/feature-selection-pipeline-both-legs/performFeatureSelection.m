@@ -84,7 +84,7 @@ for n=1:niter
 end
 
 % Retain only selected PCs
-fprintf('Retaining selected PCs only...')
+fprintf('\nRetaining selected PCs only...')
 [~, pcidx] = sort(ncSFS, 'descend');
 pcidx = sort(pcidx(10:-1:1));
 final.data = weissind.data(:, pcidx);

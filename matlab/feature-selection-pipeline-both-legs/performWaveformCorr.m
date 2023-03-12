@@ -35,7 +35,7 @@ for s=1:length(final.labels)
     dataidx{s, 2} = find(strcmpi(pcainfo.(dataidx{s, 1}).varnames, tokens{1}{2}), 1);
 
     % Calculate waveform correlation coefficients
-    fprintf('Calculating correlation coefficients...\n');
+    fprintf('---> Calculating correlation coefficients...\n');
     wavecorr.coeffs(:, :, s) = weightedcorrs([final.data(:,s) squeeze(pcadata.(dataidx{s, 1})(:, :, dataidx{s, 2}))], pcaweights);
     wavecorr.norms(:, s) = squeeze(wavecorr.coeffs(2:end,1,s)).^2; 
     

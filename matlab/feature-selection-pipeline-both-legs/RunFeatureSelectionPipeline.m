@@ -9,7 +9,7 @@
 % User settings
 addpath('..');
 user = getUserScriptSettings();
-outpath = user.FEATPATH;
+outpath = user.OUTPATH2;
 
 
 
@@ -45,10 +45,10 @@ tt.ttable = ttable;
 wcorr.wavecorr = wavecorr;
 wcorr.dataidx = dataidx;
 
-% % associated features
-% [acorrtable,associdx] = performAssocFeatureSelection(final,training,pcainfo);
-% acorr.acorrtable = wavecorr;
-% acorr.associdx = dataidx;
+% associated features
+[acorrtable, associdx] = performAssocFeatureSelection(final, training, pcainfo);
+acorr.acorrtable = wavecorr;
+acorr.associdx = dataidx;
 
 
 %% TABLES AND FIGURES

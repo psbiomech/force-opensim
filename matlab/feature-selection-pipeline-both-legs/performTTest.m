@@ -29,7 +29,7 @@ for n=1:npcs
     fprintf('%s\n',final.labels{n});
     
     % Descriptives
-    fprintf('Calculating descriptives...\n');
+    fprintf('---> Calculating descriptives...\n');
     ttable.table{n,1} = final.labels{n};
     ttable.table{n,2} = mean(final.data(pcainfo.(['is' groups{1}]), n));
     ttable.table{n,3} = std(final.data(pcainfo.(['is' groups{1}]), n));
@@ -37,7 +37,7 @@ for n=1:npcs
     ttable.table{n,5} = std(final.data(~pcainfo.(['is' groups{1}]), n));    
     
     % T-test (t and p)
-    fprintf('Performing two-sample t-tests...\n');
+    fprintf('---> Performing two-sample t-tests...\n');
     [~, pval, ~, stats] = ttest2(final.data(pcainfo.(['is' groups{1}]), n), final.data(~pcainfo.(['is' groups{1}]), n));
     ttable.table{n,6} = stats.tstat;
     ttable.table{n,7} = pval;
