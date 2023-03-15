@@ -63,4 +63,4 @@ acorr.associdx = dataidx;
 %% SAVE OUTPUTS
 
 % % save all structs
-% save(fullfile(outpath,'fsp.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');
+% save(fullfile(outpath,'fsp_outputs_all.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');

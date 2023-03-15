@@ -52,12 +52,11 @@ for d={'ik','id'}
     dataset = pcadata.(d{1}); 
     label = pcainfo.(d{1}).label;
     for v=1:size(dataset, 3)
-        
 
         % Find scores
         data = squeeze(dataset(:, :, v));        
-        latent = sort(eig(weightedcorrs(data,pcaweights)), 'descend');
-        numvalidscores = find(latent>randvareigpcts, 1, 'last');
+        latent = sort(eig(weightedcorrs(data, pcaweights)), 'descend');
+        numvalidscores = find(latent > randvareigpcts, 1, 'last');
                 
         % Record table of results for Parallel Analysis
         % (how much each selected PC explains the associated waveform)
@@ -65,7 +64,7 @@ for d={'ik','id'}
         varname = pcainfo.(d{1}).varnames{v};
         pcsexplained{inc,1} = [label '_' varname];
         for bb=1:numvalidscores
-            pcsexplained{inc,1+bb} = explained(bb)./100;
+            pcsexplained{inc, 1 + bb} = explained(bb)./100;
         end
         totalvariance{inc} = sum(cell2mat(pcsexplained(inc, 2:end)));
         totalvalidpcs = totalvalidpcs + numvalidscores;
@@ -79,6 +78,7 @@ for d={'ik','id'}
         % Get quantiles and indices of scores associated with top and
         % bottom quantiles
         paquantl.(d{1}).(varname).quantl = quantile(paselected.(d{1}).(varname).score, [.025 .25 .50 .75 .975]);
+        if numvalidscores == 1, paquantl.(d{1}).(varname).quantl = paquantl.(d{1}).(varname).quantl'; end
         paquantl.(d{1}).(varname).bottom.idx = paselected.(d{1}).(varname).score <= paquantl.(d{1}).(varname).quantl(2, :);
         paquantl.(d{1}).(varname).top.idx = paselected.(d{1}).(varname).score >= paquantl.(d{1}).(varname).quantl(4, :);        
         

@@ -117,7 +117,10 @@ class FORCESettings_SDP(UserSettings):
         
         # output samples
         self.samples = 101
-       
+
+        # additional participant info
+        self.additional_participant_info_file = r"outputdatabase\csvfolder\FORCE-ParticipantData-All.csv"
+        
         
         # ******************************
         # C3D DATA PROCESSING     

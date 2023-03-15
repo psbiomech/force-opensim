@@ -64,7 +64,7 @@ import os
 
 # file path and name prefix
 fprefix = "FAILTCRT01_SDP01"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT05\FAILTCRT05_SDP05"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")

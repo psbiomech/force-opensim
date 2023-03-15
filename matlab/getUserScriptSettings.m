@@ -67,12 +67,12 @@ user.feature.rajagopal.id.idx = [8:10 14 19 11:13];
 
 % Rajagopal model
 user.feature2.rajagopal.ik.label = 'angle';
-user.feature2.rajagopal.ik.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation', 'hip_adduction_np','hip_flexion_np','hip_rotation_np','knee_angle_np','ankle_angle_np','lumbar_bending_np','lumbar_extension_np','lumbar_rotation_np'};
-user.feature2.rajagopal.ik.idx = [8:10 11 13 16:18 33:35 36 38 41:43];
+user.feature2.rajagopal.ik.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation', 'hip_adduction_np','hip_flexion_np','hip_rotation_np','knee_angle_np','ankle_angle_np'};
+user.feature2.rajagopal.ik.idx = [8:10 11 13 16:18 33:35 36 38];
 
 user.feature2.rajagopal.id.label = 'moment';
-user.feature2.rajagopal.id.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation', 'hip_adduction_np','hip_flexion_np','hip_rotation_np','knee_angle_np','ankle_angle_np','lumbar_bending_np','lumbar_extension_np','lumbar_rotation_np'};
-user.feature2.rajagopal.id.idx = [8:10 14 19 11:13 33:35 39 44 36:38];
+user.feature2.rajagopal.id.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation', 'hip_adduction_np','hip_flexion_np','hip_rotation_np','knee_angle_np','ankle_angle_np'};
+user.feature2.rajagopal.id.idx = [8:10 14 19 11:13 33:35 39 44];
 
 % user.feature.gait2392.so.pcacols = [];
 % user.feature.gait2392.so.flipcols = [];  % column indices *before* trimming to only PCA cols

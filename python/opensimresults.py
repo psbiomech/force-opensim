@@ -222,6 +222,9 @@ opensim_results_batch_process(meta, analyses, nsamp):
 '''
 def opensim_results_batch_process(meta, analyses, user, nsamp):
     
+    # load additional participant data spreadsheet
+    addpartinfo = pd.read_csv(os.path.join(user.rootpath, user.additional_participant_info_file));    
+    
     # extract OpenSim data
     osimkey = {}
     failedfiles = []
@@ -253,6 +256,16 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                         
                     # get the OpenSim results
                     osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp)
+                         
+                    # additional participant info
+                    partinfo = addpartinfo[addpartinfo["id"] == meta[subj]["subj"]]
+                    osimresultskey.age = partinfo["age"][0]
+                    osimresultskey.sex = partinfo["sex"][0]
+                    osimresultskey.mass = partinfo["mass"][0]
+                    osimresultskey.height= partinfo["height"][0]
+                    osimresultskey.dom_foot = partinfo["dom_foot"][0]
+                    osimresultskey.aff_side = partinfo["aff_side"][0]
+                    osimresultskey.shomri = [partinfo["r_shomri_total"][0], partinfo["l_shomri_total"][0]]
                     
                     # save OsimResultsKey to file
                     with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:

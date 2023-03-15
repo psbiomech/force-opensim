@@ -58,13 +58,15 @@ for g=1:2
             ntrials(g) = ntrials(g) + 1;
 
             % IK data
-            ikrows = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'ik'), :);
+            ikrows0 = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'ik'), :);
+            ikrows = ikrows0(~(strcmpi(ikrows0.data_leg_role, 'nonpivot') & contains(ikrows0.variable, 'lumbar')), :);   % remove non-pivot lumbar variables
             ikdata0 = ikrows{:, 20:120}';
             ikdata = ikdata0(:, modelparams.ik.idx);
             pcadata.ik(x+q-1, :, :) = ikdata;
 
             % ID data
-            idrows = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'id'), :);
+            idrows0 = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'id'), :);
+            idrows = idrows0(~(strcmpi(idrows0.data_leg_role, 'nonpivot') & contains(idrows0.variable, 'lumbar')), :);   % remove non-pivot lumbar variables
             iddata0 = idrows{:, 20:120}';
             iddata = iddata0(:, modelparams.id.idx);
             pcadata.id(x+q-1, :, :) = iddata;   
@@ -112,11 +114,11 @@ fprintf('Performing weighted PCA...\n');
 pcaout.ik = [];
 pcaout.id = [];
 for d={'ik','id'}
-    for c=1:size(pcadata.(d{1}),3)
-        [coeff,score,~,~,explained] = pca(squeeze(pcadata.(d{1})(:,:,c)), 'Weights', pcaweights);
-        pcaout.(d{1}).coeff(:,:,c) = coeff;
-        pcaout.(d{1}).score(:,:,c) = score;
-        pcaout.(d{1}).explained(:,c) = explained;
+    for c=1:size(pcadata.(d{1}), 3)
+        [coeff, score, ~, ~, explained] = pca(squeeze(pcadata.(d{1})(:,:,c)), 'Weights', pcaweights);
+        pcaout.(d{1}).coeff(:, :, c) = coeff;
+        pcaout.(d{1}).score(:, :, c) = score;
+        pcaout.(d{1}).explained(:, c) = explained;
     end
 end
 
