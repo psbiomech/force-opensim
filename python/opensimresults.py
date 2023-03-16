@@ -302,6 +302,12 @@ def export_opensim_results(meta, user, analyses):
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
+
+        # subject type
+        if subj.startswith("FAILCRT"):
+            subj_type = "C"
+        else:
+            subj_type = "S"
                 
         for group in meta[subj]["trials"]:
             
@@ -403,7 +409,7 @@ def export_opensim_results(meta, user, analyses):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, trial, task, foot, data_leg_role, age, mass, height, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, foot, data_leg_role, age, mass, height, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -414,7 +420,7 @@ def export_opensim_results(meta, user, analyses):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "data_leg", "data_leg_role", "age", "mass", "height", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "data_leg_role", "age", "mass", "height", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
