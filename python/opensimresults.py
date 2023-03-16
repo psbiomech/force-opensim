@@ -258,14 +258,14 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                     osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp)
                          
                     # additional participant info
-                    partinfo = addpartinfo[addpartinfo["id"] == meta[subj]["subj"]]
-                    osimresultskey.age = partinfo["age"][0]
-                    osimresultskey.sex = partinfo["sex"][0]
-                    osimresultskey.mass = partinfo["mass"][0]
-                    osimresultskey.height= partinfo["height"][0]
-                    osimresultskey.dom_foot = partinfo["dom_foot"][0]
-                    osimresultskey.aff_side = partinfo["aff_side"][0]
-                    osimresultskey.shomri = [partinfo["r_shomri_total"][0], partinfo["l_shomri_total"][0]]
+                    partinfo = addpartinfo[addpartinfo["id"] == meta[subj]["subj"]].values
+                    osimresultskey.age = partinfo[0, 1]
+                    osimresultskey.sex = partinfo[0, 2]
+                    osimresultskey.mass = partinfo[0, 3]
+                    osimresultskey.height= partinfo[0, 4]
+                    osimresultskey.dom_foot = partinfo[0, 5]
+                    osimresultskey.aff_side = partinfo[0, 6]
+                    osimresultskey.shomri = [partinfo[0, 7], partinfo[0, 8]]
                     
                     # save OsimResultsKey to file
                     with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:
@@ -322,8 +322,31 @@ def export_opensim_results(meta, user, analyses):
                     pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
                     with open(pkfile,"rb") as fid:
                         osimresultskey = pk.load(fid)
+                                            
+                    # participant data
+                    age = osimresultskey.age
+                    mass = osimresultskey.mass
+                    height = osimresultskey.height
+                    dom_foot = osimresultskey.dom_foot
+                    aff_side = osimresultskey.aff_side
+                    shomri_r = osimresultskey.shomri[0]
+                    shomri_l = osimresultskey.shomri[1]
+                    
+                    # for bilateral symptomatics, affected side based on shomri
+                    if aff_side == 1:
+                        more_aff_side = "R"
+                    elif aff_side == 2:
+                        more_aff_side = "L"
+                    elif aff_side == 0 or aff_side == 3:
+                        if np.isnan(shomri_r) or np.isnan(shomri_l):
+                            more_aff_side = "R"   # default until data available
+                        if shomri_r > shomri_l:
+                            more_aff_side = "R"
+                        else:
+                            more_aff_side = "L"
                         
-                    # trial task and condition
+                        
+                    # trial task type (always SDP in this case)
                     task = osimresultskey.task
 
                     # pivot leg
@@ -349,6 +372,20 @@ def export_opensim_results(meta, user, analyses):
                         else:
                             data_leg_role = "nonpivot"
                         
+                        # trial combinations:
+                        #   1. pivot = more affected, nonpivot = less affected
+                        #   2. pivot = less affected, nonpivot = more affected
+                        if data_leg_role == "pivot":
+                            if foot == more_aff_side:
+                                trial_combo = "pivot_more"
+                            else:
+                                trial_combo = "pivot_less"
+                        elif data_leg_role == "nonpivot":
+                            if foot == more_aff_side:
+                                trial_combo = "pivot_less"
+                            else:
+                                trial_combo = "pivot_more"                        
+                        
                         # analysis
                         for ans in analyses:
                             
@@ -366,7 +403,7 @@ def export_opensim_results(meta, user, analyses):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, trial, task, foot, data_leg_role] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, task, foot, data_leg_role, age, mass, height, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -377,7 +414,7 @@ def export_opensim_results(meta, user, analyses):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "data_leg", "data_leg_role"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "task", "data_leg", "data_leg_role", "age", "mass", "height", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

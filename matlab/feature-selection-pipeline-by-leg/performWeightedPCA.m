@@ -74,13 +74,13 @@ for b=1:2
                 ikrows = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'ik'), :);
                 ikdata0 = ikrows{:, 20:120}';
                 ikdata = ikdata0(:, modelparams.ik.idx);
-                pcadata.(limbs{b}).ik(x+q-1, :, :) = ikdata;
+                pcadata.(limbs{b}).ik(x + q - 1, :, :) = ikdata;
 
                 % ID data
                 idrows = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'id'), :);
                 iddata0 = idrows{:, 20:120}';
                 iddata = iddata0(:, modelparams.id.idx);
-                pcadata.(limbs{b}).id(x+q-1, :, :) = iddata;   
+                pcadata.(limbs{b}).id(x + q - 1, :, :) = iddata;   
 
                 % Add subject names to list
                 subjlist{g} = [subjlist{g}, subjects{s}];

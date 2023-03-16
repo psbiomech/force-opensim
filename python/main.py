@@ -107,23 +107,23 @@ print("Converting OpenSim results to Pickle...\n")
 osr.opensim_results_batch_process(forcedb, ["ik", "id", "so", "jr"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
-# print("Exporting OpenSim results to CSV...\n")
-# osr.export_opensim_results(forcedb, user, ["ik", "id", "so", "jr"])
-# print("CSV export complete.\n")
+print("Exporting OpenSim results to CSV...\n")
+osr.export_opensim_results(forcedb, user, ["ik", "id", "so", "jr"])
+print("CSV export complete.\n")
 
 
 
 # %% ANALYSES
 
-import analyses as an
+# import analyses as an
 
 # print("Running post-hoc analyses...\n")
 # an.analyses_batch_process(forcedb, user)
 # print("Analyses complete.\n")
 
-print("Exporting analysis results...\n")
-an.export_joint_angular_impulse(forcedb, user)
-print("Analyses results export complete.\n")
+# print("Exporting analysis results...\n")
+# an.export_joint_angular_impulse(forcedb, user)
+# print("Analyses results export complete.\n")
 
 
 
