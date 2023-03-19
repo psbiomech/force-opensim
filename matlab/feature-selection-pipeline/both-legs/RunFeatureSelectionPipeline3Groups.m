@@ -16,14 +16,14 @@ outpath = user.OUTPATH2;
 %% FEATURE SELECTION PIPELINE
 
 % Weighted PCA
-[pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA('rajagopal');
+[pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA3Groups('rajagopal');
 pcaw.pcadata = pcadata;
 pcaw.pcaweights = pcaweights;
 pcaw.pcaout = pcaout;
 pcaw.pcainfo = pcainfo;
 
 % Parallel Analysis
-[pcsexplained, totalvalidpcs, totalvariance, paselected, paquantl] = performParallelAnalysis(pcadata, pcaweights, pcaout, pcainfo);
+[pcsexplained, totalvalidpcs, totalvariance, paselected, paquantl] = performParallelAnalysis3Groups(pcadata, pcaweights, pcaout, pcainfo);
 pa.pcsexplained = pcsexplained;
 pa.totalvalidpcs = totalvalidpcs;
 pa.totalvariance = totalvariance;

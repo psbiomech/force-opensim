@@ -1,6 +1,6 @@
-function [pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA(refmodel)
+function [pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA3Groups(refmodel)
 
-%PERFORMWEIGHTEDPCA Undertake PCA analysis for FORCe SDP
+%PERFORMWEIGHTEDPCA3GROUPS Undertake PCA analysis for FORCe SDP
 %   Prasanna Sritharan, February 2022
 %
 % Based on PCA scripts by Prasanna Sritharan for ACLR hopping 
@@ -15,9 +15,10 @@ function [pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA(refmodel)
 addpath('..');
 user = getUserScriptSettings();
 csvpath = user.SRCPATH;
-outpath = user.OUTPATH2;
-groups = user.GROUPS;
-subjprefix = user.SUBJPREFIX;
+outpath = user.GROUP3OUTPATH;
+groups = user.GROUPS3;
+subjprefix = user.SUBJPREFIX3;
+trialcombo = user.TRIALCOMBO3;
 modelparams = user.feature2.(refmodel);
 
 fprintf('Perform Weighted PCA on raw data waveforms.\n');
@@ -34,14 +35,14 @@ pcainfo = struct;
 pcaout = struct;
 qs = [];
 x = 1;  % total observations
-ntrials = [0 0];    % number of observations per group
-subjlist = {{}, {}};    % list of subjects in each group
+ntrials = [0 0 0];    % number of observations per group
+subjlist = {{}, {}, {}};    % list of subjects in each group
 
 
 fprintf('Collating data into matrices...\n');
 
 % Groups
-for g=1:2
+for g=1:length(groups)
 
     % Subjects
     allsubjects = unique(limbdata.subject);
@@ -50,8 +51,8 @@ for g=1:2
 
         % Trials
         q = 0;
-        trials = unique(limbdata.trial(strcmpi(limbdata.subject, subjects{s})));
-        for t=1:length(trials)
+        trials = unique(limbdata.trial(strcmpi(limbdata.subject, subjects{s}) & contains(limbdata.trial_combo, trialcombo{g})));
+        for t=1:length(trials)            
 
             % Increment trial counter
             q = q + 1;
@@ -60,14 +61,14 @@ for g=1:2
             % IK data
             ikrows0 = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'ik'), :);
             ikrows = ikrows0(~(strcmpi(ikrows0.data_leg_role, 'nonpivot') & contains(ikrows0.variable, 'lumbar')), :);   % remove non-pivot lumbar variables
-            ikdata0 = ikrows{:, 20:120}';
+            ikdata0 = ikrows{:, 30:130}';
             ikdata = ikdata0(:, modelparams.ik.idx);
             pcadata.ik(x+q-1, :, :) = ikdata;
 
             % ID data
             idrows0 = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'id'), :);
             idrows = idrows0(~(strcmpi(idrows0.data_leg_role, 'nonpivot') & contains(idrows0.variable, 'lumbar')), :);   % remove non-pivot lumbar variables
-            iddata0 = idrows{:, 20:120}';
+            iddata0 = idrows{:, 30:130}';
             iddata = iddata0(:, modelparams.id.idx);
             pcadata.id(x+q-1, :, :) = iddata;   
                 
@@ -90,18 +91,17 @@ end
 
 % Store database info
 pcainfo.observations.total = x-1;
-pcainfo.observations.(groups{1}) = ntrials(1);
-pcainfo.observations.(groups{2}) = ntrials(2);
+for g=1:length(groups)
+    pcainfo.observations.(groups{g}) = ntrials(g);
+    pcainfo.subjects.all.(groups{g}) = subjlist{g};
+    pcainfo.subjects.unique.(groups{g}) = unique(subjlist{g});
+end
 pcainfo.variables = size(pcadata.ik, 2);
-pcainfo.subjects.all.(groups{1}) = subjlist{1};
-pcainfo.subjects.all.(groups{2}) = subjlist{2};
-pcainfo.subjects.unique.(groups{1}) = unique(subjlist{1});
-pcainfo.subjects.unique.(groups{2}) = unique(subjlist{2});
 for d={'ik','id'}
     pcainfo.(d{1}).label = modelparams.(d{1}).label;
     pcainfo.(d{1}).varnames = modelparams.(d{1}).headers;
 end
-pcainfo.(['is' groups{1}]) = [true(pcainfo.observations.(groups{1}), 1); false(pcainfo.observations.(groups{2}), 1)];
+pcainfo.group = [2 * ones(pcainfo.observations.(groups{1}), 1); ones(pcainfo.observations.(groups{2}), 1); zeros(pcainfo.observations.(groups{3}), 1)];
 
 
 % Calculate weighting vector

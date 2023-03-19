@@ -12,33 +12,19 @@ user = getUserScriptSettings();
 outpath = user.OUTPATH1;
 
 
-
 %% FEATURE SELECTION PIPELINE
 
 % Weighted PCA
 [pcadata, pcaweights, pcaout, pcainfo] = performWeightedPCA('rajagopal');
-pcaw.pcadata = pcadata;
-pcaw.pcaweights = pcaweights;
-pcaw.pcaout = pcaout;
-pcaw.pcainfo = pcainfo;
 
 % Parallel Analysis
 [pcsexplained, totalvalidpcs, totalvariance, paselected, paquantl] = performParallelAnalysis(pcadata, pcaweights, pcaout, pcainfo);
-pa.pcsexplained = pcsexplained;
-pa.totalvalidpcs = totalvalidpcs;
-pa.totalvariance = totalvariance;
-pa.paselected = paselected;
-pa.paquantl = paquantl;
 
 % Feature selection
 [final, weissind, training] = performFeatureSelection(paselected, pcainfo);
-fs.final = final;
-fs.weissind = weissind;
-fs.training = training;
 
 % t-tests, effect size and descriptives
 ttable = performTTest(final, pcainfo);
-tt.ttable = ttable;
 
 % correlation of PCs with original waveforms
 [wavecorr, dataidx] = performWaveformCorr(final, pcainfo, pcadata, pcaweights);
@@ -47,8 +33,6 @@ wcorr.dataidx = dataidx;
 
 % % associated features
 % [acorrtable,associdx] = performAssocFeatureSelection(final,training,pcainfo);
-% acorr.acorrtable = wavecorr;
-% acorr.associdx = dataidx;
 
 
 %% TABLES AND FIGURES
@@ -62,5 +46,25 @@ wcorr.dataidx = dataidx;
 
 %% SAVE OUTPUTS
 
+% pcaw.pcadata = pcadata;
+% pcaw.pcaweights = pcaweights;
+% pcaw.pcaout = pcaout;
+% pcaw.pcainfo = pcainfo;
+% 
+% pa.pcsexplained = pcsexplained;
+% pa.totalvalidpcs = totalvalidpcs;
+% pa.totalvariance = totalvariance;
+% pa.paselected = paselected;
+% pa.paquantl = paquantl;
+% 
+% fs.final = final;
+% fs.weissind = weissind;
+% fs.training = training;
+% 
+% tt.ttable = ttable;
+% 
+% acorr.acorrtable = wavecorr;
+% acorr.associdx = dataidx;
+
 % % save all structs
-% save(fullfile(outpath,'fsp.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');
+% save(fullfile(outpath,'fsp_all_outputs.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');

@@ -19,17 +19,19 @@ outpath = user.OUTPATH1;
 limbs = user.LIMBS;
 groups = user.GROUPS;
 subjprefix = user.SUBJPREFIX;
+trialcombo =    user.TRIALCOMBO;
 modelparams = user.feature.(refmodel);
 
-fprintf('\nPerform Weighted PCA on raw data waveforms.\n');
+fprintf('Perform Weighted PCA on raw data waveforms.\n');
 fprintf('------------------------------------------------\n'); 
 
 % Load FORCe SDP data into tables
-fprintf('Loading data into tables:\n');
-fprintf('---> Pivot limb\n');
-sdp.pivot = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_pivot.csv'));
-fprintf('---> Non-pivot limb\n');
-sdp.nonpivot = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_nonpivot.csv'));
+fprintf('Loading data into tables...:\n');
+limbdata0 = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_bothlegs.csv'));
+% fprintf('---> Pivot limb\n');
+% sdp.pivot = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_pivot.csv'));
+% fprintf('---> Non-pivot limb\n');
+% sdp.nonpivot = readtable(fullfile(csvpath, 'force_sdp_results_all_trials_ikid_nonpivot.csv'));
 
 % Data tables
 pcadata = struct;
@@ -42,12 +44,12 @@ for b=1:2
     
     fprintf('\nWeighted PCA: %s LIMB\n', upper(limbs{b}))
 
+    % Trim rows to only those of the pivot limb
+    limbdata = limbdata0(strcmpi(limbdata0.data_leg_role, limbs{b}), :);
+
     % Initialise output data tables
     pcadata.(limbs{b}).ik = [];
     pcadata.(limbs{b}).id = [];
-
-    % Data from relevant table
-    limbdata = sdp.(limbs{b});
 
     % Groups
     qs = [];
@@ -57,13 +59,13 @@ for b=1:2
     for g=1:2
 
         % Subjects
-        allsubjects = unique(sdp.(limbs{b}).subject);
+        allsubjects = unique(limbdata.subject);
         subjects = allsubjects(~cellfun(@isempty, regexp(allsubjects, [subjprefix{g} '\d+'])));
         for s=1:length(subjects)
     
             % Trials
             q = 0;
-            trials = unique(limbdata.trial(strcmpi(limbdata.subject, subjects{s})));
+            trials = unique(limbdata.trial(strcmpi(limbdata.subject, subjects{s}) & contains(limbdata.trial_combo, trialcombo{g})));
             for t=1:length(trials)
 
                 % Increment trial counter
@@ -72,13 +74,13 @@ for b=1:2
 
                 % IK data
                 ikrows = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'ik'), :);
-                ikdata0 = ikrows{:, 20:120}';
+                ikdata0 = ikrows{:, 30:130}';
                 ikdata = ikdata0(:, modelparams.ik.idx);
                 pcadata.(limbs{b}).ik(x + q - 1, :, :) = ikdata;
 
                 % ID data
                 idrows = limbdata(strcmpi(limbdata.subject, subjects{s}) & strcmpi(limbdata.trial, trials{t}) & strcmpi(limbdata.analysis, 'id'), :);
-                iddata0 = idrows{:, 20:120}';
+                iddata0 = idrows{:, 30:130}';
                 iddata = iddata0(:, modelparams.id.idx);
                 pcadata.(limbs{b}).id(x + q - 1, :, :) = iddata;   
 

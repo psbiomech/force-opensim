@@ -11,7 +11,7 @@ function [wavecorr, dataidx] = performWaveformCorr(final, pcainfo, pcadata, pcaw
 % User settings
 addpath('..');
 user = getUserScriptSettings();
-outpath = user.FEATPATH;
+outpath = user.OUTPATH1;
 limbs = user.LIMBS;
 
 fprintf('Correlations of PC scores against original waveform data.\n');

@@ -14,6 +14,8 @@ user.OUTPATH1 = 'C:\Users\Owner\Documents\data\FORCe\pcaDatabase\by-leg\';   % l
 user.OUTPATH2 = 'C:\Users\Owner\Documents\data\FORCe\pcaDatabase\both-legs\';   % location of output database
 user.SRCPATH = 'C:\Users\Owner\Documents\data\FORCe\outputDatabase\csvfolder';   % location of source data
 
+% additional folder paths: three-group analysis
+user.GROUP3OUTPATH = fullfile(user.OUTPATH2, 'three-group\');
 
 
 %% GENERAL
@@ -23,14 +25,20 @@ user.SRCPATH = 'C:\Users\Owner\Documents\data\FORCe\outputDatabase\csvfolder';  
 user.LIMBS = {'pivot', 'nonpivot'};
 user.GROUPS = {'sym','ctrl'};
 user.SUBJPREFIX = {'FAILT', 'FAILTCRT'};
+user.TRIALCOMBO = {'pivot_more', 'pivot'};
 user.FOOT = {'r','l'};
 user.RESAMP = 101;
 user.GRAVITY = 9.81;    % m/s2
 
-user.STATICPREFIX = 'STATIC';  % trial code prefix for static trials (eg. for trial code WALK01, the trialprefix is 'WALK')
-user.DYNAMICPREFIX = 'HOPP';  % trial code prefix for dynamic trials (eg. for trial code WALK01, the trialprefix is 'WALK')
-user.SEPARATOR = '_';   % file name separator between subject code and trial code (eg. for file FAILT01_WALK01.c3d, the separator is '_')
-user.TRIALTYPE = {'static','dynamic'};  % trial type: static calibration trial, or dynamic gait trial
+% general parameters: three-group analysis
+user.GROUPS3 = {'moresym', 'lesssym', 'ctrl'};
+user.SUBJPREFIX3 = {'FAILT', 'FAILT', 'FAILTCRT'};
+user.TRIALCOMBO3 = {'pivot_more', 'pivot_less', 'pivot'};
+
+% user.STATICPREFIX = 'STATIC';  % trial code prefix for static trials (eg. for trial code WALK01, the trialprefix is 'WALK')
+% user.DYNAMICPREFIX = 'HOPP';  % trial code prefix for dynamic trials (eg. for trial code WALK01, the trialprefix is 'WALK')
+% user.SEPARATOR = '_';   % file name separator between subject code and trial code (eg. for file FAILT01_WALK01.c3d, the separator is '_')
+% user.TRIALTYPE = {'static','dynamic'};  % trial type: static calibration trial, or dynamic gait trial
 
 
 %% FEATURE SELECTION PARAMETERS: BY LEGS

@@ -54,7 +54,7 @@ for b=1:2
         ttable.(limbs{b}).table{n,8} = mesout.hedgesg;
         
         % Headers
-        ttable.(limbs{b}).headers = {'feature', 'mean1', 'sd1', 'mean2', 'sd2', 't', 'p', 'g'};
+        %ttable.(limbs{b}).headers = {'feature', 'mean1', 'sd1', 'mean2', 'sd2', 't', 'p', 'g'};
 
     end
     

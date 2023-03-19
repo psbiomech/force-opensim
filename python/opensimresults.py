@@ -304,7 +304,7 @@ def export_opensim_results(meta, user, analyses):
         print("%s" % "*" * 30)
 
         # subject type
-        if subj.startswith("FAILCRT"):
+        if subj.startswith("FAILTCRT"):
             subj_type = "C"
         else:
             subj_type = "S"
@@ -340,16 +340,16 @@ def export_opensim_results(meta, user, analyses):
                     
                     # for bilateral symptomatics, affected side based on shomri
                     if aff_side == 1:
-                        more_aff_side = "R"
+                        more_aff_side = "r"
                     elif aff_side == 2:
-                        more_aff_side = "L"
+                        more_aff_side = "l"
                     elif aff_side == 0 or aff_side == 3:
                         if np.isnan(shomri_r) or np.isnan(shomri_l):
-                            more_aff_side = "R"   # default until data available
+                            more_aff_side = "r"   # default until data available
                         if shomri_r > shomri_l:
-                            more_aff_side = "R"
+                            more_aff_side = "r"
                         else:
-                            more_aff_side = "L"
+                            more_aff_side = "l"
                         
                         
                     # trial task type (always SDP in this case)
