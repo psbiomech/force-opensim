@@ -31,17 +31,17 @@ ttable = performTTest(final, pcainfo);
 wcorr.wavecorr = wavecorr;
 wcorr.dataidx = dataidx;
 
-% % associated features
-% [acorrtable,associdx] = performAssocFeatureSelection(final,training,pcainfo);
+% associated features
+[acorrtable,associdx] = performAssocFeatureSelection(final,training,pcainfo);
 
 
 %% TABLES AND FIGURES
 
-% % generate output tables
-% tbls = generateOutputTables(pcsexplained,totalvariance,ttable,acorrtable);
-% 
-% % generate output figures
-% generateOutputFigures(paselected,paquantl,final);
+% generate output tables
+tbls = generateOutputTables(pcsexplained, totalvariance, ttable, acorrtable);
+
+% generate output figures
+generateOutputFigures(paselected, paquantl, final);
 
 
 %% SAVE OUTPUTS
