@@ -29,6 +29,7 @@ user.TRIALCOMBO = {'pivot_more', 'pivot'};
 user.FOOT = {'r','l'};
 user.RESAMP = 101;
 user.GRAVITY = 9.81;    % m/s2
+user.DATACOLS = 31:131;
 
 % general parameters: three-group analysis
 user.GROUPS3 = {'moresym', 'lesssym', 'ctrl'};
