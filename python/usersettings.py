@@ -71,6 +71,8 @@ class UserSettings():
         # limb code
         self.leg = ["r", "l"]
         
+        # gravity
+        self.gravity = 9.81
         
         
 '''

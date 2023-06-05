@@ -40,7 +40,10 @@ user = uset.FORCESettings_SDP()
 print("Done.\n")
 
 
-# %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)...
+# %% GET META DATABASE (BUILD NEW OR LOAD EXISTING)...
+
+
+# OPTION 1: Build new database
 
 # import builddatabase as bd
 
@@ -49,7 +52,7 @@ print("Done.\n")
 # print("Done.\n")
 
 
-# %% ...OR LOAD EXISTING META DATABASE
+# OPTION 2: Load existing database
 
 import pickle as pk
 import os
@@ -104,12 +107,16 @@ print("Done.\n")
 import opensimresults as osr
 
 # print("Converting OpenSim results to Pickle...\n")
-# osr.opensim_results_batch_process(forcedb, ["ik", "id", "so", "jr"], user, 101)
+# osr.opensim_results_batch_process(forcedb, ["ik", "id"], user, 101)
 # print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting OpenSim results to CSV...\n")
-osr.export_opensim_results(forcedb, user, ["ik", "id", "so", "jr"])
+osr.export_opensim_results(forcedb, user, ["ik", "id"])
 print("CSV export complete.\n")
+
+print("Exporting normalised OpenSim results to CSV...\n")
+osr.export_opensim_results(forcedb, user, ["ik", "id"], True)
+print("Normalised CSV export complete.\n")
 
 
 

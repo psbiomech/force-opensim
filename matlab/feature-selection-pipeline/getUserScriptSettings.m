@@ -45,11 +45,11 @@ user.TRIALCOMBO3 = {'pivot_more', 'pivot_less', 'pivot'};
 
 % Rajagopal model
 user.feature.rajagopal.ik.label = 'angle';
-user.feature.rajagopal.ik.headers = {'hip_adduction','hip_flexion','hip_rotation','knee_angle','ankle_angle','lumbar_bending','lumbar_extension','lumbar_rotation'};
+user.feature.rajagopal.ik.headers = {'hip_flexion','hip_adduction','hip_rotation','knee_angle','ankle_angle','lumbar_extension','lumbar_bending','lumbar_rotation'};
 user.feature.rajagopal.ik.idx = [8:10 11 13 16:18];
 
 user.feature.rajagopal.id.label = 'moment';
-user.feature.rajagopal.id.headers = {'hip_adduction_moment','hip_flexion_moment','hip_rotation_moment','knee_angle_moment','ankle_angle_moment','lumbar_bending_moment','lumbar_extension_moment','lumbar_rotation_moment'};
+user.feature.rajagopal.id.headers = {'hip_flexion','hip_adduction','hip_rotation_moment','knee_angle_moment','ankle_angle_moment','lumbar_extension_moment','lumbar_bending_moment','lumbar_rotation_moment'};
 user.feature.rajagopal.id.idx = [8:10 14 19 11:13];
 
 % user.feature.gait2392.so.pcacols = [];

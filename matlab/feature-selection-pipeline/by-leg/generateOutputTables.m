@@ -39,7 +39,7 @@ for b = 1:2
     
     % Table 2: t-test, effect size and descriptives
     fprintf('Creating Table 2: T-test, effect size and descriptives for final selected PCs...\n');
-    headers2 = {'feature', 'mean_aclr', 'sd_aclr', 'mean_ctrl', 'sd_ctrl', 't', 'P', 'g'};
+    headers2 = {'feature', 'mean_sym', 'sd_sym', 'mean_ctrl', 'sd_ctrl', 't', 'P', 'g'};
     tbls.table2 = [headers2; ttable.(limbs{b}).table];
     writecell(tbls.table2, fullfile(tabledir, ['table2_ttestout_' limbs{b} '.csv']));
     
@@ -50,7 +50,7 @@ for b = 1:2
     
     % Table 4: associated features
     fprintf('Creating Table 4: Associated features...\n');
-    headers4 = {'main_feature', 'associated_feature', 'mean_aclr', 'sd_aclr', 'mean_ctrl', 'sd_ctrl', 'rho', 't', 'P', 'g'};
+    headers4 = {'main_feature', 'associated_feature', 'mean_sym', 'sd_sym', 'mean_ctrl', 'sd_ctrl', 'rho', 't', 'P', 'g'};
     tbls.table4 = [headers4; acorrtable.(limbs{b})];
     writecell(tbls.table4, fullfile(tabledir, ['table4_assocfeatures_' limbs{b} '.csv']));
 

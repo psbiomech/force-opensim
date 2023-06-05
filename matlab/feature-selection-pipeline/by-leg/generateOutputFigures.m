@@ -15,6 +15,11 @@ limbs = user.LIMBS;
 fprintf('Generating output figures.\n');
 fprintf('------------------------------------------------\n');
 
+% event timings (from Python OpenSim and SPM workflow)
+events = [0, 28.5, 38.25, 68.25, 77, 101];
+eventlabels = {'PFO1', 'PFS2', 'NFO1', 'NFS2', 'PFO3', 'PFS4'};
+eventlabelspos = [0.5, 28, 38.75, 67.75, 77.50, 100.5];
+eventlabelsalign = {'left', 'right', 'left', 'right', 'left', 'right'};
 
 % Limbs
 for b=1:2
@@ -41,13 +46,14 @@ for b=1:2
         fprintf('Generating figure: %s...\n', final.(limbs{b}).labels{f});
         
         figure(f);
-        set(gcf, 'Position', [100 100 900 400], 'PaperSize', [29.7 21.0]);
+        set(gcf, 'Position', [100 100 400 900], 'PaperSize', [29.7 21.0]);
         sgtitle(strrep(final.(limbs{b}).labels{f}, '_', '-'));
         
+
         % ********************
         % Quantiles
         
-        % data
+        % Data
         data.top.mean = paquantl.(limbs{b}).(analysis).(toks{1}{2}).top.mean(:, str2double(toks{1}{3}));
         data.top.std = paquantl.(limbs{b}).(analysis).(toks{1}{2}).top.std(:, str2double(toks{1}{3}));
         data.top.upper = data.top.mean + data.top.std;
@@ -58,7 +64,7 @@ for b=1:2
         data.bottom.lower = data.bottom.mean - data.bottom.std;
         
         % Plot
-        subplot(1, 2, 1);
+        subplot(2, 1, 1);
         hold on;
         qtl = {'top', 'bottom'};
         clrs = {'b', 'r'};
@@ -72,13 +78,16 @@ for b=1:2
             hold on;    % shadedplot sets hold off
             plot(0:100, data.(qtl{d}).mean, [clrs{d} lsty{d}]);        
         end
+        for ev=2:5, xline(events(ev), ':'); end
         hold off;
-        legend('25%Q', '75%Q');
+        %legend('25%Q', '75%Q');
         box on;
         xlim([0 100]);
         xlabel('% landing phase');
         ylim('auto');   % temporary
         ylabel(ytext1);
+        yl = ylim;
+        for ev=1:6, text(eventlabelspos(ev), yl(2)*0.95, eventlabels{ev}, 'FontSize', 6, 'HorizontalAlignment', eventlabelsalign{ev}); end
         
         
         % ********************
@@ -89,18 +98,21 @@ for b=1:2
         normpc2 = paquantl.(limbs{b}).(analysis).(toks{1}{2}).normpc2(:, str2double(toks{1}{3}));
         
         % Plot
-        subplot(1, 2, 2);
+        subplot(2, 1, 2);
         yyaxis left;
         plot(0:100, coeffs,'k');
         ylabel('PC coefficient');
         set(gca, 'YColor', 'k');
         yyaxis right;
+        hold on;
         plot(0:100, normpc2, 'k--');
-        ylabel('Explained variance');
-        set(gca, 'YColor', 'k');
+        for ev=2:5, xline(events(ev), ':'); end
+        hold off;
+        ylabel({'Explained variance', ''});
+        set(gca, 'YColor', 'k');        
         xlim([0 100]);
         xlabel('% landing phase');
-        legend('PC coeff', 'Explained var');
+        %legend('PC coeff', 'Explained var', '', '', '', '');
         
 
         % ********************
@@ -111,9 +123,9 @@ for b=1:2
         if ~exist(figdir, 'dir'), mkdir(figdir); end
            
         % save figures and close
-        saveas(gcf, fullfile(figdir, [final.(limbs{b}).labels{f} '_' limbs{b} '.fig']));
-        saveas(gcf, fullfile(figdir, [final.(limbs{b}).labels{f} '_' limbs{b} '.png']));
-        saveas(gcf, fullfile(figdir, [final.(limbs{b}).labels{f} '_' limbs{b} '.pdf']));
+        saveas(gcf, fullfile(figdir, [limbs{b} '_' final.(limbs{b}).labels{f} '.fig']));
+        saveas(gcf, fullfile(figdir, [limbs{b} '_' final.(limbs{b}).labels{f} '.png']));
+        saveas(gcf, fullfile(figdir, [limbs{b} '_' final.(limbs{b}).labels{f} '.pdf']));
         close(gcf);
         
     end

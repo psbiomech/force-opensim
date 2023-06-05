@@ -145,7 +145,7 @@ with open(os.path.join(outpath, outpkl),"wb") as f: pk.dump(sdp, f)
 
 # plot parameters
 eventlist = 100 * np.round(events["desc"]["total"]["mean"]) / 101
-eventlabels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+eventlabels = ["PFO1", "PFS2", "NFO1", "NFS2", "PFO3", "PFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
 limblabel= ["pivot", "nonpivot"]

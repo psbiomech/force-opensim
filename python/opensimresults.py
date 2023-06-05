@@ -284,10 +284,11 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
     
 
 '''
-export_opensim_results(meta, user, analyses):
-    Collate OpenSim results into dataframes and export to text for Rstats.
+export_opensim_results(meta, user, analyses, normalise):
+    Collate OpenSim results into dataframes and export to text. Normalise data
+    if desired (default = False)
 '''
-def export_opensim_results(meta, user, analyses):
+def export_opensim_results(meta, user, analyses, normalise = False):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -333,6 +334,7 @@ def export_opensim_results(meta, user, analyses):
                     age = osimresultskey.age
                     mass = osimresultskey.mass
                     height = osimresultskey.height
+                    sex = osimresultskey.sex
                     dom_foot = osimresultskey.dom_foot
                     aff_side = osimresultskey.aff_side
                     shomri_r = osimresultskey.shomri[0]
@@ -401,15 +403,31 @@ def export_opensim_results(meta, user, analyses):
                             # data array
                             data = osimresultskey.results["split"][ans][foot]["data"]
                             varheader = osimresultskey.results["split"][ans][foot]["headers"]
-                        
-                            # variable
-                            for v, variable in enumerate(varheader):
-    
+                                                                                                                
+                            # variables
+                            for v, variable in enumerate(varheader):                                
+
                                 # data for the variable (includes time)
                                 drow = data[:, v]
     
+                                # normalisation factors
+                                normfactor = 1
+                                if normalise:
+                                    if variable.casefold() == "time":
+                                        normfactor = 1
+                                    elif ans == "ik":
+                                        normfactor = 1
+                                    elif ans == "id":
+                                        if variable.casefold().startswith("pelvis_t"):
+                                            normfactor = 1 / mass * user.gravity
+                                        else:
+                                            normfactor = 100 / (mass * user.gravity * height)
+                                            
+                                # normalise if required
+                                drow = drow  * normfactor
+                                            
                                 # create new line of data
-                                csvrow = [subj, trial, subj_type, task, foot, data_leg_role, age, mass, height, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -420,12 +438,13 @@ def export_opensim_results(meta, user, analyses):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "data_leg", "data_leg_role", "age", "mass", "height", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + ".csv"
+    normalisestr = ["", "_normalised"]
+    csvfile = user.csvfileprefix + normalisestr[int(normalise)] + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)

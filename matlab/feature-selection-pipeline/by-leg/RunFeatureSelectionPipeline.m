@@ -46,25 +46,25 @@ generateOutputFigures(paselected, paquantl, final);
 
 %% SAVE OUTPUTS
 
-% pcaw.pcadata = pcadata;
-% pcaw.pcaweights = pcaweights;
-% pcaw.pcaout = pcaout;
-% pcaw.pcainfo = pcainfo;
-% 
-% pa.pcsexplained = pcsexplained;
-% pa.totalvalidpcs = totalvalidpcs;
-% pa.totalvariance = totalvariance;
-% pa.paselected = paselected;
-% pa.paquantl = paquantl;
-% 
-% fs.final = final;
-% fs.weissind = weissind;
-% fs.training = training;
-% 
-% tt.ttable = ttable;
-% 
-% acorr.acorrtable = wavecorr;
-% acorr.associdx = dataidx;
+pcaw.pcadata = pcadata;
+pcaw.pcaweights = pcaweights;
+pcaw.pcaout = pcaout;
+pcaw.pcainfo = pcainfo;
 
-% % save all structs
-% save(fullfile(outpath,'fsp_all_outputs.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');
+pa.pcsexplained = pcsexplained;
+pa.totalvalidpcs = totalvalidpcs;
+pa.totalvariance = totalvariance;
+pa.paselected = paselected;
+pa.paquantl = paquantl;
+
+fs.final = final;
+fs.weissind = weissind;
+fs.training = training;
+
+tt.ttable = ttable;
+
+acorr.acorrtable = wavecorr;
+acorr.associdx = dataidx;
+
+% save all structs
+save(fullfile(outpath,'fsp_all_outputs.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');
