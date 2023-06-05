@@ -102,7 +102,7 @@ print("Done.\n")
 #******************************
 
 
-# %% LOAD AND FORMAT RESULTS
+# %% COLLATE AND EXPORT RESULTS
 
 import opensimresults as osr
 
@@ -117,7 +117,6 @@ print("CSV export complete.\n")
 print("Exporting normalised OpenSim results to CSV...\n")
 osr.export_opensim_results(forcedb, user, ["ik", "id"], True)
 print("Normalised CSV export complete.\n")
-
 
 
 # %% ANALYSES
