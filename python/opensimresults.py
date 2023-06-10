@@ -376,19 +376,19 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 
                         # pivot leg or non-pivot leg data
                         if foot == pivot_leg:
-                            scenario = "pivot"
+                            data_leg_role = "pivot"
                         else:
-                            scenario = "nonpivot"
+                            data_leg_role = "nonpivot"
                         
                         # trial combinations:
                         #   1. pivot = more affected, nonpivot = less affected
                         #   2. pivot = less affected, nonpivot = more affected
-                        if scenario == "pivot":
+                        if data_leg_role == "pivot":
                             if foot == more_aff_side:
                                 trial_combo = "pivot_more"
                             else:
                                 trial_combo = "pivot_less"
-                        elif scenario == "nonpivot":
+                        elif data_leg_role == "nonpivot":
                             if foot == more_aff_side:
                                 trial_combo = "pivot_less"
                             else:
@@ -427,7 +427,7 @@ def export_opensim_results(meta, user, analyses, normalise = False):
                                 drow = drow  * normfactor
                                             
                                 # create new line of data
-                                csvrow = [subj, trial, subj_type, task, foot, scenario, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, pivot_leg, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -438,7 +438,7 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "data_leg", "scenario", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "pivot_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
@@ -550,19 +550,19 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
 
                         # pivot leg or non-pivot leg data
                         if foot == pivot_leg:
-                            scenario = "pivot"
+                            data_leg_role = "pivot"
                         else:
-                            scenario = "nonpivot"
+                            data_leg_role = "nonpivot"
                         
                         # trial combinations:
                         #   1. pivot = more affected, nonpivot = less affected
                         #   2. pivot = less affected, nonpivot = more affected
-                        if scenario == "pivot":
+                        if data_leg_role == "pivot":
                             if foot == more_aff_side:
                                 trial_combo = "pivot_more"
                             else:
                                 trial_combo = "pivot_less"
-                        elif scenario == "nonpivot":
+                        elif data_leg_role == "nonpivot":
                             if foot == more_aff_side:
                                 trial_combo = "pivot_less"
                             else:
@@ -601,7 +601,7 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
                                 drow = drow  * normfactor
                                             
                                 # create new line of data
-                                csvrow = [subj, trial, subj_type, task, foot, scenario, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, pivot_leg, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -612,11 +612,11 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "data_leg", "scenario", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "pivot_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # group
-    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "data_leg", "scenario", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "trial_combo", "analysis", "variable"])
+    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "pivot_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "trial_combo", "analysis", "variable"])
     
     # descriptives
     csvdf_grouped_mean = csvdf_grouped.mean().reset_index()

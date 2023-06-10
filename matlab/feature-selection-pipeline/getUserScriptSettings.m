@@ -25,11 +25,11 @@ user.GROUP3OUTPATH = fullfile(user.OUTPATH2, 'three-group\');
 user.LIMBS = {'pivot', 'nonpivot'};
 user.GROUPS = {'sym','ctrl'};
 user.SUBJPREFIX = {'FAILT', 'FAILTCRT'};
-user.TRIALCOMBO = {'pivot_more', 'pivot'};
+user.TRIALCOMBO = {{'pivot_more', 'pivot'}, {'pivot_less', 'pivot'}};
 user.FOOT = {'r','l'};
 user.RESAMP = 101;
 user.GRAVITY = 9.81;    % m/s2
-user.DATACOLS = 31:131;
+user.DATACOLS = 32:132;
 
 % general parameters: three-group analysis
 user.GROUPS3 = {'moresym', 'lesssym', 'ctrl'};

@@ -15,14 +15,14 @@ import pickle as pk
 
 
 # data file
-srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder\r-output"
-srcfile = "force_sdp_results_descriptives_by_subject.csv"
+srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder"
+srcfile = "force_sdp_results_subject_descriptives_normalised.csv"
 
 # output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outpkl = "force-sdp-spm1dt-ikid-between-group.pkl"
-outfigprefix = "force-sdp-spm1dt-ikid-"
+outpkl = "force-sdp-spm1dt-ikid-between-group-corrected.pkl"
+outfigprefix = "force-sdp-spm1dt-ikid-corrected-"
 
 
 
@@ -39,25 +39,25 @@ analyses = ["ik", "id"]
 osimvars = {}
 osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "ankle_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation"]
 osimvars["id"] = [k + "_moment" for k in osimvars["ik"]]
-leg = ["pivot", "nonpivot"]
-groups = ["sym", "asym", "dom", "ndom"]
+trial_combo = ["pivot_more", "pivot_less"]
+subj_type = ["S", "C"]
 
 
 # split into smaller data frames for analysis
 datamat = {}
-for lg in leg:
-    datamat[lg] = {}
-    legdata = df[df["data_leg_role"]==lg]
+for st in subj_type:
+    datamat[st] = {}
+    subjtypedata = df[df["subj_type"]==st]
     for an in analyses:        
-        datamat[lg][an] = {}
-        andata = legdata[legdata["analysis"]==an]
+        datamat[st][an] = {}
+        andata = subjtypedata[subjtypedata["analysis"]==an]
         for va in osimvars[an]:
-            datamat[lg][an][va] = {}
+            datamat[st][an][va] = {}
             vadata = andata[andata["variable"]==va]
-            for gp in groups:            
-                gpdata = vadata[vadata["data_leg_type"]==gp]
-                gpdata = gpdata.loc[:, "t1":"t101"]
-                datamat[lg][an][va][gp] = gpdata.to_numpy()
+            for tc in trial_combo:            
+                tcdata = vadata[vadata["trial_combo"]==tc]
+                tcdata = tcdata.loc[:, "t1":"t101"]
+                datamat[st][an][va][tc] = tcdata.to_numpy()
 
 
 # event time steps
@@ -65,13 +65,15 @@ events = {}
 events["data"] = {}
 events["desc"] = {}
 descmat = np.zeros((4,6))
-for gn, g in enumerate(groups):
-    dfreduced = df.loc[(df["analysis"]=="ik") & (df["variable"]=="time") & (df["data_leg_role"]=="pivot") & (df["data_leg_type"]==g)]    
-    events["data"][g] = dfreduced.loc[:, "es1_PFO1":"es6_PFS4"]
-    events["desc"][g] = {}
-    events["desc"][g]["mean"] = np.round(np.mean(events["data"][g].to_numpy(), axis=0))
-    events["desc"][g]["sd"] = np.round(np.std(events["data"][g].to_numpy(), axis=0))
-    descmat[gn, 0:6] = events["desc"][g]["mean"]
+for stn, st in enumerate(subj_type):
+    for tcn, tc in enumerate(trial_combo):
+        dfreduced = df.loc[(df["analysis"]=="ik") & (df["variable"]=="time") & (df["trial_combo"]==tc) & (df["subj_type"]==st)]    
+        events["data"][st][tc] = dfreduced.loc[:, "es1_PFO1":"es6_PFS4"]
+        events["desc"][st][tc] = {}
+        events["desc"][st][tc]["mean"] = np.round(np.mean(events["data"][st][tc].to_numpy(), axis=0))
+        events["desc"][st][tc]["sd"] = np.round(np.std(events["data"][st][tc].to_numpy(), axis=0))
+        idx = (2 * stn) + tcn
+        descmat[idx, 0:6] = events["desc"][st][tc]["mean"]
 events["desc"]["total"] = {}
 events["desc"]["total"]["mean"] = np.mean(descmat, axis=0)
 events["desc"]["total"]["sd"] = np.std(descmat, axis=0)
@@ -87,16 +89,16 @@ pairs["limb"] = ["asym", "sym"]
 
 # calculate descriptives from file
 desc = {}
-for lg in leg:
-    desc[lg] = {}
+for st in subj_type:
+    desc[st] = {}
     for an in analyses:        
-        desc[lg][an] = {}
+        desc[st][an] = {}
         for va in osimvars[an]:
-            desc[lg][an][va] = {}
-            for gp in groups:    
-                desc[lg][an][va][gp] = {}                      
-                desc[lg][an][va][gp]["mean"] = np.mean(datamat[lg][an][va][gp], axis = 0)
-                desc[lg][an][va][gp]["sd"] = np.std(datamat[lg][an][va][gp], axis = 0)
+            desc[st][an][va] = {}
+            for tc in trial_combo:    
+                desc[st][an][va][tc] = {}                      
+                desc[st][an][va][tc]["mean"] = np.mean(datamat[st][an][va][tc], axis = 0)
+                desc[st][an][va][tc]["sd"] = np.std(datamat[st][an][va][tc], axis = 0)
 
 
 # run SPM{t} and inference across all legs, analyses, variables and group pairs

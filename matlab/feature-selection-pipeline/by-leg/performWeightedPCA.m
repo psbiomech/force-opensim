@@ -36,7 +36,7 @@ pcainfo = struct;
 pcaweights = struct;
 pcaout = struct;
 
-% Limb
+% Scenarios
 for b=1:2
     
     fprintf('\nWeighted PCA: %s LIMB\n', upper(limbs{b}))
@@ -62,7 +62,7 @@ for b=1:2
     
             % Trials
             q = 0;
-            trials = unique(limbdata.trial(strcmpi(limbdata.subject, subjects{s}) & contains(limbdata.trial_combo, trialcombo{g})));
+            trials = unique(limbdata.trial(strcmpi(limbdata.subject, subjects{s}) & contains(limbdata.trial_combo, trialcombo{b}{g})));
             for t=1:length(trials)
 
                 % Increment trial counter

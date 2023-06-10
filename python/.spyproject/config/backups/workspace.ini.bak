@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['opensimresults.py', 'main.py', 'basic-stats\\force-sdp-descriptives.py']
+recent_files = ['opensimresults.py', 'main.py', 'spm1d\\force-spd-spm1dt-ikid-between-group-corrected.py', 'spm1d\\force-spd-spm1dt-ikid-between-group.py', 'c3dextract.py', 'builddatabase.py', 'out.log', '..\\..\\..\\..\\miniconda3\\envs\\opensim43\\lib\\site-packages\\pandas\\core\\internals\\construction.py']
 
 [main]
 version = 0.2.0
