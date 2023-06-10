@@ -376,19 +376,19 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 
                         # pivot leg or non-pivot leg data
                         if foot == pivot_leg:
-                            data_leg_role = "pivot"
+                            scenario = "pivot"
                         else:
-                            data_leg_role = "nonpivot"
+                            scenario = "nonpivot"
                         
                         # trial combinations:
                         #   1. pivot = more affected, nonpivot = less affected
                         #   2. pivot = less affected, nonpivot = more affected
-                        if data_leg_role == "pivot":
+                        if scenario == "pivot":
                             if foot == more_aff_side:
                                 trial_combo = "pivot_more"
                             else:
                                 trial_combo = "pivot_less"
-                        elif data_leg_role == "nonpivot":
+                        elif scenario == "nonpivot":
                             if foot == more_aff_side:
                                 trial_combo = "pivot_less"
                             else:
@@ -427,7 +427,7 @@ def export_opensim_results(meta, user, analyses, normalise = False):
                                 drow = drow  * normfactor
                                             
                                 # create new line of data
-                                csvrow = [subj, trial, subj_type, task, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, foot, scenario, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -438,7 +438,7 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "scenario", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
@@ -448,6 +448,201 @@ def export_opensim_results(meta, user, analyses, normalise = False):
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
+    
+    
+    print("\n")
+   
+    return failedfiles
+
+
+
+
+'''
+export_opensim_results_subject_mean(meta, user, analyses, normalise):
+    Calculate subject mean/sd waveforms and export to text. Normalise data
+    if desired (default = False)
+'''
+def export_opensim_results_subject_mean(meta, user, analyses, normalise = False):
+    
+    # empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+
+        # subject type
+        if subj.startswith("FAILTCRT"):
+            subj_type = "C"
+        else:
+            subj_type = "S"
+                
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                try:
+                
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+                                            
+                    # participant data
+                    age = osimresultskey.age
+                    mass = osimresultskey.mass
+                    height = osimresultskey.height
+                    sex = osimresultskey.sex
+                    dom_foot = osimresultskey.dom_foot
+                    aff_side = osimresultskey.aff_side
+                    shomri_r = osimresultskey.shomri[0]
+                    shomri_l = osimresultskey.shomri[1]
+                    
+                    # for bilateral symptomatics, affected side based on shomri
+                    if aff_side == 1:
+                        more_aff_side = "r"
+                    elif aff_side == 2:
+                        more_aff_side = "l"
+                    elif aff_side == 0 or aff_side == 3:
+                        if np.isnan(shomri_r) or np.isnan(shomri_l):
+                            more_aff_side = "r"   # default until data available
+                        if shomri_r > shomri_l:
+                            more_aff_side = "r"
+                        else:
+                            more_aff_side = "l"
+                        
+                        
+                    # trial task type (always SDP in this case)
+                    task = osimresultskey.task
+
+                    # pivot leg
+                    pivot_leg = osimresultskey.events["labels"][0][0].lower()
+                    
+                    # generic event labels:
+                    #   PFO1: pivot limb foot off FP1
+                    #   PFS2: pivot limb foot strike FP2
+                    #   NFO1: non-pivot limb foot off FP1
+                    #   etc...
+                    events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+                    
+                    # event timing: relative time and time steps
+                    events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
+                    events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
+                    
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+
+                        # pivot leg or non-pivot leg data
+                        if foot == pivot_leg:
+                            scenario = "pivot"
+                        else:
+                            scenario = "nonpivot"
+                        
+                        # trial combinations:
+                        #   1. pivot = more affected, nonpivot = less affected
+                        #   2. pivot = less affected, nonpivot = more affected
+                        if scenario == "pivot":
+                            if foot == more_aff_side:
+                                trial_combo = "pivot_more"
+                            else:
+                                trial_combo = "pivot_less"
+                        elif scenario == "nonpivot":
+                            if foot == more_aff_side:
+                                trial_combo = "pivot_less"
+                            else:
+                                trial_combo = "pivot_more"                        
+                        
+                        # analysis
+                        for ans in analyses:
+                            
+                            # ignore scaling
+                            if ans.casefold() == "scale": continue
+                        
+                            # data array
+                            data = osimresultskey.results["split"][ans][foot]["data"]
+                            varheader = osimresultskey.results["split"][ans][foot]["headers"]
+                                                                                                                
+                            # variables
+                            for v, variable in enumerate(varheader):                                
+
+                                # data for the variable (includes time)
+                                drow = data[:, v]
+    
+                                # normalisation factors
+                                normfactor = 1
+                                if normalise:
+                                    if variable.casefold() == "time":
+                                        normfactor = 1
+                                    elif ans == "ik":
+                                        normfactor = 1
+                                    elif ans == "id":
+                                        if variable.casefold().startswith("pelvis_t"):
+                                            normfactor = 1 / mass * user.gravity
+                                        else:
+                                            normfactor = 100 / (mass * user.gravity * height)
+                                            
+                                # normalise if required
+                                drow = drow  * normfactor
+                                            
+                                # create new line of data
+                                csvrow = [subj, trial, subj_type, task, foot, scenario, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create dataframe
+    print("\nCreating dataframe...")
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "scenario", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    csvdf = pd.DataFrame(csvdata, columns = headers)
+
+    # group
+    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "data_leg", "scenario", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "trial_combo", "analysis", "variable"])
+    
+    # descriptives
+    csvdf_grouped_mean = csvdf_grouped.mean().reset_index()
+    csvdf_grouped_sd = csvdf_grouped.std().reset_index()
+    
+    # rearrange dataframes (much easier in dplyr with relocate()!)
+    csvdf_grouped_mean["statistic"] = "mean"
+    dfmean = csvdf_grouped_mean.pop("statistic")
+    csvdf_grouped_mean.insert(csvdf_grouped_mean.columns.get_loc("variable") + 1, dfmean.name, dfmean)      
+    csvdf_grouped_sd["statistic"] = "sd"
+    dfsd = csvdf_grouped_sd.pop("statistic")
+    csvdf_grouped_sd.insert(csvdf_grouped_sd.columns.get_loc("variable") + 1, dfsd.name, dfsd)    
+    
+    # interleave mean and sd rows
+    csvdf_grouped_mean["sortidx"] = range(0, len(csvdf_grouped_mean))
+    csvdf_grouped_sd["sortidx"] = range(0, len(csvdf_grouped_sd))
+    csvdf_descriptives = pd.concat([csvdf_grouped_mean, csvdf_grouped_sd]).sort_values(["sortidx", "statistic"])
+    csvdf_descriptives.drop(columns = "sortidx", inplace = True)
+    
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    normalisestr = ["", "_normalised"]
+    csvfile = user.csvdescfileprefix + normalisestr[int(normalise)] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf_descriptives.to_csv(os.path.join(fpath,csvfile), index = False)
     
     
     print("\n")

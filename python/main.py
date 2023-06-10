@@ -110,12 +110,16 @@ import opensimresults as osr
 # osr.opensim_results_batch_process(forcedb, ["ik", "id"], user, 101)
 # print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting OpenSim results to CSV...\n")
-osr.export_opensim_results(forcedb, user, ["ik", "id"])
-print("CSV export complete.\n")
+# print("Exporting OpenSim results to CSV...\n")
+# osr.export_opensim_results(forcedb, user, ["ik", "id"])
+# print("CSV export complete.\n")
 
-print("Exporting normalised OpenSim results to CSV...\n")
-osr.export_opensim_results(forcedb, user, ["ik", "id"], True)
+# print("Exporting normalised OpenSim results to CSV...\n")
+# osr.export_opensim_results(forcedb, user, ["ik", "id"], True)
+# print("Normalised CSV export complete.\n")
+
+print("Exporting normalised OpenSim results to CSV (subject descriptives)...\n")
+osr.export_opensim_results_subject_mean(forcedb, user, ["ik", "id"], True)
 print("Normalised CSV export complete.\n")
 
 

@@ -96,6 +96,7 @@ class FORCESettings_SDP(UserSettings):
         # export data
         self.csvfolder = "csvfolder"
         self.csvfileprefix = "force_sdp_results_all_trials"
+        self.csvdescfileprefix = "force_sdp_results_subject_descriptives"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
