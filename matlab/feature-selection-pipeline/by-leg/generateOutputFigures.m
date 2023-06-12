@@ -83,7 +83,7 @@ for b=1:2
         %legend('25%Q', '75%Q');
         box on;
         xlim([0 100]);
-        xlabel('% landing phase');
+        xlabel('% of step-down-and-pivot task');
         ylim('auto');   % temporary
         ylabel(ytext1);
         yl = ylim;
@@ -111,7 +111,7 @@ for b=1:2
         ylabel({'Explained variance', ''});
         set(gca, 'YColor', 'k');        
         xlim([0 100]);
-        xlabel('% landing phase');
+        xlabel('% of step-down-and-pivot task');
         %legend('PC coeff', 'Explained var', '', '', '', '');
         
 
