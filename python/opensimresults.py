@@ -306,9 +306,9 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 
         # subject type
         if subj.startswith("FAILTCRT"):
-            subj_type = "C"
+            subj_type = "ctrl"
         else:
-            subj_type = "S"
+            subj_type = "sym"
                 
         for group in meta[subj]["trials"]:
             
@@ -480,9 +480,9 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
 
         # subject type
         if subj.startswith("FAILTCRT"):
-            subj_type = "C"
+            subj_type = "ctrl"
         else:
-            subj_type = "S"
+            subj_type = "sym"
                 
         for group in meta[subj]["trials"]:
             
