@@ -39,12 +39,12 @@ for b=1:2
         % Correlation coefficients
         corrassoc(final.(limbs{b}).trainidx(f), f) = NaN;   % ignore self correlations
         iscorr = abs(corrassoc(:, f)) > 0.5;
-        associdx.(limbs{b}) = find(iscorr)';
+        associdx.(limbs{b}){x} = find(iscorr)';
         
         fprintf('%s\n',final.(limbs{b}).labels{f});
         
         % If no associated featues, then record empty row
-        if isempty(associdx.(limbs{b}))
+        if isempty(associdx.(limbs{b}){x})
             fprintf('\t----> None\n');
             acorrtable.(limbs{b}){x, 1} = final.(limbs{b}).labels{f};
             acorrtable.(limbs{b}){x, 2} = 'None';
@@ -53,7 +53,7 @@ for b=1:2
         end
         
         % Build output table
-        for j = associdx.(limbs{b})
+        for j = associdx.(limbs{b}){x}
             
             fprintf('\t----> %s\n', training.(limbs{b}).labels{j});
             

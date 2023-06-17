@@ -11,6 +11,9 @@ addpath('..');
 user = getUserScriptSettings();
 outpath = user.OUTPATH1;
 
+% improve pseudo-randomness by setting seed to time
+rng('shuffle');
+
 
 %% FEATURE SELECTION PIPELINE
 
@@ -28,8 +31,6 @@ ttable = performTTest(final, pcainfo);
 
 % correlation of PCs with original waveforms
 [wavecorr, dataidx] = performWaveformCorr(final, pcainfo, pcadata, pcaweights);
-wcorr.wavecorr = wavecorr;
-wcorr.dataidx = dataidx;
 
 % associated features
 [acorrtable,associdx] = performAssocFeatureSelection(final,training,pcainfo);
@@ -46,25 +47,30 @@ generateOutputFigures(paselected, paquantl, final);
 
 %% SAVE OUTPUTS
 
-pcaw.pcadata = pcadata;
-pcaw.pcaweights = pcaweights;
-pcaw.pcaout = pcaout;
-pcaw.pcainfo = pcainfo;
+pcaweighted.pcadata = pcadata;
+pcaweighted.pcaweights = pcaweights;
+pcaweighted.pcaout = pcaout;
+pcaweighted.pcainfo = pcainfo;
 
-pa.pcsexplained = pcsexplained;
-pa.totalvalidpcs = totalvalidpcs;
-pa.totalvariance = totalvariance;
-pa.paselected = paselected;
-pa.paquantl = paquantl;
+parallelanalysis.pcsexplained = pcsexplained;
+parallelanalysis.totalvalidpcs = totalvalidpcs;
+parallelanalysis.totalvariance = totalvariance;
+parallelanalysis.paselected = paselected;
+parallelanalysis.paquantl = paquantl;
 
-fs.final = final;
-fs.weissind = weissind;
-fs.training = training;
+featureselection.final = final;
+featureselection.weissind = weissind;
+featureselection.training = training;
 
-tt.ttable = ttable;
+ttestsig.ttable = ttable;
 
-acorr.acorrtable = wavecorr;
-acorr.associdx = dataidx;
+waveformcorr.wavecorr = wavecorr;
+waveformcorr.dataidx = dataidx;
+
+assocfeat.acorrtable = acorrtable;
+assocfeat.associdx = associdx;
+
+output.tables = tbls;
 
 % save all structs
-save(fullfile(outpath,'fsp_all_outputs.mat'),'pcaw','pa','fs','tt','wcorr','acorr','tbls');
+save(fullfile(outpath, 'fsp_all_outputs.mat'), 'pcaweighted', 'parallelanalysis', 'featureselection', 'ttestsig', 'waveformcorr', 'assocfeat', 'output');
