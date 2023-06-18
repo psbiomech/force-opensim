@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-STEP DOWN AND PIVOT: MORE SYMPTOMATIC VS CTRL - SPM1D T-TEST
+STEP DOWN AND PIVOT: MORE SYMPTOMATIC VS CTRL - SPM1D T-TEST (FOR PUBLICATION)
 @author: Prasanna Sritharan
 """
 
@@ -142,6 +142,12 @@ eventlabels = ["PFO1", "PFS2", "NFO1", "NFS2", "PFO3", "PFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]   
 
+# Figure headers
+plotheads = {}
+plotheads["ik"] = ["Hip flexion", "Hip adduction", "Hip rotation", "Knee extension", "Ankle dorsiflexion", "Lumbar extension", "Lumbar bending", "Lumbar rotation"]
+plotheads["id"] = [k + " moment" for k in plotheads["ik"]]
+
+
 # Generate plots
 for n in scenario:
 
@@ -150,7 +156,7 @@ for n in scenario:
     eventlist = 100 * np.round(events[n]["desc"]["total"]["mean"]) / 101    
 
     # Create plot area
-    fig = plt.figure(constrained_layout=True, figsize=(50, 15))   
+    fig = plt.figure(constrained_layout=True, figsize=(24, 10))   
     fig.suptitle("Step-down-and-pivot: %s vs %s (n%d vs n%d) - %s limb" % (subjtype[0].upper(), subjtype[1].upper(), nsubjs[0], nsubjs[1], n.title()), fontsize=20)
     heights = [2, 1, 0.5, 2, 1]
     spec = fig.add_gridspec(nrows = 5, ncols = len(osimvars["ik"]), height_ratios = heights) 
@@ -164,9 +170,9 @@ for n in scenario:
             
             # Mean + stdev
             for r, row in enumerate([0, 3]):        
-                
+                 
                 an = analyses[r]
-                
+                               
                 # Mean
                 m0 = desc[n][an][osimvars[an][col]][subjtype[0]]["mean"]
                 m1 = desc[n][an][osimvars[an][col]][subjtype[1]]["mean"]
@@ -180,33 +186,46 @@ for n in scenario:
                 l1 = m1 - desc[n][an][osimvars[an][col]][subjtype[1]]["sd"]       
                 
                 # Plot
-                ax = fig.add_subplot(spec[row, col], title=osimvars[an][col].replace("_", "-"))
+                ax = fig.add_subplot(spec[row, col])
+                ax.set_title(plotheads[an][col], fontsize = 12)
                 if (row == 0) and (col == 0):
-                    ax.set_ylabel("Angle (deg)")
+                    ax.set_ylabel("Angle (deg)", fontsize = 12)
                 elif (row == 3) and (col == 0):
-                    ax.set_ylabel("Moment (%BW*HT)")   
-                ax.fill_between(x, l0, u0, alpha = 0.4)
-                ax.fill_between(x, l1, u1, alpha = 0.4)
-                ax.plot(x, m0, label = subjtypefulllabel[0], linewidth = 2.0)
-                ax.plot(x, m1, label = subjtypefulllabel[1], linewidth = 2.0) 
+                    ax.set_ylabel("Moment (%BW*HT)", fontsize = 12)   
+                ax.fill_between(x, l1, u1, alpha = 0.3, color = "blue")
+                ax.fill_between(x, l0, u0, alpha = 0.3, color = "red")
+                ax.plot(x, m1, label = subjtypefulllabel[1], linewidth = 2.0, color = "blue") 
+                ax.plot(x, m0, label = subjtypefulllabel[0], linewidth = 2.0, color = "red")
                 ax.set_xlim([x[0], x[-1]])
                 for v in range(1, 5): ax.axvline(x = eventlist[v], linewidth = 1.0, linestyle = ":", color = "k")
                 if (row == 0 and col == 0): ax.legend(frameon = False, loc = "lower left")
             
                 # Event labels
                 for at in range(6): ax.text((eventlist[at] / 100) + eventlabeladjust[at], 0.95, eventlabels[at], transform = ax.transAxes, horizontalalignment = eventlabelalign[at], fontsize = 8)
-            
+                
+                # SPM significance shading
+                issig = [1 if abs(z) > spmtinf[n][an][osimvars[an][col]].zstar else 0 for t, z in enumerate(spmtinf[n][an][osimvars[an][col]].z)]
+                issigdiff = np.diff([0] + issig + [0])
+                t0s = np.where(issigdiff == 1)
+                t1s = np.where(issigdiff == -1)  # Should be the same length as t0s, I hope!
+                if not t0s:
+                    for t in range(len(t0s)):
+                        ax.axvspan(t0s[0][s], t1s[0][t], alpha = 0.3, color = "grey")
+                    
+                #ax.axvspan(8, 14, alpha=0.5, color='red')
+                
             # SPM inference
             for r, row in enumerate([1, 4]):  
                 
                 an = analyses[r]
                 
-                # Plot
-                ax = fig.add_subplot(spec[row, col], xlabel = "% task")
-                if col == 0: ax.set_ylabel("SPM{t}") 
+                # plot
+                ax = fig.add_subplot(spec[row, col])
+                ax.set_xlabel("% of step-down-and-pivot task", fontsize = 12)
+                if col == 0: ax.set_ylabel("SPM{t}", fontsize = 10) 
                 for v in range(1, 5): ax.axvline(x = eventlist[v], linewidth = 1.0, linestyle = ":", color = "k")
                 spmtinf[n][an][osimvars[an][col]].plot(plot_ylabel = False)
                     
                     
-    # Save to pdf
-    plt.savefig(os.path.join(outpath, outfilename + "-" + n + ".pdf"))
+    # save to pdf
+    plt.savefig(os.path.join(outpath, outfilename + "-" + n + "_forpub.pdf"))

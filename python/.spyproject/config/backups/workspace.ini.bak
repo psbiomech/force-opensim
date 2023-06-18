@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['main.py', 'c3dextract.py', 'builddatabase.py', 'opensimresults.py', 'spm1d\\sdp-spm1dt-pivot-ikid-sym-ctrl.py', 'spm1d_original\\force-spd-spm1dt-ikid-between-group.py']
+recent_files = ['main.py', 'c3dextract.py', 'builddatabase.py', 'opensimresults.py', 'spm1d\\sdp-spm1dt-ikid-sym-ctrl.py']
 
 [main]
 version = 0.2.0
