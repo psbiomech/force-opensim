@@ -162,7 +162,7 @@ for n in scenario:
     spec = fig.add_gridspec(nrows = 5, ncols = len(osimvars["ik"]), height_ratios = heights) 
     
     # Plot results
-    for s, subj in enumerate(subjtype):
+    for s, subj in enumerate(subjtype): 
     
         # Create plots
         x = range(101)
@@ -208,11 +208,9 @@ for n in scenario:
                 issigdiff = np.diff([0] + issig + [0])
                 t0s = np.where(issigdiff == 1)
                 t1s = np.where(issigdiff == -1)  # Should be the same length as t0s, I hope!
-                if not t0s:
-                    for t in range(len(t0s)):
-                        ax.axvspan(t0s[0][s], t1s[0][t], alpha = 0.3, color = "grey")
-                    
-                #ax.axvspan(8, 14, alpha=0.5, color='red')
+                if t0s[0].tolist():
+                    for t in range(np.size(t0s[0])):
+                        ax.axvspan(t0s[0][t], t1s[0][t], alpha = 0.3, color = "grey")
                 
             # SPM inference
             for r, row in enumerate([1, 4]):  
@@ -228,4 +226,4 @@ for n in scenario:
                     
                     
     # save to pdf
-    plt.savefig(os.path.join(outpath, outfilename + "-" + n + "_forpub.pdf"))
+    plt.savefig(os.path.join(outpath, outfilename + "-" + n + "-forpub.pdf"))
