@@ -36,7 +36,7 @@ print("Done.\n")
 import usersettings as uset
 
 print("Loading user settings... ", end="")
-user = uset.FORCESettings_SDP()
+user = uset.FORCESettings_SLDJ()
 print("Done.\n")
 
 
@@ -48,7 +48,7 @@ print("Done.\n")
 # import builddatabase as bd
 
 # print("Building new output database... ", end="")
-# forcedb, failedfilesBD = bd.build_database(user, "sdp")
+# forcedb, failedfilesBD = bd.build_database(user, "sldj")
 # print("Done.\n")
 
 
@@ -66,24 +66,24 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# c3dex.c3d_batch_process(user, forcedb, lasem, 2, -1)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failed_files = c3dex.c3d_batch_process(user, forcedb, lasem, 2)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
-# import opensimpipeline as osp
+import opensimpipeline as osp
 
-# print("Running OpenSim model scaling: SCALE...\n")
-# osp.opensim_pipeline(forcedb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
+print("Running OpenSim model scaling: SCALE...\n")
+osp.opensim_pipeline(forcedb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# print("Running OpenSim analyses: IK, ID...\n")
-# osp.opensim_pipeline(forcedb, user, ["ik", "id"])
-# print("\nOpenSim analyses (IK, ID) completed.\n")
+print("Running OpenSim analyses: IK, ID...\n")
+osp.opensim_pipeline(forcedb, user, ["ik", "id"])
+print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])

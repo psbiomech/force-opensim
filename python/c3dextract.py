@@ -59,16 +59,18 @@ class TrialKey():
 
     def __set_events(self, c3dkey, task, static_fp_channel):
 
-        # initialise dict        
+        # Initialise dict        
         events = {}
               
-        # process events, or if no events, add general events
+        # Process events, or if no events, add general events
         if c3dkey.meta["EVENT"]["USED"] == 0:            
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
         
-        # if general events exist, rename to GEN
-        elif (c3dkey.meta["EVENT"]["USED"] == 2) and ([g == 1 for g in c3dkey.meta["EVENT"]["GENERIC_FLAGS"]]):
+        # If general events exist, rename to GEN
+        # Temporary: some single-leg drop jump trials only have 2 events so
+        # so need to skip these.
+        elif (c3dkey.meta["EVENT"]["USED"] == 2) and ([g == 1 for g in c3dkey.meta["EVENT"]["GENERIC_FLAGS"]]) and (task.casefold() != "sldj"):
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
                                 
@@ -237,6 +239,49 @@ class TrialKey():
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
             events["opensim_last_event_idx"] = 5            
+
+        # single leg drop jump
+        elif task.casefold().startswith("sldj"):
+            
+            # Ipsilateral foot-strike to ipsilateral foot-off.
+            
+            # Ideally we want the window from contrlateral foot off to the jump
+            # landing but this is not possible due to inconsistent trial 
+            # protocol and inconsistent event labelling. Some trials are 
+            # labelled from contralateral foot off to ipsilateral foot off. 
+            # Others are labelled ipsilateral foot off to jump landing, which 
+            # is sometimes single leg on either foot, sometimes double leg.
+            
+            # Calculate the time window of interest (assume first FS is start
+            # of the trial time window, the following event is assumed to be FO 
+            # and is end of window)
+            fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
+            foidx1 = fsidx0 + 1
+            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
+            
+            # List the individual intervals
+            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+             
+            # Find force plate sequence for each interval (row) defined in the
+            # array window_intervals0
+            # note: sequences defined as per GaitExtract using a 2D array:
+            #   rows: event intervals
+            #   col1: right foot
+            #   col2: left foot
+            events["fp_sequence"] = [[0, 0]]
+            if events["window_labels"][0][1] == "R":    # For SLDJ, use second event
+                events["fp_sequence"] = np.array([[0, 1]])
+            else:
+                events["fp_sequence"] = np.array([[2, 0]])            
+            
+            # Leg task, i.e., what is the role of the leg in the task
+            events["leg_task"] = ["sldj_ipsi", "sldj_contra"]   
+            
+            # Last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = 1
+
             
         #
         # ###################################
@@ -620,14 +665,35 @@ class OpenSimKey():
 '''
 c3d_batch_process(user, meta, lab, xdir, usermass):
     Batch processing for C3D data extract, and OpenSim input file write,
-    obtains mass from used static trial in each group if mass = -1.
+    obtains mass from used static trial in each group if mass = -1. All data 
+    in meta is processed unless specified by restart flag which may have types:
+        string: Start from this participant and process until the end
+        2-tuple: Process between the first and last participant. To process
+                only one participant, set the tuple elements to be the same,
+                e.g. ("FAILT04", "FAILT04")
 '''
-def c3d_batch_process(user, meta, lab, xdir, usermass):
+def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
 
     # extract C3D data for OpenSim
     print("\n")
     failedfiles = []
+    startflag = 0
     for subj in meta:
+        
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue        
         
         print("\n")
         print("%s" % "*" * 30)
@@ -649,16 +715,19 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT05_SDP05")
-                trialmatch = trialre.match(trial)
-                if (not trialmatch):
-                    continue
+                # trialre = re.compile("IGNORE_THIS")
+                # trialmatch = trialre.match(trial)
+                # if (not trialmatch):
+                #     continue
                 #******************************
                 
                 # ignore dynamic trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 usedstatic = meta[subj]["trials"][group][trial]["usedstatic"]
-                if not(isstatic): continue
+                if not isstatic:
+                    continue
+                elif not usedstatic:
+                    continue
             
                 print("\nStatic trial: %s" % trial)
                 print("%s" % "-" * 30)
@@ -672,8 +741,9 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                     osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)                           
                     if usedstatic: mass = osimkey.mass
                 except:
-                    print("*** FAILED ***")    
+                    print("*** FAILED2 ***")    
                     failedfiles.append(c3dfile)
+                    #raise
             
             #
             # ###################################            
@@ -690,10 +760,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                trialre = re.compile("FAILTCRT05_SDP05")
-                trialmatch = trialre.match(trial)
-                if (not trialmatch):
-                    continue
+                # trialre = re.compile("FAILTCRT09_SLDJ01")
+                # trialmatch = trialre.match(trial)
+                # if (not trialmatch):
+                #     continue
                 #******************************
                 
                 # ignore static trials
@@ -711,9 +781,9 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)   
                 except:
-                    print("*** FAILED ***")    
+                    print("*** FAILED1 ***")    
                     failedfiles.append(c3dfile)
-                    raise
+                    #raise
 
             #
             # ###################################                    

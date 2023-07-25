@@ -102,18 +102,17 @@ def build_database(user, task):
                             meta[subj]["trials"][group][trial]["condition"] = "static"
                             meta[subj]["trials"][group][trial]["isstatic"] = True
                                                    
-                # determine which file to use as static trial in OpenSim, in
+                # Determine which file to use as static trial in OpenSim, in
                 # most cases use the static file set in the user settings, if
-                # not found, then use the first available                        
-                hasusedstatic = any([meta[subj]["trials"][group][t]["usedstatic"] for t in meta[subj]["trials"][group].keys()])
-                if not hasusedstatic:
-                    for trial in meta[subj]["trials"][group]:             
-                        if trial.casefold().endswith(user.staticused.casefold()):
-                            meta[subj]["trials"][group][trial]["usedstatic"] = True                            
-                            break
-                        elif user.staticprefix.casefold() in trial.casefold():
-                            meta[subj]["trials"][group][trial]["usedstatic"] = True
-                            break
+                # not found, then use the first available static trial.
+                statictrials = [trial for trial in meta[subj]["trials"][group].keys() if user.staticprefix.casefold() in trial.casefold()]  
+                preferredstatic = [pref for pref in statictrials if user.staticused.casefold() in pref.casefold()]
+                if not statictrials:
+                    continue
+                elif not preferredstatic:
+                    meta[subj]["trials"][group][statictrials[0]]["usedstatic"] = True
+                else:
+                    meta[subj]["trials"][group][preferredstatic[0]]["usedstatic"] = True
                     
         # clean up, remove empty subject meta dict keys or those without at
         # least one static and one dynamic trial

@@ -59,10 +59,10 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                             
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT05_SDP05")
-                if not trialre.match(trial):
-                    # print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("FAILTCRT05_SDP05")
+                # if not trialre.match(trial):
+                #     # print("%s ---> SKIP" % trial)
+                #     continue
                 #******************************
 
                 # run the scale tool if the static trial is the trial to be
@@ -111,10 +111,10 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                trialre = re.compile("FAILTCRT05_SDP05")
-                if not trialre.match(trial):
-                    #print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("FAILTCRT05_SDP05")
+                # if not trialre.match(trial):
+                #     #print("%s ---> SKIP" % trial)
+                #     continue
                 #******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
