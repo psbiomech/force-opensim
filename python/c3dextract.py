@@ -337,15 +337,27 @@ class TrialKey():
         # initialise dict
         force_plates = {}
         
-        # used force plate depending on whether static or dynamic trial, if
-        # static with no force plate, return empty field
+        # Used force plate depending on whether static or dynamic trial.
+        # Static: if static with no force plate recorded, return empty field.
         if (staticprefix.casefold() in c3dkey.trial_name.casefold()) and not c3dkey.forces:
             self.force_plates = None
             return None
+       
+        # Static: sometimes a static trial C3D will have fewer force plates for
+        # the static trial than the default. If P plates should have been used
+        # by default, but only p<P plates were recorded in the C3D file, correct
+        # protocol was not used. Ignore force plates.
+        elif (c3dkey.meta["FORCE_PLATFORM"]["USED"] < len(lab.fp_used_static)):
+            fpused = range(1, c3dkey.meta["FORCE_PLATFORM"]["USED"] + 1)
+                    
+        #  Static: otherwise return the default used force plates
         elif staticprefix.casefold() in c3dkey.trial_name.casefold():
             fpused = lab.fp_used_static      
+        
+        # Dynamic trial: use all force plates recorded in C3D
         else:
             fpused = lab.fp_used
+
                         
         # get force plate info for only used force plates
         force_plates["fp_used"] = [] 
@@ -384,6 +396,8 @@ class TrialKey():
         if (staticprefix.casefold() in c3dkey.trial_name.casefold()) and not c3dkey.forces:
             self.forces = None
             return None
+        elif (c3dkey.meta["FORCE_PLATFORM"]["USED"] < len(lab.fp_used_static)):
+            fpused = range(1, c3dkey.meta["FORCE_PLATFORM"]["USED"] + 1)
         elif staticprefix.casefold() in c3dkey.trial_name.casefold():
             fpused = lab.fp_used_static      
         else:
@@ -738,10 +752,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     task = meta[subj]["trials"][group][trial]["task"]
                     condition = meta[subj]["trials"][group][trial]["condition"]
-                    osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)                           
+                    osimkey = c3d_extract(subj, trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)                           
                     if usedstatic: mass = osimkey.mass
                 except:
-                    print("*** FAILED2 ***")    
+                    print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
                     #raise
             
@@ -760,7 +774,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                # trialre = re.compile("FAILTCRT09_SLDJ01")
+                # trialre = re.compile("SKIP THESE")
                 # trialmatch = trialre.match(trial)
                 # if (not trialmatch):
                 #     continue
@@ -779,9 +793,9 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     task = meta[subj]["trials"][group][trial]["task"]
                     condition = meta[subj]["trials"][group][trial]["condition"]
-                    c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)   
+                    c3d_extract(subj, trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)   
                 except:
-                    print("*** FAILED1 ***")    
+                    print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
                     #raise
 
@@ -793,11 +807,11 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
 
 
 '''
-c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass):
+c3d_extract(subj, trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass):    
+def c3d_extract(subj, trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass):    
     # load C3D file
     itf = c3d.c3dserver()
     c3d.open_c3d(itf, c3dpath + "/" + c3dfile)       
@@ -808,8 +822,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass)
     fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
     
     # subject and trial name
-    sname= fmeta["SUBJECTS"]["NAMES"][0]
-    if not sname: sname = "NoName"
+    sname = subj
     tname = trial
     
     # C3D key with all data from C3D file

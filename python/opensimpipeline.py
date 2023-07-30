@@ -35,9 +35,14 @@ import re
 
 '''
 opensim_pipeline(meta, user):
-    Run OpenSim tools pipeline
+    Run OpenSim tools pipeline. All data in meta is processed unless specified
+    by the restart flag which may have types:
+        string: Start from this participant and process until the end
+        2-tuple: Process between the first and last participant. To process
+                only one participant, set the tuple elements to be the same,
+                e.g. ("TRAIL004", "TRAIL004")
 '''
-def opensim_pipeline(meta, user, analyses):
+def opensim_pipeline(meta, user, analyses, restart = -1):
 
     # note: I haven't worked out how to run OpenSim in a local folder, simply 
     # changing the pwd doesn't work. So need to clear the log file before each
@@ -48,7 +53,23 @@ def opensim_pipeline(meta, user, analyses):
     
     # run OpenSim for all valid trials
     failedfiles = []
+    startflag = 0
     for subj in meta:
+        
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue        
         
         for group in meta[subj]["trials"]:
             
@@ -59,7 +80,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                             
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT05_SDP05")
+                # trialre = re.compile("SKIPPING THIS!")
                 # if not trialre.match(trial):
                 #     # print("%s ---> SKIP" % trial)
                 #     continue
@@ -101,7 +122,8 @@ def opensim_pipeline(meta, user, analyses):
                 
                         except:
                             print("%s ---> ***FAILED***" % trial)
-                            failedfiles.append(trial) 
+                            failedfiles.append(trial)
+                            #raise
             
             # if scale was the only analysis, then go to next group
             if not analyses0: continue
@@ -111,7 +133,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                # trialre = re.compile("FAILTCRT05_SDP05")
+                # trialre = re.compile("FAILTCRT01_SLDJ01")
                 # if not trialre.match(trial):
                 #     #print("%s ---> SKIP" % trial)
                 #     continue
@@ -159,10 +181,13 @@ def opensim_pipeline(meta, user, analyses):
                                 run_opensim_cmc(osimkey, user)
                             elif ans == "jr":
                                 run_opensim_jr(osimkey, user)
+                            elif ans == "bk":
+                                    run_opensim_bk(osimkey, user)
                                 
                     except:
                         print("%s ---> ***FAILED***" % trial)
                         failedfiles.append(trial)
+                        #raise
                             
     return failedfiles
 
@@ -502,7 +527,156 @@ def run_opensim_id(osimkey, user):
     # ******************************
         
     return None    
+   
+
     
+'''
+run_opensim_bk(osimkey, user):
+    Set up and run the Tool using the API. A generic XML setup file is
+    initially loaded, and then modified using the API. The Tool is then run
+    via the API. Results are printed to text files in the remote folder.
+'''
+def run_opensim_bk(osimkey, user):
+    
+    # trial folder, model and trial
+    fpath = osimkey.outpath
+    modelfile = osimkey.model
+    trial = osimkey.trial
+
+    # clear log file
+    open(user.logfile, "w").close()
+    
+    print("\nPerforming BK on trial: %s" % trial)
+    print("------------------------------------------------")
+    
+    # create an generic AnalyzeTool from the template setup file (set the flag
+    # aLoadModelAndInput = false as we are only configuring the setup file at 
+    # this stage)
+    print("Create new AnalyzeTool...")
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupso
+    tool = opensim.AnalyzeTool(os.path.join(refsetuppath, refsetupfile), False)
+    tool.setName(trial) 
+  
+    # set the initial and final times (limit to between first and last event)
+    t0 = float(osimkey.events["time"][0])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
+    tool.setInitialTime(t0)
+    tool.setFinalTime(t1)
+    
+    # set output directory
+    print("Setting output file name...")
+    stofilepath = os.path.join(fpath, user.bkcode)
+    if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
+    tool.setResultsDir(stofilepath)
+    
+    # # create an external loads object from template, set it up, and
+    # # print to destination folder (This is not the best way to do this,
+    # # but Opensim Tools are designed to read directly from XML files,
+    # # so better to fully set up an external loads file, print it then
+    # # load it again into the Tool, than to create an ExternalLoads
+    # # object and connect it to the Model. This also ensures a copy of
+    # # the external loads file is available in the trial folder in case
+    # # a one-off analysis needs to be run in future.)
+    # print("Creating external loads XML file...")
+    # extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
+    # if not os.path.isfile(extloadsfile):
+    #     extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
+    #     extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
+    #     extloads.printToXML(extloadsfile)  
+
+    # # set the external loads file name
+    # tool.setExternalLoadsFileName(extloadsfile)
+    
+    
+    # ******************************
+    # CREATE BODY KINEMATICS ANALYSIS   
+    
+    # create an JR analysis
+    print("Create new BK Analysis to the AnalysisSet...")
+    bk = opensim.BodyKinematics()
+    bk.setName("bk")
+    bk.setStartTime(t0)
+    bk.setEndTime(t1)
+    
+    # # set the muscle forces 
+    # print("Setting muscle forces...")
+    # if user.jr_use_cmc_forces:
+    #     forcefile = os.path.join(fpath, user.cmccode, trial + "_Actuation_force.sto")
+    # else:
+    #     forcefile = os.path.join(fpath, user.socode, trial + "_so_force.sto")         
+    # jr.setForcesFileName(forcefile)
+    
+    # set the bodies to be analysed
+    print("Setting bodies to be analysed...")
+    bodies = opensim.ArrayStr()
+    for j in user.bk_bodies:
+        bodies.append(j)
+    bk.setBodiesToRecord(bodies)
+    bk.setRecordCenterOfMass(user.bk_output_com)
+
+    # Set frame of reference
+    bk.setExpressResultsInLocalFrame(user.bk_output_in_local_frame)    
+
+
+    # add the BodyKinematics analysis to the tool AnalysisSet
+    print("Append new BK Analysis to the AnalysisSet...")
+    analyses = tool.getAnalysisSet()
+    analyses.insert(0, bk)
+
+
+    # ******************************
+    # SET THE MODEL AND KINEMATICS
+    # (use baseline or RRA adjusted model and kinematics)
+           
+    # desired model name
+    print("Loading the model...")
+    if user.bk_use_cmc_results:
+        if user.update_mass:
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted_MassUpdated.osim"
+        else:
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted.osim"
+    else:
+        actualmodelfile = modelfile
+    tool.setModelFilename(os.path.join(fpath, actualmodelfile))
+        
+    # set coordinates data file
+    print("Setting coordinates data file...")
+    if user.jr_use_cmc_forces:
+        kinfile = os.path.join(fpath, user.cmccode, trial + "_Kinematics_q.sto")
+        filtfreq = -1    
+    else:            
+        kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")
+        filtfreq = 6.0
+    tool.setCoordinatesFileName(kinfile)
+    tool.setLowpassCutoffFrequency(filtfreq)
+    
+    
+    # ******************************
+    # RUN TOOL 
+    
+    print("Running the AnalysisTool (BK)...")
+
+    # save the settings in a setup file
+    customsetupfile = os.path.join(fpath, trial + "_Setup_BK.xml")
+    tool.printToXML(customsetupfile)
+    
+    # run the tool (need to load the setup again into a new AnalyzeTool)
+    try:
+        tool2 = opensim.AnalyzeTool(customsetupfile)
+        tool2.run()
+        print("Done.")
+    except:
+        print("---> ERROR: BK failed. Skipping BK for %s." % trial)
+    finally:
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_BK.log")) 
+        print("------------------------------------------------\n")
+
+    # ******************************
+        
+    return None   
+
 
 
 '''
@@ -1162,7 +1336,7 @@ def run_opensim_jr(osimkey, user):
     jr.setOnBody(onbodys)
     jr.setInFrame(inframes)
     
-    # add the StaticOptimization analysis to the tool AnalysisSet
+    # add the JointReaction analysis to the tool AnalysisSet
     print("Append new JR Analysis to the AnalysisSet...")
     analyses = tool.getAnalysisSet()
     analyses.insert(0, jr)
