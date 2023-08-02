@@ -75,7 +75,7 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-import opensimpipeline as osp
+# import opensimpipeline as osp
 
 # print("Running OpenSim model scaling: SCALE...\n")
 # osp.opensim_pipeline(forcedb, user, ["scale"])
@@ -85,9 +85,9 @@ import opensimpipeline as osp
 # failedfiles = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
-print("Running OpenSim analyses: BK...\n")
-osp.opensim_pipeline(forcedb, user, ["bk"], "FAILT70")
-print("\nOpenSim analyses (IK, ID) completed.\n")
+# print("Running OpenSim analyses: BK...\n")
+# osp.opensim_pipeline(forcedb, user, ["bk"])
+# print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])
@@ -108,11 +108,11 @@ print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # %% COLLATE AND EXPORT RESULTS
 
-# import opensimresults as osr
+import opensimresults as osr
 
-# print("Converting OpenSim results to Pickle...\n")
-# osr.opensim_results_batch_process(forcedb, ["ik", "id"], user, 101)
-# print("\nOpenSim results converted to Pickle.\n")
+print("Converting OpenSim results to Pickle...\n")
+osr.opensim_results_batch_process(forcedb, ["ik", "id", "bk"], user, 101)
+print("\nOpenSim results converted to Pickle.\n")
 
 # print("Exporting OpenSim results to CSV...\n")
 # osr.export_opensim_results(forcedb, user, ["ik", "id"])

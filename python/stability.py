@@ -8,13 +8,16 @@ Stability analyses:
 @author: Prasanna Sritharan
 """
 
+import opensim as osim
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import numpy as np
 import shapely
 import scipy.constants as consts
 import scipy.interpolate as interp
+import scipy.io as scio
 import pickle as pk
+import pandas as pd
 import os
 
 
@@ -30,7 +33,7 @@ import os
 
 '''
 -----------------------------------
------------- FUNCTIONS ------------
+--------- BATCH FUNCTIONS ---------
 -----------------------------------
 '''
 
@@ -51,25 +54,147 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
         # Trials
         for trial in meta[subj]["trials"]:
             
-            print("%s" % trial)
+            print("\nTRIAL: %s" % trial)
            
             # Load the data
             trialname = meta[subj]["trials"][trial]["name"]
             trialpath = meta[subj]["trials"][trialname]["path"]
             with open(os.path.join(trialpath, trialname + "_trial_data.pkl"), "rb") as fid:
                 datakey = pk.load(fid)   
+            
                 
+            # *********************
+            # MARGIN OF STABILITY
+            
+            print("---> Margin of stability...")
+            
             # Calculate simple margin of stability
             stable = margin_of_stability(user, datakey, treadmill_speed)
             
             # Calculate artificially perturbed margin of stability
-            if artifperturb:
-                perturb = perturbed_margin_of_stability(user, datakey, perturbation, asteps, treadmill_speed)
+            #if artifperturb:
+            #    perturb = perturbed_margin_of_stability(user, datakey, perturbation, asteps, treadmill_speed)
                 
             # Visualise
             plot_margin_of_stability(datakey, stable)
-             
+            
+            
+            # *********************
+            # WHOLE BODY ANGULAR MOMENTUM
+            
+            print("---> Whole body angular momentum...")
+            
+            # Calculate whole body angular momentum
+            wbam = whole_body_angular_momentum(user, datakey)
+            
+            # Visualise
+            plot_whole_body_angular_momentum(datakey, wbam)
+                                    
     return None    
+
+
+
+'''
+whole_body_angular_momentum(user, datakey):
+    Calculate whole body angular momentum as the sum of segmental angular 
+    momentum with respect to the whole body centre-of-mass, from mechanical
+    dynamics: L = sum(r x mv + Iw)
+'''
+def whole_body_angular_momentum(user, datakey):
+
+    # Get the model
+    osimfile = os.path.join(datakey.trial["path"], datakey.model)
+    model = osim.Model(osimfile)
+    
+    # Get the bodies and inertia
+    # Assumption: moment of inertia are provided as principal moments of inertia
+    # therefore no inertia matrix products.
+    bodyset = model.getBodySet()
+    nbods = bodyset.getSize()
+    bodies = {}
+    for b in range(nbods):
+        bname = bodyset.get(b).getName()
+        bodies[bname] = {}
+        bodies[bname]["m"] = bodyset.get(b).getMass()
+        bodies[bname]["I"] = np.array([bodyset.get(b).getInertia().getMoments().get(i) for i in range(3)])
+
+    # Get the absolute segmental position and orientation
+    positions = {}
+    for b in range(nbods):
+        bname = bodyset.get(b).getName()
+        positions[bname] = {}
+        ridxs = [h for h, header in enumerate(datakey.data_osim_results["bk"]["pos"]["headers"]) if bname in header]
+        positions[bname]["r"] = datakey.data_osim_results["bk"]["pos"]["data"][:, ridxs[0:3]]
+        positions[bname]["theta"] = np.radians(datakey.data_osim_results["bk"]["pos"]["data"][:, ridxs[3:6]])            
+        
+    # Get the segmental absolute linear and angular velocities
+    # Convert angular velocities to rad/s
+    velocities = {}
+    for b in range(nbods):
+        bname = bodyset.get(b).getName()
+        velocities[bname] = {}
+        vidxs = [h for h, header in enumerate(datakey.data_osim_results["bk"]["vel"]["headers"]) if bname in header]
+        velocities[bname]["v"] = datakey.data_osim_results["bk"]["vel"]["data"][:, vidxs[0:3]]
+        velocities[bname]["w"] = np.radians(datakey.data_osim_results["bk"]["vel"]["data"][:, vidxs[3:6]])
+    
+    # Get the absolute centre-of-mass position and velocity
+    com = {}
+    cidxs0 = [h for h, header in enumerate(datakey.data_osim_results["bk"]["pos"]["headers"]) if "center_of_mass" in header]
+    cidxs1 = [h for h, header in enumerate(datakey.data_osim_results["bk"]["vel"]["headers"]) if "center_of_mass" in header]
+    com["r"] = datakey.data_osim_results["bk"]["pos"]["data"][:, cidxs0]    
+    com["v"] = datakey.data_osim_results["bk"]["vel"]["data"][:, cidxs1]
+    
+    # Calculate segmental angular momentum
+    nsamps = np.shape(com["r"])[0]
+    L_seg = {}
+    for b in range(nbods):
+
+        # At each time step
+        bname = bodyset.get(b).getName()
+        L_seg[bname] = np.zeros([nsamps, 3])
+        for n in range(nsamps):
+
+            # Inertia
+            m = bodies[bname]["m"]
+            I = bodies[bname]["I"]
+            
+            # Kinematics relative to centre-of-mass
+            r = positions[bname]["r"][n, :] - com["r"][n, :]
+            v = velocities[bname]["v"][n, :] - com["v"][n, :]
+            w = np.reshape(velocities[bname]["w"][n, :], [3, 1])
+            
+            # Instantaneous segmental angular momentum relative to centre-of mass:
+            #   L_seg_t = r x mv + Iw
+            L_seg_t = np.cross(r, m * v) + np.matmul(np.diag(I), w).T
+            
+            # Store
+            L_seg[bname][n, :] = L_seg_t
+
+
+    # Calculate whole body angular momentum
+    L = np.zeros([nsamps, 3])
+    for b in range(nbods): 
+        L = L + L_seg[bodyset.get(b).getName()]
+            
+    # Normalised whole body angular momentum
+    # TBD        
+        
+        
+    # Store in dict
+    wbam = {}
+    wbam["bodies"] = bodies
+    wbam["positions"] = positions
+    wbam["velocities"] = velocities
+    wbam["com"] = com
+    wbam["L_seg"] = L_seg
+    wbam["L"] = L
+
+    # Pickle it
+    trialname = datakey.trial["name"]
+    with open(os.path.join(datakey.trial["path"], trialname + "_wbam.pkl"), "wb") as f:
+        pk.dump(wbam, f)
+
+    return wbam
 
 
 
@@ -394,12 +519,112 @@ def construct_base_of_support(markers, forces, timevec):
 
 
 '''
-plot_margin_of_stability(stable):
+resample1d(data, nsamp):
+    Simple resampling by 1-D interpolation (rows = samples, cols = variable).
+    Data can be a 1-D or multiple variables in a 2D array-like object.
+'''
+def resample1d(data, nsamp):
+
+    # Convert list to array
+    if isinstance(data, list):
+        data = np.array([data]).transpose()
+        ny = 1        
+
+    # Data dimensions
+    nx = data.shape[0]
+    ny = data.shape[1]
+
+    # Old sample points
+    x = np.linspace(0, nx - 1, nx)
+        
+    # New sample points
+    xnew = np.linspace(0, nx - 1, nsamp)
+    
+    # Parse columns
+    datanew = np.zeros([nsamp, ny])
+    for col in range(0, ny):
+        
+        # Old data points
+        y = data[:, col]
+        
+        # Convert to cubic spline function
+        fy = interp.interp1d(x, y, kind = "cubic", fill_value = "extrapolate")
+    
+        # New data points
+        ynew = fy(xnew)
+    
+        # Store column
+        datanew[:, col] = ynew
+        
+    
+    return datanew    
+
+
+
+'''
+-----------------------------------
+---------- VISUALISATION ----------
+-----------------------------------
+'''
+
+
+'''
+export MoS (TBD)
+'''
+def export_stability_measures(stable):
+   
+    # Create dataframe from dict (b, b_x, b_z)        
+    b = stable["MoS"]["b"]
+    b_x = stable["MoS"]["b_x"]
+    b_z = stable["MoS"]["b_z"]
+    bdf = pd.DataFrame(zip(b, b_x, b_z), columns=["b", "b_x", "b_z"])
+    
+    #TBD
+    
+    return None
+
+
+
+'''
+plot_whole_body_angular_momentum(datakey, wbam, showplot):
+    Plot the whole body angular momentum.
+'''
+def plot_whole_body_angular_momentum(datakey, wbam, showplot = False):
+    
+    subject = datakey.subj
+    trial = datakey.trial["name"]
+    
+    figpath = os.path.join(datakey.trial["path"], "viz", "timeseries")  
+    if not os.path.exists(figpath): os.makedirs(figpath)   
+            
+    # Global parameters
+    plotcolours = ["black", "blue", "red"]
+    plotlabels = ["Fore-aft (OpenSim X)", "Vertical (OpenSim Y)", "Mediolateral (OpenSim Z)"]
+    filelabels= ["Fore-aft", "Vertical", "Mediolateral"]
+    #plotlimits = [(-1, 1), (-1, 1), (-0.15, 0.15)] 
+    
+    # Plot
+    for p in range(3):
+        plt.figure()
+        plt.plot(wbam["L"][:, p], label = plotlabels[p], color = plotcolours[p])
+        plt.title("WBAM: " + plotlabels[p])
+        plt.xlabel(xlabel = "Time step")
+        plt.ylabel("WBAM (kgm$^2$/s)")
+
+        plt.savefig(os.path.join(figpath, subject + "_" + trial + "_WBAM_" + filelabels[p] + ".png"))   
+        
+        if not showplot: plt.close()
+    
+    return None
+
+
+'''
+plot_margin_of_stability(datakey, stable, showplot):
     Plot the margin of stability (b): 2D, X and Z.
 '''
-def plot_margin_of_stability(datakey, stable):
+def plot_margin_of_stability(datakey, stable, showplot = False):
     
-    subject = datakey.subject
+    subject = datakey.subj
     trial = datakey.trial["name"]
     
     figpath = os.path.join(datakey.trial["path"], "viz", "timeseries")  
@@ -408,8 +633,9 @@ def plot_margin_of_stability(datakey, stable):
     # Global parameters
     moslabels = ["b", "b_x", "b_z"]
     moscolours = ["black", "blue", "red"]
-    plotlabels = ["2D", "X", "Z"]
-    plotlimits = [(-1, 1), (-1, 1), (-0.15, 0.15)] 
+    plotlabels = ["Euclidean: b", "Fore-aft (OpenSim X): bx", "Mediolateral (OpenSim Z): bz"]
+    filelabels = ["Euclidean", "Fore-aft", "Mediolateral"]
+    plotlimits = [(-1, 1), (-1, 1), (-0.2, 0.2)] 
     
     # Plot
     figlabels = ["b", "bx", "bz"]
@@ -421,18 +647,20 @@ def plot_margin_of_stability(datakey, stable):
         plt.ylabel("MoS (m)")
         plt.ylim(plotlimits[p])
 
-        plt.savefig(os.path.join(figpath, subject + "_" + trial + "_" + figlabels[p] + ".png"))    
+        plt.savefig(os.path.join(figpath, subject + "_" + trial + "_MoS_" + filelabels[p] + ".png")) 
+        
+        if not showplot: plt.close()
         
     return None
     
     
 
 '''
-visualise_stability_timehistory(datakey, stable):
+visualise_stability_timehistory(datakey, stable, showplot):
     Visualise the base of support (BoS), centre of mass (CoM) and extrapolated 
     centre of mass (XCoM) at each time step. Export as individual frames.
 '''
-def visualise_stability_timehistory(datakey, stable):
+def visualise_stability_timehistory(datakey, stable, showplot = False):
 
     # Output folder
     figpath = os.path.join(datakey.trial["path"], "viz", "figures", "stable")  
@@ -454,6 +682,8 @@ def visualise_stability_timehistory(datakey, stable):
         
         # Save
         fig.savefig(os.path.join(figpath, datakey.trial["name"] + "_" + str(t) + ".png"))
+        
+        if not showplot: plt.close()
 
     return None
     
@@ -661,43 +891,6 @@ def plot_bos_com_xcom(fig, baseshape, com, xcom, colours = ("blue", "red", "blac
     return fig
     
     
-'''
-resample1d(data, nsamp):
-    Simple resampling by 1-D interpolation (rows = samples, cols = variable).
-    Data can be a 1-D or multiple variables in a 2D array-like object.
-'''
-def resample1d(data, nsamp):
 
-    # Convert list to array
-    if isinstance(data, list):
-        data = np.array([data]).transpose()
-        ny = 1        
-
-    # Data dimensions
-    nx = data.shape[0]
-    ny = data.shape[1]
-
-    # Old sample points
-    x = np.linspace(0, nx - 1, nx)
-        
-    # New sample points
-    xnew = np.linspace(0, nx - 1, nsamp)
     
-    # Parse columns
-    datanew = np.zeros([nsamp, ny])
-    for col in range(0, ny):
-        
-        # Old data points
-        y = data[:, col]
-        
-        # Convert to cubic spline function
-        fy = interp.interp1d(x, y, kind = "cubic", fill_value = "extrapolate")
     
-        # New data points
-        ynew = fy(xnew)
-    
-        # Store column
-        datanew[:, col] = ynew
-        
-    
-    return datanew    

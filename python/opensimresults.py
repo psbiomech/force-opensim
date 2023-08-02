@@ -54,6 +54,7 @@ class OsimResultsKey():
         filext["rra"] = []
         filext["cmc"] = []
         filext["jr"] = "_jr_ReactionLoads.sto"
+        filext["bk"] = ["_bk_pos_global.sto", "_bk_vel_global.sto", "_bk_acc_global.sto"]
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -65,27 +66,56 @@ class OsimResultsKey():
         headnum["rra"] = []
         headnum["cmc"] = []
         headnum["jr"] = 9
+        headnum["bk"] = 13
        
         # get OpenSim data
         for ans in analyses:
             
-            # skip scale
-            if ans.casefold() == "scale": continue
+            # skip Scale
+            if ans.casefold() == "scale":
+                continue
             
-            # load data 
-            datafile = os.path.join(osimkey.outpath, ans, osimkey.trial + filext[ans])
-            datadf = pd.read_csv(datafile, sep="\t", header=headnum[ans])
-            headers = datadf.columns.tolist()
-            data = datadf.to_numpy()
-            
-            # resample data
-            datanew = resample1d(data, nsamp)
-            
-            # store in dict
-            results[ans] = {}
-            results[ans]["data"] = datanew
-            results[ans]["headers"] = headers
+            # BodyKinematics
+            elif ans.casefold() == "bk":
         
+                var = ["pos", "vel", "acc"]
+                datadfs = []
+                headers = []
+                for f, file in enumerate(filext["bk"]):
+        
+                    # load data 
+                    datafile = os.path.join(osimkey.outpath, ans, osimkey.trial + filext[ans][f])
+                    datadf = pd.read_csv(datafile, sep="\t", header=headnum[ans])
+                    data = datadf.to_numpy()
+                    
+                    # resample data
+                    datadfs.append(resample1d(data, nsamp))
+                    
+                    # headers
+                    headers.append(datadf.columns.tolist())
+                    
+                # store in dict
+                results[ans] = {}
+                results[ans]["data"] = np.dstack(datadfs)
+                results[ans]["headers"] = headers
+            
+            # Other analyses
+            else:
+                
+                # load data 
+                datafile = os.path.join(osimkey.outpath, ans, osimkey.trial + filext[ans])
+                datadf = pd.read_csv(datafile, sep="\t", header=headnum[ans])
+                headers = datadf.columns.tolist()
+                data = datadf.to_numpy()
+                
+                # resample data
+                datanew = resample1d(data, nsamp)
+                
+                # store in dict
+                results[ans] = {}
+                results[ans]["data"] = np.reshape(datanew, list(np.shape(datanew)) + [1])  # add third dimension
+                results[ans]["headers"] = headers
+                
         self.results = {}
         self.results["raw"] = results        
             
@@ -136,7 +166,7 @@ class OsimResultsKey():
                     
                     # flip columns for left leg trials
                     if f == 2:
-                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                        data0[:, flip[ans], :] = np.multiply(data0[:, flip[ans]], -1)
                     
                     # time window depends on leg task
                     if self.events["leg_task"][f] == "run_stridecycle":
@@ -156,7 +186,7 @@ class OsimResultsKey():
                     
                     # flip columns for left leg trials
                     if f == 2:
-                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                        data0[:, flip[ans], :] = np.multiply(data0[:, flip[ans]], -1)
                         
                     # time window
                     e0 = self.events["labels"].index(foot.upper() + "FS")
@@ -170,7 +200,7 @@ class OsimResultsKey():
                     
                     # flip columns for left-foot-first left-turning trials
                     if osimkey.events["labels"][0][0].casefold() == "l":
-                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                        data0[:, flip[ans], :] = np.multiply(data0[:, flip[ans]], -1)                   
                     
                     # time window
                     e0 = 0
@@ -178,25 +208,42 @@ class OsimResultsKey():
                     t0 = self.events["time"][e0]
                     t1 = self.events["time"][e1]                    
 
+
+                # single leg drop jump
+                elif self.task.casefold() == "sldj":
+                    
+                    # flip columns for left leg trials
+                    if osimkey.events["labels"][0][0].casefold() == "l":
+                        data0[:, flip[ans], :] = np.multiply(data0[:, flip[ans]], -1)                   
+                    
+                    # time window
+                    e0 = 0
+                    e1 = 1
+                    t0 = self.events["time"][e0]
+                    t1 = self.events["time"][e1]  
+
                     
                 #
                 # ###################################
 
                 # trim columns
-                data0 = data0[:, columns[ans][f]].copy()
+                data0 = data0[:, columns[ans][f], :].copy()
                 
                 # trim rows (time window)
-                r00 = np.where(data0[:, 0] <= t0)[0]
+                r00 = np.where(data0[:, 0, 0] <= t0)[0]
                 if r00.size == 0:
                     r0 = 0
                 else:
                     r0 = r00[-1]
-                r1 = np.where(data0[:, 0] <= t1)[0][-1]
-                data1 = data0[r0:r1 + 1, :]
+                r1 = np.where(data0[:, 0, 0] <= t1)[0][-1]
+                data1 = data0[r0:r1 + 1, :, :]
                 
-                # resample data, currently uses simple 1D interpolation but
-                # need to find a package that emulates Matlab's resample()
-                data = resample1d(data1, nsamp)
+                # resample data, currently uses simple 1D cubic spline 
+                # interpolation but need to find a package that emulates 
+                # Matlab's resample()
+                data = np.zeros([nsamp, np.shape(data1)[1], np.shape(data1)[2]])
+                for b in range(np.shape(data1)[2]):
+                    data[:, :, b] = resample1d(data1[:, :, b], nsamp)
                             
                 # store in dict
                 results[ans][foot] = {}
@@ -218,9 +265,14 @@ class OsimResultsKey():
 
 '''
 opensim_results_batch_process(meta, analyses, nsamp):
-    Batch process OpenSim results text files to OsimResultsKeys.
+    Batch process OpenSim results text files to OsimResultsKeys. All data in 
+    meta is processed unless specified by the restart flag which may have types:
+        string: Start from this participant and process until the end
+        2-tuple: Process between the first and last participant. To process
+                only one participant, set the tuple elements to be the same,
+                e.g. ("TRAIL004", "TRAIL004")
 '''
-def opensim_results_batch_process(meta, analyses, user, nsamp):
+def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
     
     # load additional participant data spreadsheet
     addpartinfo = pd.read_csv(os.path.join(user.rootpath, user.additional_participant_info_file));    
@@ -228,8 +280,24 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
     # extract OpenSim data
     osimkey = {}
     failedfiles = []
+    startflag = 0
     for subj in meta:
-    
+                
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue         
+        
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
@@ -273,7 +341,8 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                                     
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
-                    failedfiles.append(trial)                    
+                    failedfiles.append(trial)     
+                    #raise
                 else:
                     print("Dynamic trial: %s" % trial)
                           
