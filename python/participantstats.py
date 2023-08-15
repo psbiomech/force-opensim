@@ -9,6 +9,10 @@ import os
 import pandas as pd
 import numpy as np
 from scipy.stats import chisquare
+from scipy.stats import chi2_contingency
+from scipy.stats import shapiro
+from scipy.stats import ttest_ind
+from scipy.stats import mannwhitneyu
 
 
 
@@ -57,11 +61,37 @@ datadf2 = datadf1.drop(columns = ["Participant", "Sport"])
 
 # Chi-square: Sex
 sexfreq = pd.crosstab(index = datadf2["Group"], columns = datadf2["Sex"]).transpose()
-sex_chisq = chisquare(sexfreq)
+sex_chisq = chi2_contingency(sexfreq, correction = False)
 
 # Chi-square: Presentation
-presfreq = pd.crosstab(index = datadf2["Group"], columns = datadf2["Presentation"]).transpose()
+presfreq = pd.crosstab(index = datadf2["Group"], columns = datadf2["Presentation"])
 pres_chisq = chisquare(presfreq)
 
-# T-Test vs Mann-Whitney U based on Shapiro-Wilk
+# T-Test vs Mann-Whitney U based on Shapiro-Wilk and manual boxplot inspection.
+# Run both inference tests, select which to use and report manually based on
+# Shapiro-Wilks test of normality.
+datadf3 = datadf2.drop(columns = ["Sex", "Presentation", "Average_Pain_7days_NRS"]) 
+datadf3grps = datadf3.groupby("Group") 
+shapw = {}
+ttest = {}
+mannwu = {}                                                                                       
+for c, col in enumerate(datadf3.columns):
+    
+    # Data
+    data0 = datadf3grps.get_group(0).loc[:, col].to_frame()
+    data1 = datadf3grps.get_group(1).loc[:, col].to_frame()
+    
+    # Shapiro-Wilks: test normality
+    shapw[col] = {}
+    shapw[col][0] = shapiro(data0).pvalue
+    shapw[col][1] = shapiro(data1).pvalue
+    
+    # T-test (Welch's)
+    ttest[col] = ttest_ind(data0, data1, equal_var = False, nan_policy = "omit").pvalue
+    
+    # Mann-Whitney U
+    mannwu[col] = mannwhitneyu(data0, data1, nan_policy = "omit").pvalue
+    
+    
+    
 
