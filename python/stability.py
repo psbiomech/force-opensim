@@ -40,9 +40,9 @@ import os
 
 '''
 batch_process_stability(user, meta, perturb, treadmill_speed, asteps, perturbation):
-    Batch process margin of stability with or without artificial perturbation.
+    Batch process margin of stability.
 '''
-def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0, asteps = 16, perturbation = 1.0):
+def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0):
 
     # Subjects
     for subj in meta:
@@ -51,44 +51,37 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
         print("SUBJECT: %s" % subj)
         print("-----------------------------------")  
         
-        # Trials
-        for trial in meta[subj]["trials"]:
-            
-            print("\nTRIAL: %s" % trial)
-           
-            # Load the data
-            trialname = meta[subj]["trials"][trial]["name"]
-            trialpath = meta[subj]["trials"][trialname]["path"]
-            with open(os.path.join(trialpath, trialname + "_trial_data.pkl"), "rb") as fid:
-                datakey = pk.load(fid)   
-            
+        # Groups
+        for group in meta[subj]["trials"]:
+        
+            # Trials
+            for trial in meta[subj]["trials"][group]:
                 
-            # *********************
-            # MARGIN OF STABILITY
-            
-            print("---> Margin of stability...")
-            
-            # Calculate simple margin of stability
-            stable = margin_of_stability(user, datakey, treadmill_speed)
-            
-            # Calculate artificially perturbed margin of stability
-            #if artifperturb:
-            #    perturb = perturbed_margin_of_stability(user, datakey, perturbation, asteps, treadmill_speed)
+                #****** FOR TESTING ONLY ******
+                if not (trial == "FAILTCRT13_SLDJ05"): continue
+                #******************************
                 
-            # Visualise
-            plot_margin_of_stability(datakey, stable)
-            
-            
-            # *********************
-            # WHOLE BODY ANGULAR MOMENTUM
-            
-            print("---> Whole body angular momentum...")
-            
-            # Calculate whole body angular momentum
-            wbam = whole_body_angular_momentum(user, datakey)
-            
-            # Visualise
-            plot_whole_body_angular_momentum(datakey, wbam)
+                print("\nTRIAL: %s" % trial)
+               
+                # Load the OpenSim results (OsimResultsKey)
+                trialpath = meta[subj]["trials"][group][trial]["outpath"]
+                with open(os.path.join(trialpath, trial + "_opensim_results.pkl"), "rb") as fid0:
+                    datakey = pk.load(fid0)   
+                            
+                # Load OpenSim input data (OsimKey)
+                with open(os.path.join(trialpath, trial + "_osimkey.pkl"), "rb") as fid1:
+                    osimkey = pk.load(fid1)            
+                
+                
+                # Calculate simple margin of stability
+                print("---> Calculating margin of stability...")
+                stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
+                
+                # Visualise
+                print("---> Generating visualisations...")
+                plot_margin_of_stability(datakey, stable)
+                visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
+                animate_stability_timehistory(datakey, stable)
                                     
     return None    
 
@@ -346,21 +339,29 @@ def perturbed_margin_of_stability(user, datakey, perturbation = 1.0, asteps = 16
 
 
 '''
-margin_of_stability(user, datakey, treadmill_speed):
+margin_of_stability(user, datakey, osimkey, treadmill_speed):
     Calculate 2D margin of stability (b) using the geometric method described
     by Hof et al. (2005). Use Shapely to do the vector geometry. For treadmill
     trials, add the treadmill speed to the anteroposterior centre of mass 
     velocity (default = 0.0 m/s).
 '''
-def margin_of_stability(user, datakey, treadmill_speed = 0.0):
+def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
     
-    # Centre of mass position (OpenSim global)
-    comdata = datakey.data_osim_results[user.bkcode]["pos"]
-    comxidx = comdata["headers"].index("center_of_mass_X")
-    CoM_r = comdata["data"][:, comxidx:comxidx + 3]
+    
+    
+    
+    # Centre of mass position (OpenSim global)   
+    comdata = datakey.results["raw"][user.bkcode]["data"][:, :, 0]
+    comxidx = datakey.results["raw"][user.bkcode]["headers"][0].index("center_of_mass_X")
+    CoM_r = comdata[:, comxidx:comxidx + 3]
+    # comdata = datakey.data_osim_results[user.bkcode]["pos"]
+    # comxidx = comdata["headers"].index("center_of_mass_X")
+    # CoM_r = comdata["data"][:, comxidx:comxidx + 3] 
+    
     
     # Centre of mass velocity (OpenSim global)
-    CoM_v = datakey.data_osim_results[user.bkcode]["vel"]["data"][:, comxidx:comxidx + 3].copy()  # Requires copy() or will only create new reference, not a new variable!
+    CoM_v = datakey.results["raw"][user.bkcode]["data"][:, comxidx:comxidx + 3, 1].copy()  # Requires copy() or will only create new reference, not a new variable!
+    #CoM_v = datakey.data_osim_results[user.bkcode]["vel"]["data"][:, comxidx:comxidx + 3].copy()  # Requires copy() or will only create new reference, not a new variable!
     
     # Adjust fore-aft velocity (for treadmill walking, default = 0.0 m/s)
     CoM_v[:, 0] = CoM_v[:, 0] + treadmill_speed
@@ -389,9 +390,10 @@ def margin_of_stability(user, datakey, treadmill_speed = 0.0):
     
     # Base of support (OpenSim global) from foot markers and GRF
     # Assume marker data already converted to model coordinate system
-    markers = datakey.data_c3dextract_osim["markers"]
-    forces = datakey.data_c3dextract_osim["forces"]
-    timevec = datakey.data_osim_results[user.bkcode]["pos"]["data"][:, datakey.data_osim_results[user.bkcode]["pos"]["headers"].index("time")]
+    markers = osimkey.markers
+    forces = osimkey.forces    
+    timevec = datakey.results["raw"][user.bkcode]["data"][:, datakey.results["raw"][user.bkcode]["headers"][0].index("time"), 0]
+    #timevec = datakey.data_osim_results[user.bkcode]["pos"]["data"][:, datakey.data_osim_results[user.bkcode]["pos"]["headers"].index("time")]
     BoS = construct_base_of_support(markers, forces, timevec)  
     
     # Two-dimensional margin of stability (MoS, b) in transverse (x-z) plane: 
@@ -404,8 +406,19 @@ def margin_of_stability(user, datakey, treadmill_speed = 0.0):
     MoS["b_abs"] = []
     MoS["isstable"] = []
     for t in range(len(BoS["baseshape"])):
-        MoS["b_abs"].append(BoS["baseshape"][t].exterior.distance(CoM["XCoM_pt"][t]))
-        MoS["isstable"].append(BoS["baseshape"][t].contains(CoM["XCoM_pt"][t]))        
+        
+        # No base of support means empty Shapely GeometryColleciton created by
+        # default. Report nominal values for these cases.
+        if type(BoS["baseshape"][t]) == shapely.geometry.collection.GeometryCollection:
+            MoS["b_abs"].append(0.0)
+            MoS["isstable"].append(True)
+            
+        # Valid base of support    
+        else:
+            MoS["b_abs"].append(BoS["baseshape"][t].exterior.distance(CoM["XCoM_pt"][t]))
+            MoS["isstable"].append(BoS["baseshape"][t].contains(CoM["XCoM_pt"][t]))        
+    
+    # Append sign (pos/neg) to margin of stability: pos = stable, neg = unstable
     MoS["b"] = [MoS["b_abs"][bidx] if stab else -1 * MoS["b_abs"][bidx] for bidx, stab in enumerate(MoS["isstable"])]
     
     # Margins of stability along coordinates (b_x, b_z)
@@ -441,8 +454,8 @@ def margin_of_stability(user, datakey, treadmill_speed = 0.0):
     stabledict["CoM"] = CoM
         
     # Pickle it
-    trialname = datakey.trial["name"]
-    with open(os.path.join(datakey.trial["path"], trialname + "_stability.pkl"), "wb") as f:
+    trialname = datakey.trial
+    with open(os.path.join(datakey.outpath, trialname + "_stability.pkl"), "wb") as f:
         pk.dump(stabledict, f)     
     
     return stabledict
@@ -462,16 +475,16 @@ def construct_base_of_support(markers, forces, timevec):
     # Temporary: assume all foot markers always define base of support. This is
     # actually only true during foot-flat. 
     bosmarkers = [[], \
-                  ["RHEE", "RLM", "RMT5", "RMT2", "RMM"], \
-                  ["LHEE", "LLM", "LMT5", "LMT2", "LMM"], \
-                  ["RHEE", "RLM", "RMT5", "RMT2", "LMT2", "LMT5", "LLM", "LHEE"]]
+                  ["RHEEL", "RLMAL", "RMFL", "RP5MT", "RTOE", "RP1MT"], \
+                  ["LHEEL", "LLMAL", "LMFL", "LP5MT", "LTOE", "LP1MT"], \
+                  ["RHEEL", "RLMAL", "RMFL", "RP5MT", "RTOE", "LTOE", "LP5MT", "LMFL", "LLMAL", "LHEEL"]]
     
     # Get GRF
     # Note: OpenSim GRF files are set up as FP1: left, FP2: right, even though 
     # the lab setup is FP1: right, FP2: left.
-    grftime = forces["time0"]
-    grfy_right = forces["data"]["FP2"]["F"][:, 1]
-    grfy_left = forces["data"]["FP1"]["F"][:, 1]
+    grftime = forces["time"]
+    grfy_right = forces["data"]["right"]["F"][:, 1]
+    grfy_left = forces["data"]["left"]["F"][:, 1]
         
     # Determine single or double support from GRF:
     #   0: no support
@@ -487,8 +500,12 @@ def construct_base_of_support(markers, forces, timevec):
     
     # Interpolation functions: 2D marker position (cubic spline)
     mkrfun = {}
-    for m in markers["data"]:
-        mkrfun[m] = interp.interp1d(markers["time0"], markers["data"][m][:, [0, 2]], kind = "cubic", fill_value = "extrapolate", axis = 0)
+    for m in markers:
+        if m in ["frames", "offset", "rate", "time", "units"]:
+            continue
+        else:
+            mkrfun[m] = interp.interp1d(markers["time"], markers[m][:, [0, 2]], kind = "cubic", fill_value = "extrapolate", axis = 0)
+        
     
     # Dynamic base of support
     bos = {}
@@ -511,7 +528,7 @@ def construct_base_of_support(markers, forces, timevec):
         bos["coordinates"].append(mkrcoords)
         
         # Build base of support Polygon, but return the convex hull
-        baseshape = shapely. MultiPoint(mkrcoords).convex_hull
+        baseshape = shapely.MultiPoint(mkrcoords).convex_hull
         bos["baseshape"].append(baseshape)
         
     return bos
@@ -571,17 +588,17 @@ def resample1d(data, nsamp):
 '''
 export MoS (TBD)
 '''
-def export_stability_measures(stable):
+# def export_stability_measures(stable):
    
-    # Create dataframe from dict (b, b_x, b_z)        
-    b = stable["MoS"]["b"]
-    b_x = stable["MoS"]["b_x"]
-    b_z = stable["MoS"]["b_z"]
-    bdf = pd.DataFrame(zip(b, b_x, b_z), columns=["b", "b_x", "b_z"])
+#     # Create dataframe from dict (b, b_x, b_z)        
+#     b = stable["MoS"]["b"]
+#     b_x = stable["MoS"]["b_x"]
+#     b_z = stable["MoS"]["b_z"]
+#     bdf = pd.DataFrame(zip(b, b_x, b_z), columns=["b", "b_x", "b_z"])
     
-    #TBD
+#     #TBD
     
-    return None
+#     return None
 
 
 
@@ -624,10 +641,10 @@ plot_margin_of_stability(datakey, stable, showplot):
 '''
 def plot_margin_of_stability(datakey, stable, showplot = False):
     
-    subject = datakey.subj
-    trial = datakey.trial["name"]
+    subject = datakey.subject
+    trial = datakey.trial
     
-    figpath = os.path.join(datakey.trial["path"], "viz", "timeseries")  
+    figpath = os.path.join(datakey.outpath, "viz", "MoS", "timeseries")  
     if not os.path.exists(figpath): os.makedirs(figpath)   
             
     # Global parameters
@@ -656,14 +673,14 @@ def plot_margin_of_stability(datakey, stable, showplot = False):
     
 
 '''
-visualise_stability_timehistory(datakey, stable, showplot):
+visualise_stability_timehistory(datakey, stable, showplot, colours, xlim, ylim):
     Visualise the base of support (BoS), centre of mass (CoM) and extrapolated 
     centre of mass (XCoM) at each time step. Export as individual frames.
 '''
-def visualise_stability_timehistory(datakey, stable, showplot = False):
+def visualise_stability_timehistory(datakey, stable, showplot = False, colours = ("blue", "red", "black"), xlim = [-1, 1], ylim = [-1, 1]):
 
     # Output folder
-    figpath = os.path.join(datakey.trial["path"], "viz", "figures", "stable")  
+    figpath = os.path.join(datakey.outpath, "viz", "MoS", "slides")  
     if not os.path.exists(figpath): os.makedirs(figpath)
 
     # Plot time history of base of support, centre of mass, and extrapolated
@@ -671,17 +688,17 @@ def visualise_stability_timehistory(datakey, stable, showplot = False):
     for t in range(len(stable["BoS"]["baseshape"])):
         
         fig = plt.figure()
-        fig.suptitle(datakey.trial["name"] + " Step: " + str(t))
+        fig.suptitle(datakey.trial + " Step: " + str(t))
         
         # Plot
         baseshape = stable["BoS"]["baseshape"][t]
         com = stable["CoM"]["CoM_pt"][t]
         xcom = stable["CoM"]["XCoM_pt"][t]
-        plot_bos_com_xcom(fig, baseshape, com, xcom)     
+        plot_bos_com_xcom(fig, baseshape, com, xcom, colours, xlim, ylim)     
         plt.show()
         
         # Save
-        fig.savefig(os.path.join(figpath, datakey.trial["name"] + "_" + str(t) + ".png"))
+        fig.savefig(os.path.join(figpath, datakey.trial + "_" + str(t) + ".png"))
         
         if not showplot: plt.close()
 
@@ -690,11 +707,11 @@ def visualise_stability_timehistory(datakey, stable, showplot = False):
 
 
 '''
-animate_stability_timehistory(datakey, stable):
+animate_stability_timehistory(datakey, stable, showplot):
     Visualise the base of support (BoS), centre of mass (CoM) and extrapolated 
     centre of mass (XCoM) at each time step. Export as MP4 animation.
 '''    
-def animate_stability_timehistory(datakey, stable):
+def animate_stability_timehistory(datakey, stable, showplot = False, xlim = [-0.5, 0.5], ylim = [-0.5, 1.0]):
           
     fig = plt.figure()
     ax = fig.gca()
@@ -702,24 +719,25 @@ def animate_stability_timehistory(datakey, stable):
     # Initialise animation
     def init_func():
         ax.clear()
-        ax.set_xlim(-0.5, 0.5)
-        ax.set_ylim(-0.5, 1.0)
+        ax.set_xlim(xlim)
+        ax.set_ylim(ylim)
         ax.set_aspect("equal", adjustable="box")
         
     # Animator function
     def animate(i):
     
         ax.clear()
-        ax.set_xlim(-0.5, 0.5)
-        ax.set_ylim(-0.5, 1.0)
+        ax.set_xlim(xlim)
+        ax.set_ylim(ylim)
         ax.set_xlabel("Mediolateral (m)")
         ax.set_ylabel("Fore-aft (m)")
         ax.set_aspect("equal", adjustable="box")
-        ax.set_title(datakey.trial["name"] + " Step: " + str(i))
+        ax.set_title(datakey.trial + " Step: " + str(i))
         
-        # Base shape
-        shapex, shapey = stable["BoS"]["baseshape"][i].exterior.xy
-        ax.plot(shapey, shapex, color = "green")
+        # Plot base of support shape if it exists (must be type Polygon)
+        if type(stable["BoS"]["baseshape"][i]) == shapely.geometry.polygon.Polygon:
+            shapex, shapey = stable["BoS"]["baseshape"][i].exterior.xy
+            ax.plot(shapey, shapex, color = "green")
         
         # Centre of mass
         comx, comy = stable["CoM"]["CoM_pt"][i].xy
@@ -736,9 +754,11 @@ def animate_stability_timehistory(datakey, stable):
     anim = FuncAnimation(fig, animate, init_func=init_func, frames = len(stable["BoS"]["baseshape"]))
     
     # Save a MP4    
-    figpath = os.path.join(datakey.trial["path"], "viz", "animation")  
+    figpath = os.path.join(datakey.outpath, "viz", "MoS", "animation")  
     if not os.path.exists(figpath): os.makedirs(figpath) 
-    anim.save(os.path.join(figpath, datakey.trial["name"] + ".mp4"))
+    anim.save(os.path.join(figpath, datakey.trial + ".mp4"))
+    
+    if not showplot: plt.close()
     
     return None
     
@@ -856,18 +876,19 @@ def animate_stability_artificial_perturbation(datakey, perturb):
 
 
 '''
-plot_bos_com_xcom(fig, baseshape, com, xcom, colours):
+plot_bos_com_xcom(fig, baseshape, com, xcom, colours, xlim, ylim):
     Plot instantaneous base of support (BoS), centre of mass (CoM) and 
     extrapolated centre of mass (XCoM). Coordinates flipped (z-x) for easier 
     visualisation.
 '''
-def plot_bos_com_xcom(fig, baseshape, com, xcom, colours = ("blue", "red", "black")):
+def plot_bos_com_xcom(fig, baseshape, com, xcom, colours = ("blue", "red", "black"), xlim = [-1, 1], ylim = [-1, 1]):
     
     #fig = plt.figure()
     
-    # Base shape
-    shapex, shapey = baseshape.exterior.xy
-    plt.plot(shapey, shapex, color = "green")
+    # Plot base of support shape if it exists (must be type Polygon)
+    if type(baseshape) == shapely.geometry.polygon.Polygon:
+        shapex, shapey = baseshape.exterior.xy
+        plt.plot(shapey, shapex, color = "green")
     
     # Centre of mass
     comx, comy = com.xy
@@ -880,8 +901,8 @@ def plot_bos_com_xcom(fig, baseshape, com, xcom, colours = ("blue", "red", "blac
     # Connect with line
     plt.plot([comy, xcomy], [comx, xcomx], linestyle = "-", color = colours[2])
     
-    plt.xlim([-0.75, 0.75])
-    plt.ylim([-0.5, 1.0])
+    plt.xlim(xlim)
+    plt.ylim(ylim)
     plt.xlabel("Mediolateral (m)")
     plt.ylabel("Fore-aft (m)")
     

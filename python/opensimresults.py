@@ -78,7 +78,7 @@ class OsimResultsKey():
             # BodyKinematics
             elif ans.casefold() == "bk":
         
-                var = ["pos", "vel", "acc"]
+                #var = ["pos", "vel", "acc"]
                 datadfs = []
                 headers = []
                 for f, file in enumerate(filext["bk"]):

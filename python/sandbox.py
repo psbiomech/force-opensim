@@ -16,13 +16,32 @@ user = uset.FORCESettings_SDP()
 
 # %% LOAD META DATA
 
+import usersettings as uset
 import pickle as pk
 import os
+
+user = uset.FORCESettings_SLDJ()
 
 dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     forcedb = pk.load(fid)
 
+
+# %% LOAD A TRIALKEY
+
+import pickle as pk
+import os
+
+# file path and name prefix
+fprefix = "FAILT01_SLDJ01"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT01\FAILT01_SLDJ01"
+
+# OsimResultsKey
+pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")
+with open(pkfile, "rb") as fid: 
+    trialkey1 = pk.load(fid)
+    
+    
 
 # %% LOAD AN OSIMKEY
 
@@ -30,8 +49,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILTCRT01_SLDJ01"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILTCRT01\FAILTCRT01_SLDJ01"
+fprefix = "FAILT01_SLDJ01"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT01\FAILT01_SLDJ01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")
@@ -46,8 +65,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILTCRT01_SDP01"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01"
+fprefix = "FAILT01_SLDJ01"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT01\FAILT01_SLDJ01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_c3dkey.pkl")
@@ -63,8 +82,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILTCRT01_SDP01"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\FAILTCRT01\FAILTCRT01_SDP01"
+fprefix = "FAILTCRT01_SLDJ01"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILTCRT01\FAILTCRT01_SLDJ01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")

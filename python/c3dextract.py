@@ -270,17 +270,17 @@ class TrialKey():
             #   col1: right foot
             #   col2: left foot
             events["fp_sequence"] = [[0, 0]]
-            if events["window_labels"][0][1] == "R":    # For SLDJ, use second event
-                events["fp_sequence"] = np.array([[0, 1]])
+            if events["window_labels"][1][0] == "R":    # For SLDJ, use second event
+                events["fp_sequence"] = np.array([[1, 0]])
             else:
-                events["fp_sequence"] = np.array([[2, 0]])            
+                events["fp_sequence"] = np.array([[0, 2]])            
             
             # Leg task, i.e., what is the role of the leg in the task
             events["leg_task"] = ["sldj_ipsi", "sldj_contra"]   
             
             # Last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = 1
+            events["opensim_last_event_idx"] = 2
 
             
         #
@@ -728,11 +728,8 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             osimkey = {}
             for trial in meta[subj]["trials"][group]:                
 
-                #****** FOR TESTING ONLY ******
-                # trialre = re.compile("IGNORE_THIS")
-                # trialmatch = trialre.match(trial)
-                # if (not trialmatch):
-                #     continue
+                #****** FOR TESTING ONLY ******        
+                #if not (trial == "SKIP_ME"): continue
                 #******************************
                 
                 # ignore dynamic trials
@@ -774,10 +771,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** FOR TESTING ONLY ******                
-                # trialre = re.compile("SKIP THESE")
-                # trialmatch = trialre.match(trial)
-                # if (not trialmatch):
-                #     continue
+                #if not (trial == "FAILT01_SLDJ01"): continue
                 #******************************
                 
                 # ignore static trials

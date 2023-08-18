@@ -69,7 +69,7 @@ print("Done.\n")
 # import c3dextract as c3dex
 
 # print("Extracting C3D data, creating OpenSim files...\n")
-# failed_files = c3dex.c3d_batch_process(user, forcedb, lasem, -1, restart = "FAILT71")
+# failed_files = c3dex.c3d_batch_process(user, forcedb, lasem, -1)
 # print("\nC3D data extract done.\n")
 
 
@@ -108,11 +108,11 @@ print("Done.\n")
 
 # %% COLLATE AND EXPORT RESULTS
 
-import opensimresults as osr
+# import opensimresults as osr
 
-print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(forcedb, ["ik", "id", "bk"], user, 101)
-print("\nOpenSim results converted to Pickle.\n")
+# print("Converting OpenSim results to Pickle...\n")
+# osr.opensim_results_batch_process(forcedb, ["ik", "id", "bk"], user, 101)
+# print("\nOpenSim results converted to Pickle.\n")
 
 # print("Exporting OpenSim results to CSV...\n")
 # osr.export_opensim_results(forcedb, user, ["ik", "id"])
@@ -147,7 +147,10 @@ print("\nOpenSim results converted to Pickle.\n")
 
 # %% STABILITY
 
+import stability
 
+print("Running post-hoc analyses...\n")
+stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
 
 
 
