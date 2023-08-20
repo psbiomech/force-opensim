@@ -49,8 +49,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILT01_SLDJ01"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT01\FAILT01_SLDJ01"
+fprefix = "FAILT02_SLDJ08"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT02\FAILT02_SLDJ08"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")

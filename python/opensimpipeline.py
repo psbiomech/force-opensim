@@ -468,7 +468,8 @@ def run_opensim_id(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    #t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"] - 1])   # temporary, need to fix last_event_idx for sldj
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setStartTime(t0)
     tool.setEndTime(t1)
@@ -560,7 +561,8 @@ def run_opensim_bk(osimkey, user):
   
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    #t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"] - 1])   # temporary, need to fix last_event_idx for sldj
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)

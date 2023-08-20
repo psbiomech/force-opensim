@@ -280,7 +280,13 @@ class TrialKey():
             
             # Last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = 2
+            #
+            # For single leg drop jump, last event in the window of interest
+            # is actually 2 (foot-off, moving into jump phase), but the first
+            # event indicating initiation of the drop phase is ignored when 
+            # creating the OsimKey as this event is often not labelled correctly,
+            # therefore the window is reduced to FO to FS on the ipsilateral leg.
+            events["opensim_last_event_idx"] = 1
 
             
         #

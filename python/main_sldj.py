@@ -69,7 +69,7 @@ print("Done.\n")
 # import c3dextract as c3dex
 
 # print("Extracting C3D data, creating OpenSim files...\n")
-# failed_files = c3dex.c3d_batch_process(user, forcedb, lasem, -1)
+# failed_files = c3dex.c3d_batch_process(user, forcedb, lasem, -1, restart = ("FAILT70", "FAILT70"))
 # print("\nC3D data extract done.\n")
 
 
@@ -82,12 +82,12 @@ print("Done.\n")
 # print("\nOpenSim model scaling (SCALE) completed.\n")
 
 # print("Running OpenSim analyses: IK, ID...\n")
-# failedfiles = osp.opensim_pipeline(forcedb, user, ["ik", "id"])
+# failedfiles_ikid = osp.opensim_pipeline(forcedb, user, ["ik", "id"], restart = "FAILTCRT24")
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: BK...\n")
-# osp.opensim_pipeline(forcedb, user, ["bk"])
-# print("\nOpenSim analyses (IK, ID) completed.\n")
+# failedfiles_bk = osp.opensim_pipeline(forcedb, user, ["bk"], restart = "FAILT100")
+# print("\nOpenSim analyses (BK) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])
@@ -111,7 +111,7 @@ print("Done.\n")
 # import opensimresults as osr
 
 # print("Converting OpenSim results to Pickle...\n")
-# osr.opensim_results_batch_process(forcedb, ["ik", "id", "bk"], user, 101)
+# failedfiles = osr.opensim_results_batch_process(forcedb, ["ik", "id", "bk"], user, 101)
 # print("\nOpenSim results converted to Pickle.\n")
 
 # print("Exporting OpenSim results to CSV...\n")
@@ -149,7 +149,7 @@ print("Done.\n")
 
 import stability
 
-print("Running post-hoc analyses...\n")
+print("Running stability analyses...\n")
 stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
 
 

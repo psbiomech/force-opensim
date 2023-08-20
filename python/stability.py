@@ -21,6 +21,9 @@ import pandas as pd
 import os
 
 
+# Use non-interactive backend
+plt.switch_backend("Agg")
+
 '''
 -----------------------------------
 ------------- CLASSES -------------
@@ -45,11 +48,12 @@ batch_process_stability(user, meta, perturb, treadmill_speed, asteps, perturbati
 def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0):
 
     # Subjects
+    failedfiles = []
     for subj in meta:
         
         print("-----------------------------------")
         print("SUBJECT: %s" % subj)
-        print("-----------------------------------")  
+        #print("-----------------------------------")  
         
         # Groups
         for group in meta[subj]["trials"]:
@@ -58,32 +62,45 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                if not (trial == "FAILTCRT13_SLDJ05"): continue
+                # if not (trial == "FAILTCRT13_SLDJ05"): continue
                 #******************************
                 
-                print("\nTRIAL: %s" % trial)
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+                
+                print("-----------------------------------") 
+                print("TRIAL: %s" % trial)
+                print("-----------------------------------") 
+                
+                try:
                
-                # Load the OpenSim results (OsimResultsKey)
-                trialpath = meta[subj]["trials"][group][trial]["outpath"]
-                with open(os.path.join(trialpath, trial + "_opensim_results.pkl"), "rb") as fid0:
-                    datakey = pk.load(fid0)   
-                            
-                # Load OpenSim input data (OsimKey)
-                with open(os.path.join(trialpath, trial + "_osimkey.pkl"), "rb") as fid1:
-                    osimkey = pk.load(fid1)            
-                
-                
-                # Calculate simple margin of stability
-                print("---> Calculating margin of stability...")
-                stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
-                
-                # Visualise
-                print("---> Generating visualisations...")
-                plot_margin_of_stability(datakey, stable)
-                visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
-                animate_stability_timehistory(datakey, stable)
+                    # Load the OpenSim results (OsimResultsKey)
+                    trialpath = meta[subj]["trials"][group][trial]["outpath"]
+                    with open(os.path.join(trialpath, trial + "_opensim_results.pkl"), "rb") as fid0:
+                        datakey = pk.load(fid0)   
+                                
+                    # Load OpenSim input data (OsimKey)
+                    with open(os.path.join(trialpath, trial + "_osimkey.pkl"), "rb") as fid1:
+                        osimkey = pk.load(fid1)            
+                    
+                    
+                    # Calculate simple margin of stability
+                    print("---> Calculating margin of stability...")
+                    stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
+                    
+                    # Visualise
+                    print("---> Generating visualisations...")
+                    plot_margin_of_stability(datakey, stable)
+                    visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
+                    animate_stability_timehistory(datakey, stable)
+                    
+                except:
+                    print("*** FAILED ***")
+                    failedfiles.append(trial)     
+                    #raise
                                     
-    return None    
+    return failedfiles    
 
 
 
@@ -695,7 +712,7 @@ def visualise_stability_timehistory(datakey, stable, showplot = False, colours =
         com = stable["CoM"]["CoM_pt"][t]
         xcom = stable["CoM"]["XCoM_pt"][t]
         plot_bos_com_xcom(fig, baseshape, com, xcom, colours, xlim, ylim)     
-        plt.show()
+        #plt.show()
         
         # Save
         fig.savefig(os.path.join(figpath, datakey.trial + "_" + str(t) + ".png"))
