@@ -90,6 +90,23 @@ pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")
 with open(pkfile, "rb") as fid: 
     osimresultskey1 = pk.load(fid)
     
+
+# %% LOAD A STABILITY KEY
+
+import pickle as pk
+import os
+
+# file path and name prefix
+fprefix = "FAILT24_SLDJ06"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT24\FAILT24_SLDJ06"
+
+# OsimResultsKey
+pkfile = os.path.join(fpath, fprefix + "_stability.pkl")
+with open(pkfile, "rb") as fid: 
+    stabilitykey1 = pk.load(fid)
+    
+
+
     
 
 # %% CALCULATE JOINT ANGULAR IMPULSE

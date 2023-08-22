@@ -21,8 +21,11 @@ import pandas as pd
 import os
 
 
-# Use non-interactive backend
+# Use non-interactive backend to avoid memory accumulation
 plt.switch_backend("Agg")
+
+
+
 
 '''
 -----------------------------------
@@ -45,10 +48,30 @@ plt.switch_backend("Agg")
 batch_process_stability(user, meta, perturb, treadmill_speed, asteps, perturbation):
     Batch process margin of stability.
 '''
-def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0):
+def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0, restart = -1):
+
+    
+    failedfiles = []
+    startflag = 0
+    for subj in meta:
+                
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue    
+
 
     # Subjects
-    failedfiles = []
     for subj in meta:
         
         print("-----------------------------------")
@@ -90,10 +113,10 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                     stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
                     
                     # Visualise
-                    print("---> Generating visualisations...")
-                    plot_margin_of_stability(datakey, stable)
-                    visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
-                    animate_stability_timehistory(datakey, stable)
+                    #print("---> Generating visualisations...")
+                    #plot_margin_of_stability(datakey, stable)
+                    #visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
+                    #animate_stability_timehistory(datakey, stable)
                     
                 except:
                     print("*** FAILED ***")
@@ -102,6 +125,14 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                                     
     return failedfiles    
 
+
+
+
+'''
+-----------------------------------
+------- STABILITY ANALYSES --------
+-----------------------------------
+'''
 
 
 '''
@@ -364,21 +395,13 @@ margin_of_stability(user, datakey, osimkey, treadmill_speed):
 '''
 def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
     
-    
-    
-    
     # Centre of mass position (OpenSim global)   
     comdata = datakey.results["raw"][user.bkcode]["data"][:, :, 0]
     comxidx = datakey.results["raw"][user.bkcode]["headers"][0].index("center_of_mass_X")
     CoM_r = comdata[:, comxidx:comxidx + 3]
-    # comdata = datakey.data_osim_results[user.bkcode]["pos"]
-    # comxidx = comdata["headers"].index("center_of_mass_X")
-    # CoM_r = comdata["data"][:, comxidx:comxidx + 3] 
-    
     
     # Centre of mass velocity (OpenSim global)
     CoM_v = datakey.results["raw"][user.bkcode]["data"][:, comxidx:comxidx + 3, 1].copy()  # Requires copy() or will only create new reference, not a new variable!
-    #CoM_v = datakey.data_osim_results[user.bkcode]["vel"]["data"][:, comxidx:comxidx + 3].copy()  # Requires copy() or will only create new reference, not a new variable!
     
     # Adjust fore-aft velocity (for treadmill walking, default = 0.0 m/s)
     CoM_v[:, 0] = CoM_v[:, 0] + treadmill_speed
@@ -410,7 +433,6 @@ def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
     markers = osimkey.markers
     forces = osimkey.forces    
     timevec = datakey.results["raw"][user.bkcode]["data"][:, datakey.results["raw"][user.bkcode]["headers"][0].index("time"), 0]
-    #timevec = datakey.data_osim_results[user.bkcode]["pos"]["data"][:, datakey.data_osim_results[user.bkcode]["pos"]["headers"].index("time")]
     BoS = construct_base_of_support(markers, forces, timevec)  
     
     # Two-dimensional margin of stability (MoS, b) in transverse (x-z) plane: 
@@ -425,10 +447,10 @@ def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
     for t in range(len(BoS["baseshape"])):
         
         # No base of support means empty Shapely GeometryColleciton created by
-        # default. Report nominal values for these cases.
+        # default. Report nominal values (0.0, None) for these cases.
         if type(BoS["baseshape"][t]) == shapely.geometry.collection.GeometryCollection:
             MoS["b_abs"].append(0.0)
-            MoS["isstable"].append(True)
+            MoS["isstable"].append(None)
             
         # Valid base of support    
         else:
@@ -442,6 +464,13 @@ def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
     MoS["b_x"] = []
     MoS["b_z"] = []
     for t in range(len(BoS["baseshape"])):
+        
+        # If no boundary of stability (flight), just return nominal values (0.0)
+        if type(BoS["baseshape"][t]) == shapely.geometry.collection.GeometryCollection:
+            MoS["b_x"].append(0.0)
+            MoS["b_z"].append(0.0)
+            continue
+        
         
         # Instantaneous parameters
         xcom = CoM["XCoM_pt"][t].coords[0]
@@ -469,6 +498,10 @@ def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
     stabledict["MoS"] = MoS
     stabledict["BoS"] = BoS
     stabledict["CoM"] = CoM
+    
+    # Trial info
+    stabledict["task"] = osimkey.task
+    stabledict["timevec"] = timevec
         
     # Pickle it
     trialname = datakey.trial
@@ -555,11 +588,11 @@ def construct_base_of_support(markers, forces, timevec):
 '''
 resample1d(data, nsamp):
     Simple resampling by 1-D interpolation (rows = samples, cols = variable).
-    Data can be a 1-D or multiple variables in a 2D array-like object.
+    Data can be a 1-D or multiple variables in a 2-D array-like object.
 '''
 def resample1d(data, nsamp):
 
-    # Convert list to array
+    # Convert list to 1D array
     if isinstance(data, list):
         data = np.array([data]).transpose()
         ny = 1        
@@ -597,25 +630,383 @@ def resample1d(data, nsamp):
 
 '''
 -----------------------------------
----------- VISUALISATION ----------
+-------- EXPORT FUNCTIONS ---------
 -----------------------------------
 '''
 
 
 '''
-export MoS (TBD)
+export_margin_of_stability(meta, user, nsamp, normalise):
+    Write stablity time histories to CSV.
+    NOTE: Currently hardcoded for SLDJ
 '''
-# def export_stability_measures(stable):
+def export_margin_of_stability(meta, user, nsamp, normalise = False):
    
-#     # Create dataframe from dict (b, b_x, b_z)        
-#     b = stable["MoS"]["b"]
-#     b_x = stable["MoS"]["b_x"]
-#     b_z = stable["MoS"]["b_z"]
-#     bdf = pd.DataFrame(zip(b, b_x, b_z), columns=["b", "b_x", "b_z"])
+    # empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
     
-#     #TBD
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+
+        # subject type
+        if subj.startswith("FAILTCRT"):
+            subj_type = "ctrl"
+        else:
+            subj_type = "sym"
+                
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                try:
+                
+                    # load the trial StabilityKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_stability.pkl")
+                    with open(pkfile,"rb") as fid:
+                        stabilitykey = pk.load(fid)
+
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+                                            
+                    # participant data
+                    age = osimresultskey.age
+                    mass = osimresultskey.mass
+                    height = osimresultskey.height
+                    sex = osimresultskey.sex
+                    dom_foot = osimresultskey.dom_foot
+                    aff_side = osimresultskey.aff_side
+                    shomri_r = osimresultskey.shomri[0]
+                    shomri_l = osimresultskey.shomri[1]
+                    
+                    # for bilateral symptomatics, affected side based on shomri
+                    if aff_side == 1:
+                        more_aff_side = "r"
+                    elif aff_side == 2:
+                        more_aff_side = "l"
+                    elif aff_side == 0 or aff_side == 3:
+                        if np.isnan(shomri_r) or np.isnan(shomri_l):
+                            more_aff_side = "r"   # default until data available
+                        if shomri_r > shomri_l:
+                            more_aff_side = "r"
+                        else:
+                            more_aff_side = "l"
+                        
+                        
+                    # trial task type
+                    task = osimresultskey.task
+
+                    # pivot leg
+                    #pivot_leg = osimresultskey.events["labels"][0][0].lower()
+                    
+                    # generic event labels:
+                    #   FS: Foot-strike
+                    #   F0: foot-off
+                    #events_gen_labels = ["FS", "FO"]
+                    
+                    # event timing: relative time and time steps
+                    #events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
+                    #events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
+                    
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        
+                        # NOTE: CURRENTLY HARDCODED FOR SLDJ
+                        
+                        # skip contralateral leg data
+                        if osimresultskey.events["labels"][0][0] != foot.upper(): continue                        
+                        
+                        # trial leg: more affected or less affected
+                        if foot == more_aff_side:
+                            trial_leg = "less"
+                        else:
+                            trial_leg = "more"                        
+                        
+                                                
+                        # Get the Euclidean (2D) margin of stability and check                       
+                        # if it needs to be trimmed if events are not accurately
+                        # labelled. Return the first and last index.
+                        b = np.array(stabilitykey["MoS"]["b"])                       
+                        bidx0 = 0
+                        bidx1 = len(b) - 1
+                        while ((b.dtype is np.dtype("bool")) and (b[bidx0] is None)) or ((b.dtype is not np.dtype("bool")) and (b[bidx0] == 0.0)): bidx0 = bidx0 + 1
+                        while ((b.dtype is np.dtype("bool")) and (b[bidx1] is None)) or ((b.dtype is not np.dtype("bool")) and (b[bidx1] == 0.0)): bidx1 = bidx1 - 1
+                        
+                        
+                        # margin of stability components
+                        for ans in ["b", "b_abs", "b_x", "b_z", "isstable"]:
+                        
+                            # Data, convert to 1D array and trim
+                            drow = np.array(stabilitykey["MoS"][ans])
+                            drow = drow[bidx0:bidx1 + 1]
+                                                            
+                            # Resample if required
+                            if len(drow) != nsamp:
+                                drow = resample1d(np.reshape(drow, (len(drow), 1)), nsamp)
+                                                                                                                
+                            # Normalisation factors
+                            # TBD: Need to determine an appropriate normalisation
+                            # factor, e.g., leg length or height. Use height for
+                            # the moment.
+                            normfactor = 1.0
+                            if normalise:
+                                normfactor = 1.0 / height
+                                            
+                            # Normalise if required
+                            if ans != "isstable":
+                                drow = drow * normfactor
+                            
+                            # create new line of data
+                            csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
+                            csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                    #raise
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create dataframe
+    print("\nCreating dataframe...")
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]
+    csvdf = pd.DataFrame(csvdata, columns = headers)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    normalisestr = ["", "_normalised"]
+    csvfile = user.csvfileprefix + "_margin_of_stability" + normalisestr[int(normalise)] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
     
-#     return None
+    
+    print("\n")
+   
+    return failedfiles
+
+
+
+'''
+export_margin_of_stability_subject_mean(meta, user, nsamp, normalise):
+    Write stablity time histories to CSV.
+    NOTE: Currently hardcoded for SLDJ
+'''
+def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False):
+   
+    # empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+
+        # subject type
+        if subj.startswith("FAILTCRT"):
+            subj_type = "ctrl"
+        else:
+            subj_type = "sym"
+                
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                try:
+                
+                    # load the trial StabilityKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_stability.pkl")
+                    with open(pkfile,"rb") as fid:
+                        stabilitykey = pk.load(fid)
+
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+                                            
+                    # participant data
+                    age = osimresultskey.age
+                    mass = osimresultskey.mass
+                    height = osimresultskey.height
+                    sex = osimresultskey.sex
+                    dom_foot = osimresultskey.dom_foot
+                    aff_side = osimresultskey.aff_side
+                    shomri_r = osimresultskey.shomri[0]
+                    shomri_l = osimresultskey.shomri[1]
+                    
+                    # for bilateral symptomatics, affected side based on shomri
+                    if aff_side == 1:
+                        more_aff_side = "r"
+                    elif aff_side == 2:
+                        more_aff_side = "l"
+                    elif aff_side == 0 or aff_side == 3:
+                        if np.isnan(shomri_r) or np.isnan(shomri_l):
+                            more_aff_side = "r"   # default until data available
+                        if shomri_r > shomri_l:
+                            more_aff_side = "r"
+                        else:
+                            more_aff_side = "l"
+                        
+                        
+                    # trial task type
+                    task = osimresultskey.task
+
+                    # pivot leg
+                    #pivot_leg = osimresultskey.events["labels"][0][0].lower()
+                    
+                    # generic event labels:
+                    #   FS: Foot-strike
+                    #   F0: foot-off
+                    #events_gen_labels = ["FS", "FO"]
+                    
+                    # event timing: relative time and time steps
+                    #events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
+                    #events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
+                    
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        
+                        # NOTE: CURRENTLY HARDCODED FOR SLDJ
+                        
+                        # skip contralateral leg data
+                        if osimresultskey.events["labels"][0][0] != foot.upper(): continue                        
+                        
+                        # trial leg: more affected or less affected
+                        if foot == more_aff_side:
+                            trial_leg = "less"
+                        else:
+                            trial_leg = "more"                        
+                        
+                                                
+                        # Get the Euclidean (2D) margin of stability and check                       
+                        # if it needs to be trimmed if events are not accurately
+                        # labelled. Return the first and last index.
+                        b = np.array(stabilitykey["MoS"]["b"])                       
+                        bidx0 = 0
+                        bidx1 = len(b) - 1
+                        while ((b.dtype is np.dtype("bool")) and (b[bidx0] is None)) or ((b.dtype is not np.dtype("bool")) and (b[bidx0] == 0.0)): bidx0 = bidx0 + 1
+                        while ((b.dtype is np.dtype("bool")) and (b[bidx1] is None)) or ((b.dtype is not np.dtype("bool")) and (b[bidx1] == 0.0)): bidx1 = bidx1 - 1
+                        
+                        
+                        # margin of stability components
+                        for ans in ["b", "b_abs", "b_x", "b_z", "isstable"]:
+                        
+                            # Data, convert to 1D array and trim
+                            drow = np.array(stabilitykey["MoS"][ans])
+                            drow = drow[bidx0:bidx1 + 1]
+                                                            
+                            # Resample if required
+                            if len(drow) != nsamp:
+                                drow = resample1d(np.reshape(drow, (len(drow), 1)), nsamp)
+                                                                                                                
+                            # Normalisation factors
+                            # TBD: Need to determine an appropriate normalisation
+                            # factor, e.g., leg length or height. Use height for
+                            # the moment.
+                            normfactor = 1.0
+                            if normalise:
+                                normfactor = 1.0 / height
+                                            
+                            # Normalise if required
+                            if ans != "isstable":
+                                drow = drow * normfactor
+                            
+                            # create new line of data
+                            csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
+                            csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                    #raise
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create dataframe
+    print("\nCreating dataframe...")
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]
+    csvdf = pd.DataFrame(csvdata, columns = headers)    
+
+    # group
+    csvdf.drop("trial", axis = 1, inplace = True)   # std() doesn't like the trial column
+    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"])
+
+    # descriptives
+    csvdf_grouped_mean = csvdf_grouped.mean().reset_index()
+    csvdf_grouped_sd = csvdf_grouped.std().reset_index()
+    
+    # rearrange dataframes (much easier in dplyr with relocate()!)
+    csvdf_grouped_mean["statistic"] = "mean"
+    dfmean = csvdf_grouped_mean.pop("statistic")
+    csvdf_grouped_mean.insert(csvdf_grouped_mean.columns.get_loc("variable") + 1, dfmean.name, dfmean)      
+    csvdf_grouped_sd["statistic"] = "sd"
+    dfsd = csvdf_grouped_sd.pop("statistic")
+    csvdf_grouped_sd.insert(csvdf_grouped_sd.columns.get_loc("variable") + 1, dfsd.name, dfsd)    
+    
+    # interleave mean and sd rows
+    csvdf_grouped_mean["sortidx"] = range(0, len(csvdf_grouped_mean))
+    csvdf_grouped_sd["sortidx"] = range(0, len(csvdf_grouped_sd))
+    csvdf_descriptives = pd.concat([csvdf_grouped_mean, csvdf_grouped_sd]).sort_values(["sortidx", "statistic"])
+    csvdf_descriptives.drop(columns = "sortidx", inplace = True)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    normalisestr = ["", "_normalised"]
+    csvfile = user.csvdescfileprefix + "_margin_of_stability" + normalisestr[int(normalise)] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf_descriptives.to_csv(os.path.join(fpath,csvfile), index = False)
+    
+    print("\n")
+   
+    return failedfiles
+
+
+
+
+
+'''
+-----------------------------------
+---------- VISUALISATION ----------
+-----------------------------------
+'''
 
 
 

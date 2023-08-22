@@ -676,6 +676,7 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)
+                    #raise
                 else:
                     print("Dynamic trial: %s" % trial)
 

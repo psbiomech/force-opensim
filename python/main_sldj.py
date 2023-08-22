@@ -149,8 +149,18 @@ print("Done.\n")
 
 import stability
 
-print("Running stability analyses...\n")
-stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
+# print("Running stability analyses (MoS)...\n")
+# stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
+# print("Stability analyses (MoS) complete.\n")
+
+# print("Exporting stability results (MoS) to CSV...\n")
+# stability.export_margin_of_stability(forcedb, user, 101, True)
+# print("Stability CSV export complete.\n")
+
+print("Exporting normalised stability results (MoS) to CSV...\n")
+stability.export_margin_of_stability_subject_mean(forcedb, user, 101, True)
+print("Normalised stability CSV export complete.\n")
+
 
 
 

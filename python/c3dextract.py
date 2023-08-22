@@ -276,8 +276,11 @@ class TrialKey():
                 events["fp_sequence"] = np.array([[0, 2]])            
             
             # Leg task, i.e., what is the role of the leg in the task
-            events["leg_task"] = ["sldj_ipsi", "sldj_contra"]   
-            
+            if events["window_labels"][0][0] == "R":
+                events["leg_task"] = ["sldj_ipsi", "sldj_contra"]   
+            else:
+                events["leg_task"] = ["sldj_contra", "sldj_ipsi"]
+                
             # Last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
             #
