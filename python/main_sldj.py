@@ -153,8 +153,8 @@ import stability
 # stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
 # print("Stability analyses (MoS) complete.\n")
 
-# print("Exporting stability results (MoS) to CSV...\n")
-# stability.export_margin_of_stability(forcedb, user, 101, True)
+# print("Exporting stability results (MoS, WBAM) to CSV...\n")
+# stability.export_margin_of_stability(forcedb, user, 101, False)
 # print("Stability CSV export complete.\n")
 
 print("Exporting normalised stability results (MoS) to CSV...\n")

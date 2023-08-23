@@ -15,7 +15,7 @@ import numpy as np
 import shapely
 import scipy.constants as consts
 import scipy.interpolate as interp
-import scipy.io as scio
+#import scipy.io as scio
 import pickle as pk
 import pandas as pd
 import os
@@ -45,8 +45,8 @@ plt.switch_backend("Agg")
 
 
 '''
-batch_process_stability(user, meta, perturb, treadmill_speed, asteps, perturbation):
-    Batch process margin of stability.
+batch_process_stability(user, meta, artifperturb, treadmill_speed, restart):
+    Batch process margin of stability, and whole body angular momentum.
 '''
 def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0, restart = -1):
 
@@ -108,15 +108,33 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                         osimkey = pk.load(fid1)            
                     
                     
+                    
+                    # ******************************
+                    # MARGIN OF STABILITY
+                    
                     # Calculate simple margin of stability
-                    print("---> Calculating margin of stability...")
-                    stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
+                    # print("---> Calculating margin of stability...")
+                    # stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
                     
                     # Visualise
-                    #print("---> Generating visualisations...")
-                    #plot_margin_of_stability(datakey, stable)
-                    #visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
-                    #animate_stability_timehistory(datakey, stable)
+                    # print("---> Generating visualisations of margin of stability...")
+                    # plot_margin_of_stability(datakey, stable)
+                    # visualise_stability_timehistory(datakey, stable, ylim = [0, 1.5])
+                    # animate_stability_timehistory(datakey, stable)
+                    
+                    
+                    
+                    # ******************************
+                    # WHOLE BODY ANGULAR MOMENTUM
+                    
+                    # Calculate whole body angular momentum
+                    print("---> Calculating whole body angular momentum...")
+                    wbam = whole_body_angular_momentum(user, datakey)
+                    
+                    # Visualise
+                    print("---> Generating visualisations of whole body angular momentum...")
+                    plot_whole_body_angular_momentum(datakey, wbam)
+                    
                     
                 except:
                     print("*** FAILED ***")
@@ -144,7 +162,7 @@ whole_body_angular_momentum(user, datakey):
 def whole_body_angular_momentum(user, datakey):
 
     # Get the model
-    osimfile = os.path.join(datakey.trial["path"], datakey.model)
+    osimfile = os.path.join(datakey.outpath, datakey.model)
     model = osim.Model(osimfile)
     
     # Get the bodies and inertia
@@ -164,9 +182,9 @@ def whole_body_angular_momentum(user, datakey):
     for b in range(nbods):
         bname = bodyset.get(b).getName()
         positions[bname] = {}
-        ridxs = [h for h, header in enumerate(datakey.data_osim_results["bk"]["pos"]["headers"]) if bname in header]
-        positions[bname]["r"] = datakey.data_osim_results["bk"]["pos"]["data"][:, ridxs[0:3]]
-        positions[bname]["theta"] = np.radians(datakey.data_osim_results["bk"]["pos"]["data"][:, ridxs[3:6]])            
+        ridxs = [h for h, header in enumerate(datakey.results["raw"]["bk"]["headers"][0]) if bname in header]
+        positions[bname]["r"] = datakey.results["raw"]["bk"]["data"][:, ridxs[0:3], 0]
+        positions[bname]["theta"] = np.radians(datakey.results["raw"]["bk"]["data"][:, ridxs[3:6], 0])            
         
     # Get the segmental absolute linear and angular velocities
     # Convert angular velocities to rad/s
@@ -174,16 +192,16 @@ def whole_body_angular_momentum(user, datakey):
     for b in range(nbods):
         bname = bodyset.get(b).getName()
         velocities[bname] = {}
-        vidxs = [h for h, header in enumerate(datakey.data_osim_results["bk"]["vel"]["headers"]) if bname in header]
-        velocities[bname]["v"] = datakey.data_osim_results["bk"]["vel"]["data"][:, vidxs[0:3]]
-        velocities[bname]["w"] = np.radians(datakey.data_osim_results["bk"]["vel"]["data"][:, vidxs[3:6]])
+        vidxs = [h for h, header in enumerate(datakey.results["raw"]["bk"]["headers"][1]) if bname in header]
+        velocities[bname]["v"] = datakey.results["raw"]["bk"]["data"][:, vidxs[0:3], 1]
+        velocities[bname]["w"] = np.radians(datakey.results["raw"]["bk"]["data"][:, vidxs[3:6], 1])
     
     # Get the absolute centre-of-mass position and velocity
     com = {}
-    cidxs0 = [h for h, header in enumerate(datakey.data_osim_results["bk"]["pos"]["headers"]) if "center_of_mass" in header]
-    cidxs1 = [h for h, header in enumerate(datakey.data_osim_results["bk"]["vel"]["headers"]) if "center_of_mass" in header]
-    com["r"] = datakey.data_osim_results["bk"]["pos"]["data"][:, cidxs0]    
-    com["v"] = datakey.data_osim_results["bk"]["vel"]["data"][:, cidxs1]
+    cidxs0 = [h for h, header in enumerate(datakey.results["raw"]["bk"]["headers"][0]) if "center_of_mass" in header]
+    cidxs1 = [h for h, header in enumerate(datakey.results["raw"]["bk"]["headers"][1]) if "center_of_mass" in header]
+    com["r"] = datakey.results["raw"]["bk"]["data"][:, cidxs0, 0]    
+    com["v"] = datakey.results["raw"]["bk"]["data"][:, cidxs1, 1]
     
     # Calculate segmental angular momentum
     nsamps = np.shape(com["r"])[0]
@@ -231,8 +249,8 @@ def whole_body_angular_momentum(user, datakey):
     wbam["L"] = L
 
     # Pickle it
-    trialname = datakey.trial["name"]
-    with open(os.path.join(datakey.trial["path"], trialname + "_wbam.pkl"), "wb") as f:
+    trialname = datakey.trial
+    with open(os.path.join(datakey.outpath, trialname + "_wbam.pkl"), "wb") as f:
         pk.dump(wbam, f)
 
     return wbam
@@ -682,6 +700,12 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                     with open(pkfile,"rb") as fid:
                         stabilitykey = pk.load(fid)
 
+                    # load the trial WBAMKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_wbam.pkl")
+                    with open(pkfile,"rb") as fid:
+                        wbamkey = pk.load(fid)
+
                     # load the trial OsimResultsKey
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
@@ -779,6 +803,34 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                             # create new line of data
                             csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
                             csvdata.append(csvrow)
+
+
+
+                        # whole body angular momentum components
+                        for ans in ["L"]:
+                        
+                            # Data
+                            dmat = wbamkey[ans]
+                            dmat = dmat[bidx0:bidx1 + 1, :]
+                                                            
+                            # Resample if required
+                            if dmat.shape[0] != nsamp:
+                                dmat = resample1d(dmat, nsamp)
+                                                                                                                
+                            # Normalisation factors
+                            # TBD: Need to determine an appropriate normalisation
+                            normfactor = 1.0
+                            if normalise:
+                                normfactor = 1.0
+                                            
+                            # Normalise if required
+                            dmat = dmat * normfactor
+                            
+                            # create new line of data
+                            for d, dim in enumerate(["X", "Y", "Z"]):
+                                csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
+                                csvdata.append(csvrow)
+                                 
                 
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
@@ -795,7 +847,7 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
     # write data to file with headers
     print("\nWriting to CSV text file...")
     normalisestr = ["", "_normalised"]
-    csvfile = user.csvfileprefix + "_margin_of_stability" + normalisestr[int(normalise)] + ".csv"
+    csvfile = user.csvfileprefix + "_stability" + normalisestr[int(normalise)] + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
@@ -853,6 +905,12 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                     pkfile = os.path.join(c3dpath,trial + "_stability.pkl")
                     with open(pkfile,"rb") as fid:
                         stabilitykey = pk.load(fid)
+                        
+                    # load the trial WBAMKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_wbam.pkl")
+                    with open(pkfile,"rb") as fid:
+                        wbamkey = pk.load(fid)                        
 
                     # load the trial OsimResultsKey
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
@@ -951,6 +1009,39 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                             # create new line of data
                             csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
                             csvdata.append(csvrow)
+                            
+                            
+                        # whole body angular momentum components
+                        for ans in ["L"]:
+                        
+                            # Data
+                            dmat = wbamkey[ans]
+                            dmat = dmat[bidx0:bidx1 + 1, :]
+                            
+                            # Flip signs for frontal and transverse plane
+                            # components for left leg trials
+                            if foot == "l":
+                                dmat[:, 0:2] = -1 * dmat[:, 0:2]
+
+                                
+                            # Resample if required
+                            if dmat.shape[0] != nsamp:
+                                dmat = resample1d(dmat, nsamp)
+                                                                                                                
+                            # Normalisation factors
+                            # TBD: Need to determine an appropriate normalisation
+                            normfactor = 1.0
+                            if normalise:
+                                normfactor = 1.0
+                                            
+                            # Normalise if required
+                            dmat = dmat * normfactor
+                            
+                            # create new line of data
+                            for d, dim in enumerate(["X", "Y", "Z"]):
+                                csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
+                                csvdata.append(csvrow)
+                                
                 
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
@@ -989,7 +1080,7 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
     # write data to file with headers
     print("\nWriting to CSV text file...")
     normalisestr = ["", "_normalised"]
-    csvfile = user.csvdescfileprefix + "_margin_of_stability" + normalisestr[int(normalise)] + ".csv"
+    csvfile = user.csvdescfileprefix + "_stability" + normalisestr[int(normalise)] + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf_descriptives.to_csv(os.path.join(fpath,csvfile), index = False)
@@ -1014,24 +1105,23 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
 plot_whole_body_angular_momentum(datakey, wbam, showplot):
     Plot the whole body angular momentum.
 '''
-def plot_whole_body_angular_momentum(datakey, wbam, showplot = False):
+def plot_whole_body_angular_momentum(datakey, wbam, showplot = False, colours = ["black", "blue", "red"], plotlimits = [(-1, 1), (-1, 1), (-0.15, 0.15)]):
     
-    subject = datakey.subj
-    trial = datakey.trial["name"]
+    subject = datakey.subject
+    trial = datakey.trial
     
-    figpath = os.path.join(datakey.trial["path"], "viz", "timeseries")  
+    figpath = os.path.join(datakey.outpath, "viz", "WBAM", "timeseries")  
     if not os.path.exists(figpath): os.makedirs(figpath)   
             
     # Global parameters
-    plotcolours = ["black", "blue", "red"]
-    plotlabels = ["Fore-aft (OpenSim X)", "Vertical (OpenSim Y)", "Mediolateral (OpenSim Z)"]
+    plotlabels = ["Frontal plane (OpenSim X axis)", "Transverse plane (OpenSim Y axis)", "Sagittal plane (OpenSim Z axis)"]
     filelabels= ["Fore-aft", "Vertical", "Mediolateral"]
     #plotlimits = [(-1, 1), (-1, 1), (-0.15, 0.15)] 
     
     # Plot
     for p in range(3):
         plt.figure()
-        plt.plot(wbam["L"][:, p], label = plotlabels[p], color = plotcolours[p])
+        plt.plot(wbam["L"][:, p], label = plotlabels[p], color = colours[p])
         plt.title("WBAM: " + plotlabels[p])
         plt.xlabel(xlabel = "Time step")
         plt.ylabel("WBAM (kgm$^2$/s)")
@@ -1044,10 +1134,10 @@ def plot_whole_body_angular_momentum(datakey, wbam, showplot = False):
 
 
 '''
-plot_margin_of_stability(datakey, stable, showplot):
+plot_margin_of_stability(datakey, stable, showplot, colours, plotlimits):
     Plot the margin of stability (b): 2D, X and Z.
 '''
-def plot_margin_of_stability(datakey, stable, showplot = False):
+def plot_margin_of_stability(datakey, stable, showplot = False, colours = ["black", "blue", "red"], plotlimits = [(-1, 1), (-1, 1), (-0.2, 0.2)]):
     
     subject = datakey.subject
     trial = datakey.trial
@@ -1057,16 +1147,13 @@ def plot_margin_of_stability(datakey, stable, showplot = False):
             
     # Global parameters
     moslabels = ["b", "b_x", "b_z"]
-    moscolours = ["black", "blue", "red"]
     plotlabels = ["Euclidean: b", "Fore-aft (OpenSim X): bx", "Mediolateral (OpenSim Z): bz"]
     filelabels = ["Euclidean", "Fore-aft", "Mediolateral"]
-    plotlimits = [(-1, 1), (-1, 1), (-0.2, 0.2)] 
     
     # Plot
-    figlabels = ["b", "bx", "bz"]
     for p in range(3):
         plt.figure()
-        plt.plot(stable["MoS"][moslabels[p]], label = plotlabels[p], color = moscolours[p])
+        plt.plot(stable["MoS"][moslabels[p]], label = plotlabels[p], color = colours[p])
         plt.title("MoS: " + plotlabels[p])
         plt.xlabel(xlabel = "Time step")
         plt.ylabel("MoS (m)")
@@ -1085,7 +1172,7 @@ visualise_stability_timehistory(datakey, stable, showplot, colours, xlim, ylim):
     Visualise the base of support (BoS), centre of mass (CoM) and extrapolated 
     centre of mass (XCoM) at each time step. Export as individual frames.
 '''
-def visualise_stability_timehistory(datakey, stable, showplot = False, colours = ("blue", "red", "black"), xlim = [-1, 1], ylim = [-1, 1]):
+def visualise_stability_timehistory(datakey, stable, showplot = False, colours = ["blue", "red", "black"], xlim = [-1, 1], ylim = [-1, 1]):
 
     # Output folder
     figpath = os.path.join(datakey.outpath, "viz", "MoS", "slides")  

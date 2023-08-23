@@ -107,7 +107,22 @@ with open(pkfile, "rb") as fid:
     
 
 
-    
+ # %% LOAD A WBAM KEY
+
+import pickle as pk
+import os
+
+# file path and name prefix
+fprefix = "FAILTCRT01_SLDJ02"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILTCRT01\FAILTCRT01_SLDJ02"
+
+# OsimResultsKey
+pkfile = os.path.join(fpath, fprefix + "_wbam.pkl")
+with open(pkfile, "rb") as fid: 
+    wbamkey1 = pk.load(fid)
+     
+     
+     
 
 # %% CALCULATE JOINT ANGULAR IMPULSE
 
