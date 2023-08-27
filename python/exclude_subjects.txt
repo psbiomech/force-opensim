@@ -1,0 +1,10 @@
+FAILT03 -> vertical jump
+FAILT08 -> minimal forward jump
+FAILT09 -> vertical jump
+FAILT11 -> vertical jump
+FAILT13 -> dubious
+FAILT14 -> vertical jump
+FAILT15 -> vertical jump
+FAILT16 -> sidesways jump
+FAILT17 -> vertical jump
+

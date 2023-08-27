@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-FORCE SINGLE LEG DROP JUMP: MARGIN OF STABILITY SPM
+FORCE SINGLE LEG DROP JUMP: MARGIN OF STABILITY SPM{t}
 
 @author: Prasanna Sritharan, August 2023
 '''
@@ -20,12 +20,17 @@ rc("font", **{'family':'sans-serif','sans-serif':['Arial']})
 
 # Data file
 srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\csvfolder"
-srcfile = "force_sldj_results_subject_descriptives_stability_normalised.csv"
+srcfile = "force_sldj_results_subject_descriptives_stability.csv"
 
 # Output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
 outfilename = "force_sldj_spm1dt_mos_more_ctrl"
+
+# Outliers
+outliers = []
+# outliers = ["FAILTCRT08", "FAILTCRT13", "FAILTCRT28",  "FAILTCRT26", "FAILTCRT31",
+#             "FAILT69", "FAILT97", "FAILT146", "FAILT117"]
 
 
 
@@ -50,13 +55,22 @@ for v in ["time"] + variables:
     
     datamat[v] = {}
     
-    # Group 0
-    gp0data = df[(df["leg_type"].isin(legtype[0])) & (df["subj_type"] == subjtype[0]) & (df["variable"] == v)]
+    # Group 0: symptomatic
+    gp0data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[0]) & (df["subj_type"] == subjtype[0]) & (df["variable"] == v)]
     datamat[v][0] = gp0data.loc[:, "t1":"t101"].to_numpy()
 
-    # Group 1
-    gp1data = df[df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
+    # # Group 1: Controls (each limb is considered independently)
+    gp1data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
     datamat[v][1] = gp1data.loc[:, "t1":"t101"].to_numpy()
+
+    # # Group 1: Controls (mean of both limbs)
+    # # A single participant mean for each control may not be appropriate for this
+    # # study as only one limb is condsidered for each symptomatic. Need to get
+    # # clarification.
+    # gp1data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
+    # gp1means = gp1data.groupby("subject").mean()
+    # datamat[v][1] = gp1means.loc[:, "t1":"t101"].to_numpy()
+
 
 
 

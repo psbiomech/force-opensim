@@ -668,17 +668,22 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
     # extract OpenSim data
     print("Collating data into lists...\n")
     failedfiles = []
-    for subj in meta:
+    for sn, subj in enumerate(meta):
     
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
 
+        # subject index (may be different to the subject code)
+        subjidx = sn
+
         # subject type
         if subj.startswith("FAILTCRT"):
             subj_type = "ctrl"
+            subj_type_code = 1
         else:
             subj_type = "sym"
+            subj_type_code = 0
                 
         for group in meta[subj]["trials"]:
             
@@ -705,7 +710,7 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                     pkfile = os.path.join(c3dpath,trial + "_wbam.pkl")
                     with open(pkfile,"rb") as fid:
                         wbamkey = pk.load(fid)
-
+                        
                     # load the trial OsimResultsKey
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
@@ -751,6 +756,11 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                     #events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
                     #events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
                     
+                    # Centre of mass velocity
+                    comvidx = osimresultskey.results["raw"][user.bkcode]["headers"][1].index("center_of_mass_X")
+                    comv = osimresultskey.results["raw"][user.bkcode]["data"][:, comvidx:comvidx + 3, 1]
+                    
+                    
                     # foot
                     for f, foot in enumerate(["r","l"]):
                         
@@ -783,10 +793,6 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                             # Data, convert to 1D array and trim
                             drow = np.array(stabilitykey["MoS"][ans])
                             drow = drow[bidx0:bidx1 + 1]
-                                                            
-                            # Resample if required
-                            if len(drow) != nsamp:
-                                drow = resample1d(np.reshape(drow, (len(drow), 1)), nsamp)
                                                                                                                 
                             # Normalisation factors
                             # TBD: Need to determine an appropriate normalisation
@@ -800,8 +806,12 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                             if ans != "isstable":
                                 drow = drow * normfactor
                             
+                            # Resample if required
+                            if len(drow) != nsamp:
+                                drow = resample1d(np.reshape(drow, (len(drow), 1)), nsamp)                            
+                            
                             # create new line of data
-                            csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
+                            csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
                             csvdata.append(csvrow)
 
 
@@ -812,23 +822,23 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                             # Data
                             dmat = wbamkey[ans]
                             dmat = dmat[bidx0:bidx1 + 1, :]
-                                                            
-                            # Resample if required
-                            if dmat.shape[0] != nsamp:
-                                dmat = resample1d(dmat, nsamp)
                                                                                                                 
                             # Normalisation factors
                             # TBD: Need to determine an appropriate normalisation
                             normfactor = 1.0
                             if normalise:
-                                normfactor = 1.0
+                                normfactor = 1.0 #mass * height * 
                                             
                             # Normalise if required
                             dmat = dmat * normfactor
-                            
+
+                            # Resample if required
+                            if dmat.shape[0] != nsamp:
+                                dmat = resample1d(dmat, nsamp)
+                                
                             # create new line of data
                             for d, dim in enumerate(["X", "Y", "Z"]):
-                                csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
+                                csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
                                 csvdata.append(csvrow)
                                  
                 
@@ -841,7 +851,7 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "subj_idx", "trial", "subj_type", "subj_type_code", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

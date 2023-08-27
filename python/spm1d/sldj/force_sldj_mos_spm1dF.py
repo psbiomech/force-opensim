@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-FORCE SINGLE LEG DROP JUMP: MARGIN OF STABILITY SPM{t}
+FORCE SINGLE LEG DROP JUMP: MARGIN OF STABILITY SPM{F}
 
 @author: Prasanna Sritharan, August 2023
 '''
@@ -25,13 +25,13 @@ srcfile = "force_sldj_results_subject_descriptives_stability.csv"
 # Output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outfilename = "force_sldj_spm1dt_wbam_more_ctrl"
-
+outfilename = "force_sldj_spm1dF_mos_more_ctrl"
 
 # Outliers
 outliers = []
 # outliers = ["FAILTCRT08", "FAILTCRT13", "FAILTCRT28",  "FAILTCRT26", "FAILTCRT31",
 #             "FAILT69", "FAILT97", "FAILT146", "FAILT117"]
+
 
 
 # %% PREPARE DATA
@@ -44,7 +44,7 @@ df = df0[df0["statistic"] == "mean"]
 
 
 # Data labels
-variables = ["L_X", "L_Y", "L_Z"]
+variables = ["b", "b_x", "b_z"]
 subjtype = ["sym", "ctrl"]
 subjtypefulllabel = ["more symptomatic", "control"]
 legtype = [["more"], ["more", "less"]]
@@ -55,7 +55,7 @@ for v in ["time"] + variables:
     
     datamat[v] = {}
     
-    # Group 0: symptomatic
+    # Group 0: Symptomatic
     gp0data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[0]) & (df["subj_type"] == subjtype[0]) & (df["variable"] == v)]
     datamat[v][0] = gp0data.loc[:, "t1":"t101"].to_numpy()
 
@@ -70,7 +70,6 @@ for v in ["time"] + variables:
     # gp1data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
     # gp1means = gp1data.groupby("subject").mean()
     # datamat[v][1] = gp1means.loc[:, "t1":"t101"].to_numpy()
-
 
 
 
@@ -92,8 +91,8 @@ spmtinf = {}
 for v in variables:
     Y0 = datamat[v][0]
     Y1 = datamat[v][1]
-    spmt[v] = spm1d.stats.ttest2(Y0, Y1, equal_var=False)
-    spmtinf[v] = spmt[v].inference(alpha = 0.05, two_tailed=True, interp=True)
+    spmt[v] = spm1d.stats.anova1((Y0, Y1), equal_var=False)
+    spmtinf[v] = spmt[v].inference(alpha = 0.05, interp=True)
 
 
 
@@ -101,7 +100,7 @@ for v in variables:
 
 
 # Plot parameters
-plotheads = ["Frontal", "Transverse", "Sagittal"]
+plotheads = ["2D (Euclidean)", "Anteroposterior", "Mediolateral"]
 plotfont = {'fontname': 'Arial'}
 
 
@@ -131,19 +130,19 @@ for col in range(len(variables)):
     ax = fig.add_subplot(spec[0, col])
     ax.set_title(plotheads[col], fontsize = 12)
     if col == 0:
-        ax.set_ylabel("WBAM ($kgm^2$/s)", fontsize = 12) 
+        ax.set_ylabel("MoS", fontsize = 12) 
     ax.fill_between(x, l1, u1, alpha = 0.3, linewidth = 0.0, color = "blue")
     ax.fill_between(x, l0, u0, alpha = 0.3, linewidth = 0.0, color = "red")
     ax.plot(x, m1, label = subjtypefulllabel[1], linewidth = 2.0, color = "blue") 
     ax.plot(x, m0, label = subjtypefulllabel[0], linewidth = 2.0, color = "red")
     ax.set_xlim([x[0], x[-1]])
-    ax.set_xlabel("% of drop landing", fontsize = 8)
+    ax.set_xlabel("% of drop landing", fontsize = 12)
     if col == 0: ax.legend(frameon = False, loc = "lower left")
     
     # SPM plot
     ax = fig.add_subplot(spec[1, col])
     ax.set_xlabel("% of drop landing", fontsize = 12)
-    if col == 0: ax.set_ylabel("SPM{t}", fontsize = 10) 
+    if col == 0: ax.set_ylabel("SPM{F}", fontsize = 12) 
     spmtinf[variables[col]].plot(plot_ylabel = False)
 
 
