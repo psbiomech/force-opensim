@@ -113,8 +113,8 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                     # MARGIN OF STABILITY
                     
                     # Calculate simple margin of stability
-                    # print("---> Calculating margin of stability...")
-                    # stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
+                    print("---> Calculating margin of stability...")
+                    stable = margin_of_stability(user, datakey, osimkey, treadmill_speed)
                     
                     # Visualise
                     # print("---> Generating visualisations of margin of stability...")
@@ -132,8 +132,8 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                     wbam = whole_body_angular_momentum(user, datakey)
                     
                     # Visualise
-                    print("---> Generating visualisations of whole body angular momentum...")
-                    plot_whole_body_angular_momentum(datakey, wbam)
+                    # print("---> Generating visualisations of whole body angular momentum...")
+                    # plot_whole_body_angular_momentum(datakey, wbam)
                     
                     
                 except:
@@ -237,7 +237,8 @@ def whole_body_angular_momentum(user, datakey):
             
     # Normalised whole body angular momentum
     # TBD        
-        
+    
+    
         
     # Store in dict
     wbam = {}
@@ -1039,7 +1040,7 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                                 dmat = resample1d(dmat, nsamp)
                                                                                                                 
                             # Normalisation factors
-                            # TBD: Need to determine an appropriate normalisation
+                            # TBD: normalise to MVH
                             normfactor = 1.0
                             if normalise:
                                 normfactor = 1.0
