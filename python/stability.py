@@ -15,6 +15,8 @@ import numpy as np
 import shapely
 import scipy.constants as consts
 import scipy.interpolate as interp
+import scipy.integrate as integ
+from scipy.spatial.transform import Rotation
 #import scipy.io as scio
 import pickle as pk
 import pandas as pd
@@ -203,7 +205,10 @@ def whole_body_angular_momentum(user, datakey):
     com["r"] = datakey.results["raw"]["bk"]["data"][:, cidxs0, 0]    
     com["v"] = datakey.results["raw"]["bk"]["data"][:, cidxs1, 1]
     
-    # Calculate segmental angular momentum
+    # Get the time vector from BodyKinematics
+    timevec = datakey.results["raw"]["bk"]["data"][:, 0, 0]
+        
+    # Calculate segmental angular momentum in inertial coordinates
     nsamps = np.shape(com["r"])[0]
     L_seg = {}
     for b in range(nbods):
@@ -213,18 +218,36 @@ def whole_body_angular_momentum(user, datakey):
         L_seg[bname] = np.zeros([nsamps, 3])
         for n in range(nsamps):
 
-            # Inertia
-            m = bodies[bname]["m"]
-            I = bodies[bname]["I"]
-            
-            # Kinematics relative to centre-of-mass
-            r = positions[bname]["r"][n, :] - com["r"][n, :]
-            v = velocities[bname]["v"][n, :] - com["v"][n, :]
+            # Angular velocity relative to segment centre-of-mass in inertial
+            # coordinates
             w = np.reshape(velocities[bname]["w"][n, :], [3, 1])
+            
+            # Linear kinematics relative to whole body centre-of-mass in 
+            # inertial coordinates
+            r = positions[bname]["r"][n, :] - com["r"][n, :]
+            v = velocities[bname]["v"][n, :] - com["v"][n, :]               
+
+            # Inertia relative to segment centre of mass in body coordinates
+            m = bodies[bname]["m"]
+            I = np.diag(bodies[bname]["I"])
+            
+            # Body orientation
+            theta3 = positions[bname]["theta"][n, :]
+            
+            # Build the change of basis rotation matrix to convert inertia to
+            # inertial coordinates
+            rotmat = Rotation.from_rotvec(theta3, degrees=True).as_matrix()
+            
+            # Change basis of inertia tensor to inertial coordinates given
+            # angular momentum in inertial coordinates:
+            #   I_iner = R * I * R_inv = R * I * R_trans
+            # Note: this is change of basis only, inertia is still about the
+            # segmental centre-of-mass.
+            I_iner = np.matmul(rotmat, np.matmul(I, np.linalg.inv(rotmat)))       
             
             # Instantaneous segmental angular momentum relative to centre-of mass:
             #   L_seg_t = r x mv + Iw
-            L_seg_t = np.cross(r, m * v) + np.matmul(np.diag(I), w).T
+            L_seg_t = np.cross(r, m * v) + np.matmul(I_iner, w).T
             
             # Store
             L_seg[bname][n, :] = L_seg_t
@@ -234,12 +257,20 @@ def whole_body_angular_momentum(user, datakey):
     L = np.zeros([nsamps, 3])
     for b in range(nbods): 
         L = L + L_seg[bodyset.get(b).getName()]
-            
-    # Normalised whole body angular momentum
-    # TBD        
+    
+    # Range of whole body angular momentum
+    L_max = np.amax(L, axis = 0)
+    L_min = np.amin(L, axis = 0)
+    L_range = np.absolute(L_max - L_min)
+
+    # Integrated whole body angular momentum
+    L_int = integ.simpson(L, timevec, axis = 0)
+    
+    # Average 3D centre of mass velocity (for normalisation)
+    CoM_v_norm = np.linalg.norm(com["v"], axis = 1)
+    CoM_v_mean = np.mean(CoM_v_norm)
     
     
-        
     # Store in dict
     wbam = {}
     wbam["bodies"] = bodies
@@ -248,6 +279,11 @@ def whole_body_angular_momentum(user, datakey):
     wbam["com"] = com
     wbam["L_seg"] = L_seg
     wbam["L"] = L
+    wbam["L_range"] = L_range
+    wbam["L_int"] = L_int
+    wbam["task"] = datakey.task
+    wbam["timevec"] = timevec
+    wbam["CoM_v_mean"] = CoM_v_mean
 
     # Pickle it
     trialname = datakey.trial
@@ -260,6 +296,9 @@ def whole_body_angular_momentum(user, datakey):
 
 '''
 perturbed_margin_of_stability(user, datakey, pertubation, stepsize, treadmill_speed):
+    
+    *** TBD: DO NOT USE. NEEDS TO BE REWORKED FOR FORCE/TRAIL DATA ***
+    
     Calculate the 2D margin of stability by artificially perturbing the centre
     of mass (CoM) velocity (default = 1 m/s) at regular angular increments 
     (default = 16 steps). For treadmill trials, add the treadmill speed to the 
@@ -655,11 +694,11 @@ def resample1d(data, nsamp):
 
 
 '''
-export_margin_of_stability(meta, user, nsamp, normalise):
+export_stability_metrics(meta, user, nsamp, normalise):
     Write stablity time histories to CSV.
     NOTE: Currently hardcoded for SLDJ
 '''
-def export_margin_of_stability(meta, user, nsamp, normalise = False):
+def export_stability_metrics(meta, user, nsamp, normalise = False):
    
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -791,7 +830,7 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                         # margin of stability components
                         for ans in ["b", "b_abs", "b_x", "b_z", "isstable"]:
                         
-                            # Data, convert to 1D array and trim
+                            # Timeseries data, convert to 1D array and trim
                             drow = np.array(stabilitykey["MoS"][ans])
                             drow = drow[bidx0:bidx1 + 1]
                                                                                                                 
@@ -812,26 +851,29 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                                 drow = resample1d(np.reshape(drow, (len(drow), 1)), nsamp)                            
                             
                             # create new line of data
-                            csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
+                            csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, -1, -1, ans] + drow.flatten().tolist()
                             csvdata.append(csvrow)
 
 
 
                         # whole body angular momentum components
+                        wbam_int = wbamkey["L_int"]
+                        wbam_range = wbamkey["L_range"]
                         for ans in ["L"]:
                         
-                            # Data
+                            # Timeseries data
                             dmat = wbamkey[ans]
                             dmat = dmat[bidx0:bidx1 + 1, :]
-                                                                                                                
+                                                                                    
                             # Normalisation factors
-                            # TBD: Need to determine an appropriate normalisation
                             normfactor = 1.0
                             if normalise:
-                                normfactor = 1.0 #mass * height * 
+                                normfactor = 1.0 / (mass * height * wbamkey["CoM_v_mean"])
                                             
                             # Normalise if required
                             dmat = dmat * normfactor
+                            wbam_int = wbam_int * normfactor
+                            wbam_range = wbam_range * normfactor
 
                             # Resample if required
                             if dmat.shape[0] != nsamp:
@@ -839,7 +881,7 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
                                 
                             # create new line of data
                             for d, dim in enumerate(["X", "Y", "Z"]):
-                                csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
+                                csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [wbam_int[d], wbam_range[d]] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
                                 csvdata.append(csvrow)
                                  
                 
@@ -852,7 +894,7 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "subj_idx", "trial", "subj_type", "subj_type_code", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "subj_idx", "trial", "subj_type", "subj_type_code", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "var_integral", "var_range", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
@@ -871,11 +913,11 @@ def export_margin_of_stability(meta, user, nsamp, normalise = False):
 
 
 '''
-export_margin_of_stability_subject_mean(meta, user, nsamp, normalise):
+export_stability_metrics_subject_mean(meta, user, nsamp, normalise):
     Write stablity time histories to CSV.
     NOTE: Currently hardcoded for SLDJ
 '''
-def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False):
+def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
    
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -955,19 +997,7 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                         
                     # trial task type
                     task = osimresultskey.task
-
-                    # pivot leg
-                    #pivot_leg = osimresultskey.events["labels"][0][0].lower()
-                    
-                    # generic event labels:
-                    #   FS: Foot-strike
-                    #   F0: foot-off
-                    #events_gen_labels = ["FS", "FO"]
-                    
-                    # event timing: relative time and time steps
-                    #events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
-                    #events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
-                    
+                   
                     # foot
                     for f, foot in enumerate(["r","l"]):
                         
@@ -1017,12 +1047,12 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                             if ans != "isstable":
                                 drow = drow * normfactor
                             
-                            # create new line of data
+                            # Create new line of data
                             csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans] + drow.flatten().tolist()
                             csvdata.append(csvrow)
                             
                             
-                        # whole body angular momentum components
+                        # Whole body angular momentum components
                         for ans in ["L"]:
                         
                             # Data
@@ -1040,15 +1070,14 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                                 dmat = resample1d(dmat, nsamp)
                                                                                                                 
                             # Normalisation factors
-                            # TBD: normalise to MVH
                             normfactor = 1.0
                             if normalise:
-                                normfactor = 1.0
+                                normfactor = 1.0 / (mass * height * wbamkey["CoM_v_mean"])
                                             
                             # Normalise if required
                             dmat = dmat * normfactor
                             
-                            # create new line of data
+                            # Create new line of data
                             for d, dim in enumerate(["X", "Y", "Z"]):
                                 csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
                                 csvdata.append(csvrow)
@@ -1061,10 +1090,10 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
                 else:
                     print("Dynamic trial: %s" % trial)
 
-    # create dataframe
-    print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]
-    csvdf = pd.DataFrame(csvdata, columns = headers)    
+    # create timeseries dataframe
+    print("\nCreating dataframes...")
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"] + ["t" + str(n) for n in range(1,102)]    
+    csvdf = pd.DataFrame(csvdata, columns = headers)     
 
     # group
     csvdf.drop("trial", axis = 1, inplace = True)   # std() doesn't like the trial column
@@ -1099,6 +1128,178 @@ def export_margin_of_stability_subject_mean(meta, user, nsamp, normalise = False
     print("\n")
    
     return failedfiles
+
+
+
+
+'''
+export_wbam_discrete_subject_mean(meta, user, normalise):
+    Write stablity time histories to CSV.
+    NOTE: Currently hardcoded for SLDJ
+'''
+def export_wbam_discrete_subject_mean(meta, user, normalise = False):
+   
+    # empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+
+        # subject type
+        if subj.startswith("FAILTCRT"):
+            subj_type = "ctrl"
+        else:
+            subj_type = "sym"
+                
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                try:
+                        
+                    # load the trial WBAMKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_wbam.pkl")
+                    with open(pkfile,"rb") as fid:
+                        wbamkey = pk.load(fid)                        
+
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+                                            
+                    # participant data
+                    age = osimresultskey.age
+                    mass = osimresultskey.mass
+                    height = osimresultskey.height
+                    sex = osimresultskey.sex
+                    dom_foot = osimresultskey.dom_foot
+                    aff_side = osimresultskey.aff_side
+                    shomri_r = osimresultskey.shomri[0]
+                    shomri_l = osimresultskey.shomri[1]
+                    
+                    # for bilateral symptomatics, affected side based on shomri
+                    if aff_side == 1:
+                        more_aff_side = "r"
+                    elif aff_side == 2:
+                        more_aff_side = "l"
+                    elif aff_side == 0 or aff_side == 3:
+                        if np.isnan(shomri_r) or np.isnan(shomri_l):
+                            more_aff_side = "r"   # default until data available
+                        if shomri_r > shomri_l:
+                            more_aff_side = "r"
+                        else:
+                            more_aff_side = "l"
+                        
+                        
+                    # trial task type
+                    task = osimresultskey.task
+
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        
+                        # NOTE: CURRENTLY HARDCODED FOR SLDJ
+                        
+                        # skip contralateral leg data
+                        if osimresultskey.events["labels"][0][0] != foot.upper(): continue                        
+                        
+                        # trial leg: more affected or less affected
+                        if foot == more_aff_side:
+                            trial_leg = "less"
+                        else:
+                            trial_leg = "more"                        
+                        
+    
+                        # Whole body angular momentum components
+                        for ans in ["L_int", "L_range"]:
+                        
+                            # Data
+                            dmat = wbamkey[ans]
+                            
+                            # Flip signs for frontal and transverse plane
+                            # components for left leg trials
+                            if (foot == "l") and (ans == "L_int"):
+                                dmat[0:2] = -1 * dmat[0:2]
+                                                                                                                
+                            # Normalisation factors
+                            normfactor = 1.0
+                            if normalise:
+                                normfactor = 1.0 / (mass * height * wbamkey["CoM_v_mean"])
+                                            
+                            # Normalise if required
+                            dmat = dmat * normfactor
+                            
+                            # Create new line of data
+                            for d, dim in enumerate(["X", "Y", "Z"]):
+                                csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + [dmat[d]]
+                                csvdata.append(csvrow)
+                                
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                    #raise
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create timeseries dataframe
+    print("\nCreating dataframes...")
+    headers = ["subject", "trial", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable", "value"]
+    csvdf = pd.DataFrame(csvdata, columns = headers)     
+
+    # group
+    csvdf.drop("trial", axis = 1, inplace = True)   # std() doesn't like the trial column
+    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "data_leg", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "leg_type", "variable"])
+
+    # descriptives
+    csvdf_grouped_mean = csvdf_grouped.mean().reset_index()
+    csvdf_grouped_sd = csvdf_grouped.std().reset_index()
+    
+    # rearrange dataframes (much easier in dplyr with relocate()!)
+    csvdf_grouped_mean["statistic"] = "mean"
+    dfmean = csvdf_grouped_mean.pop("statistic")
+    csvdf_grouped_mean.insert(csvdf_grouped_mean.columns.get_loc("variable") + 1, dfmean.name, dfmean)      
+    csvdf_grouped_sd["statistic"] = "sd"
+    dfsd = csvdf_grouped_sd.pop("statistic")
+    csvdf_grouped_sd.insert(csvdf_grouped_sd.columns.get_loc("variable") + 1, dfsd.name, dfsd)    
+    
+    # interleave mean and sd rows
+    csvdf_grouped_mean["sortidx"] = range(0, len(csvdf_grouped_mean))
+    csvdf_grouped_sd["sortidx"] = range(0, len(csvdf_grouped_sd))
+    csvdf_descriptives = pd.concat([csvdf_grouped_mean, csvdf_grouped_sd]).sort_values(["sortidx", "statistic"])
+    csvdf_descriptives.drop(columns = "sortidx", inplace = True)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    normalisestr = ["", "_normalised"]
+    csvfile = user.csvdescfileprefix + "_wbam_discrete" + normalisestr[int(normalise)] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf_descriptives.to_csv(os.path.join(fpath,csvfile), index = False)
+    
+    print("\n")
+   
+    return failedfiles
+
+
 
 
 

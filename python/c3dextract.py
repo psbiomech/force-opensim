@@ -88,7 +88,8 @@ class TrialKey():
             events["time"] = [etime[e] for e in sortidxs]
                     
         # relative time, normalise to first frame
-        events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+        #events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+        events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
             
              
         # ###################################
@@ -823,6 +824,11 @@ def c3d_extract(subj, trial, c3dfile, c3dpath, lab, user, task, condition, xdir,
     fmeta = c3d.get_dict_groups(itf)
     fforces = c3d.get_dict_forces(itf, frame=True, time=True)
     fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
+
+    # Need to adjust time vector because pyc3dserver doesn't consider the
+    # ACTUAL_START_FIELD parameter when extracting the time vector
+    fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+    fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
     
     # subject and trial name
     sname = subj

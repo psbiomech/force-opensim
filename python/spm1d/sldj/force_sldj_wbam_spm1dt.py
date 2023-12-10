@@ -137,7 +137,7 @@ for col in range(len(variables)):
     ax.plot(x, m1, label = subjtypefulllabel[1], linewidth = 2.0, color = "blue") 
     ax.plot(x, m0, label = subjtypefulllabel[0], linewidth = 2.0, color = "red")
     ax.set_xlim([x[0], x[-1]])
-    ax.set_xlabel("% of drop landing", fontsize = 8)
+    ax.set_xlabel("% of drop landing", fontsize = 12)
     if col == 0: ax.legend(frameon = False, loc = "lower left")
     
     # SPM plot

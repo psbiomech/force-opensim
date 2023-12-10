@@ -126,7 +126,7 @@ print("Done.\n")
 # osr.export_opensim_results_subject_mean(forcedb, user, ["ik", "id"])
 # print("Normalised CSV export complete.\n")
 
-# print("Exporting normalised OpenSim results to CSV (subject descriptives)...\n")
+# print("Exporting subject means of normalised OpenSim results to CSV (subject descriptives)...\n")
 # osr.export_opensim_results_subject_mean(forcedb, user, ["ik", "id"], True)
 # print("Normalised CSV export complete.\n")
 
@@ -149,18 +149,21 @@ print("Done.\n")
 
 import stability
 
-# print("Running stability analyses (MoS)...\n")
-# stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
-# print("Stability analyses (MoS) complete.\n")
+print("Running stability analyses (MoS, WBAM)...\n")
+stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
+print("Stability analyses (MoS, WBAM) complete.\n")
 
 print("Exporting stability results (MoS, WBAM) to CSV...\n")
-stability.export_margin_of_stability(forcedb, user, 101, False)
+stability.export_stability_metrics(forcedb, user, 101, False)
 print("Stability CSV export complete.\n")
 
-print("Exporting normalised stability results (MoS) to CSV...\n")
-stability.export_margin_of_stability_subject_mean(forcedb, user, 101, False)
+print("Exporting subject means of stability results (MoS, WBAM) to CSV...\n")
+stability.export_stability_metrics_subject_mean(forcedb, user, 101, False)
 print("Normalised stability CSV export complete.\n")
 
+print("Exporting subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
+stability.export_wbam_discrete_subject_mean(forcedb, user, False)
+print("Discrete WBAM measures CSV export complete.\n")
 
 
 
