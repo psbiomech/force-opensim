@@ -20,11 +20,12 @@ rc("font", **{'family':'sans-serif','sans-serif':['Arial']})
 # Data file
 srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\csvfolder"
 srcfile = "force_sldj_results_subject_descriptives_wbam_discrete.csv"
+srcfile = "force_sldj_results_subject_descriptives_wbam_discrete_normalised.csv"
 
 # Output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outfilename = "force_sldj_ttest_wbam_discrete_more_ctrl"
+outfilename = "force_sldj_ttest_wbam_discrete_normalised_more_ctrl"
 
 
 # Outliers

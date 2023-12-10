@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['main_sldj.py', 'spm1d\\sldj\\force_sldj_mos_spm1dt.py', 'spm1d\\sldj\\force_sldj_wbam_int_spm1dt.py']
+recent_files = ['spm1d\\sldj\\force_sldj_mos_spm1dt.py', 'spm1d\\sldj\\force_sldj_wbam_spm1dt.py', 'spm1d\\sldj\\force_sldj_wbam_discrete_ttest.py']
 
 [main]
 version = 0.2.0
