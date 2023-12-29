@@ -165,7 +165,7 @@ class OsimResultsKey():
                 elif self.task.casefold() == "run_stridecycle":
                     
                     # flip columns for left leg trials
-                    if f == 2:
+                    if f == 1:
                         data0[:, flip[ans], :] = np.multiply(data0[:, flip[ans]], -1)
                     
                     # time window depends on leg task
@@ -185,7 +185,7 @@ class OsimResultsKey():
                 elif self.task.casefold() == "run_stance":
                     
                     # flip columns for left leg trials
-                    if f == 2:
+                    if f == 1:
                         data0[:, flip[ans], :] = np.multiply(data0[:, flip[ans]], -1)
                         
                     # time window
