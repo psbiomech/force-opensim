@@ -19,7 +19,7 @@ rc("font", **{'family':'sans-serif','sans-serif':['Arial']})
 
 # Data file
 srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\csvfolder"
-srcfile = "force_sldj_results_subject_descriptives_wbam_discrete.csv"
+#srcfile = "force_sldj_results_subject_descriptives_wbam_discrete.csv"
 srcfile = "force_sldj_results_subject_descriptives_wbam_discrete_normalised.csv"
 
 # Output file

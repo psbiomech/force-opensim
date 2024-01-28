@@ -812,9 +812,9 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
                         
                         # trial leg: more affected or less affected
                         if foot == more_aff_side:
-                            trial_leg = "less"
+                            trial_leg = "more"
                         else:
-                            trial_leg = "more"                        
+                            trial_leg = "less"                        
                         
                                                 
                         # Get the Euclidean (2D) margin of stability and check                       
@@ -856,7 +856,7 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
 
 
 
-                        # whole body angular momentum components
+                        # Whole body angular momentum, range and integral
                         wbam_int = wbamkey["L_int"]
                         wbam_range = wbamkey["L_range"]
                         for ans in ["L"]:
@@ -884,7 +884,37 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
                                 csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [wbam_int[d], wbam_range[d]] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
                                 csvdata.append(csvrow)
                                  
-                
+ 
+                        # Whole body angular momentum segmental contributions
+                        for ans in ["L_seg"]:
+                            
+                            # Segments
+                            for seg in wbamkey[ans]:
+                        
+                                # Timeseries data
+                                dmat = wbamkey[ans][seg]
+                                dmat = dmat[bidx0:bidx1 + 1, :]
+                                                                                        
+                                # Normalisation factors
+                                normfactor = 1.0
+                                if normalise:
+                                    normfactor = 1.0 / (mass * height * wbamkey["CoM_v_mean"])
+                                                
+                                # Normalise if required
+                                dmat = dmat * normfactor
+                                wbam_int = wbam_int * normfactor
+                                wbam_range = wbam_range * normfactor
+    
+                                # Resample if required
+                                if dmat.shape[0] != nsamp:
+                                    dmat = resample1d(dmat, nsamp)
+                                    
+                                # create new line of data
+                                for d, dim in enumerate(["X", "Y", "Z"]):
+                                    csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, -1, -1] + [ans + "_" + seg + "_" + dim] + dmat[:, d].flatten().tolist()
+                                    csvdata.append(csvrow)            
+ 
+    
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)
@@ -1009,9 +1039,9 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                         
                         # trial leg: more affected or less affected
                         if foot == more_aff_side:
-                            trial_leg = "less"
+                            trial_leg = "more"
                         else:
-                            trial_leg = "more"                        
+                            trial_leg = "less"                        
                         
                                                 
                         # Get the Euclidean (2D) margin of stability and check                       
@@ -1082,6 +1112,33 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                                 csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + dmat[:, d].flatten().tolist()
                                 csvdata.append(csvrow)
                                 
+
+                        # Whole body angular momentum segmental contributions
+                        for ans in ["L_seg"]:
+                            
+                            # Segments
+                            for seg in wbamkey[ans]:
+                        
+                                # Timeseries data
+                                dmat = wbamkey[ans][seg]
+                                dmat = dmat[bidx0:bidx1 + 1, :]
+                                                                                        
+                                # Normalisation factors
+                                normfactor = 1.0
+                                if normalise:
+                                    normfactor = 1.0 / (mass * height * wbamkey["CoM_v_mean"])
+                                                
+                                # Normalise if required
+                                dmat = dmat * normfactor
+    
+                                # Resample if required
+                                if dmat.shape[0] != nsamp:
+                                    dmat = resample1d(dmat, nsamp)
+                                    
+                                # create new line of data
+                                for d, dim in enumerate(["X", "Y", "Z"]):
+                                    csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + seg + "_" + dim] + dmat[:, d].flatten().tolist()
+                                    csvdata.append(csvrow)  
                 
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
@@ -1223,9 +1280,9 @@ def export_wbam_discrete_subject_mean(meta, user, normalise = False):
                         
                         # trial leg: more affected or less affected
                         if foot == more_aff_side:
-                            trial_leg = "less"
+                            trial_leg = "more"
                         else:
-                            trial_leg = "more"                        
+                            trial_leg = "less"                        
                         
     
                         # Whole body angular momentum components

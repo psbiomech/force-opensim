@@ -144,7 +144,7 @@ eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
 
 # Figure headers
 plotheads = {}
-plotheads["ik"] = ["Hip flexion", "Hip adduction", "Hip rotation", "Knee extension", "Ankle dorsiflexion", "Lumbar extension", "Lumbar bending", "Lumbar rotation"]
+plotheads["ik"] = ["Hip flexion", "Hip adduction", "Hip rotation", "Knee flexion", "Ankle dorsiflexion", "Lumbar extension", "Lumbar bending", "Lumbar rotation"]
 plotheads["id"] = [k + " moment" for k in plotheads["ik"]]
 
 

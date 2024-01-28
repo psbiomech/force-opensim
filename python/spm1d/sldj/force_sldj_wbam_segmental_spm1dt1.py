@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-STEP DOWN AND PIVOT: MORE SYMPTOMATIC VS CTRL - SPM1D T-TEST (FOR PUBLICATION)
-@author: Prasanna Sritharan
+FORCE SINGLE LEG DROP JUMP: WBAM SEGMENTAL SPM{t}
+
+@author: Prasanna Sritharan, August 2023
 """
 
 
@@ -10,20 +11,18 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import spm1d
-#import pickle as pk
+import pickle as pk
 
-from matplotlib import rc
-rc("pdf", fonttype=42)
-rc("font", **{'family':'sans-serif','sans-serif':['Arial']})
+
 
 # Data file
-srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder"
-srcfile = "force_sdp_results_subject_descriptives_normalised.csv"
+srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\csvfolder"
+srcfile = "force_sldj_results_subject_descriptives_stability_normalised.csv"
 
 # Output file
-outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\spm1d"
+outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-outfilename = "sdp-spm1dt-ikid-more-ctrl"
+outfilename = "force_sldj_spm1dt_wbam_segmental_more_ctrl"
 
 
 # %% PREPARE DATA
@@ -43,33 +42,33 @@ subjtype = ["sym", "ctrl"]
 subjtypefulllabel = ["more symptomatic", "control"]
 
 # Scenario labels
-scenario = ["pivot", "nonpivot"]
-trialcombo =[["pivot_more", "pivot"], ["pivot_less", "pivot"]]
+scenario = ["stance", "swing"]
+trialcombo =[["stance_more", "stance"], ["stance_more", "stance"]]   # symptomatic stance leg and asymptompatic swing leg
 
 # Get data into arrays
 datamat = {}
-eventmat = {}
+eventmat = []
 for sn, n in enumerate(scenario):
     df = df1[df1["data_leg_role"] == n]
     datamat[n] = {}
-    eventmat[n] = {}
     for a in analyses:
         datamat[n][a] = {}
-        eventmat[n][a] = {}
         for v in ["time"] + osimvars[a]:
             
             datamat[n][a][v] = {}
-            eventmat[n][a][v] = {}        
             
             # Group 1
             gp1data = df[(df["subj_type"] == subjtype[0]) & (df["trial_combo"] == trialcombo[sn][0]) & (df["analysis"] == a) & (df["variable"] == v)]
             datamat[n][a][v][0] = gp1data.loc[:, "t1":"t101"].to_numpy()
-            eventmat[n][a][v][0] = gp1data.loc[:, "es1_PFO1":"es6_PFS4"].to_numpy()
-        
+                   
             # Group 2
             gp2data = df[(df["subj_type"] == subjtype[1]) & (df["trial_combo"].str.contains(trialcombo[sn][1])) & (df["analysis"] == a) & (df["variable"] == v)]
             datamat[n][a][v][1] = gp2data.loc[:, "t1":"t101"].to_numpy()
-            eventmat[n][a][v][1] = gp2data.loc[:, "es1_PFO1":"es6_PFS4"].to_numpy()
+        
+            # Get max knee flexion angle, i.e. most negative knee extension
+            if (n == "stance") and (v == "knee_angle") and (a == "ik"): 
+                eventmat.append(np.argmax(gp1data.loc[:, "t1":"t101"].to_numpy(), axis=1))
+                eventmat.append(np.argmax(gp2data.loc[:, "t1":"t101"].to_numpy(), axis=1))
 
 
 
@@ -77,20 +76,18 @@ for sn, n in enumerate(scenario):
 
 # Event time steps and descriptives
 events = {}
-for n in scenario:
-    events[n] = {}
-    events[n]["data"] = {}
-    events[n]["desc"] = {}
-    descmat = np.zeros((2,6))
-    for g in range(len(subjtype)):
-        events[n]["data"][g] = eventmat[n]["ik"]["time"][g]
-        events[n]["desc"][g] = {}
-        events[n]["desc"][g]["mean"] = np.round(np.mean(events[n]["data"][g], axis=0))
-        events[n]["desc"][g]["sd"] = np.round(np.std(events[n]["data"][g], axis=0))
-        descmat[g, 0:6] = events[n]["desc"][g]["mean"]
-    events[n]["desc"]["total"] = {}
-    events[n]["desc"]["total"]["mean"] = np.mean(descmat, axis=0)
-    events[n]["desc"]["total"]["sd"] = np.std(descmat, axis=0)
+events["data"] = {}
+events["desc"] = {}
+descmat = np.zeros(2)
+for g in range(len(subjtype)):
+    events["data"][g] = eventmat[g]
+    events["desc"][g] = {}
+    events["desc"][g]["mean"] = np.round(np.mean(events["data"][g], axis=0))
+    events["desc"][g]["sd"] = np.round(np.std(events["data"][g], axis=0))
+    descmat[g] = events["desc"][g]["mean"]
+events["desc"]["total"] = {}
+events["desc"]["total"]["mean"] = np.mean(descmat, axis=0)
+events["desc"]["total"]["sd"] = np.std(descmat, axis=0)
 
 
 
@@ -127,14 +124,14 @@ for n in scenario:
 
 
 # Combine for output
-sdp = {}
-sdp["desc"] = desc
-sdp["events"] = events
-sdp["spmt"] = spmt
-sdp["spmtinf"] = spmtinf
+sldj = {}
+sldj["desc"] = desc
+sldj["events"] = events
+sldj["spmt"] = spmt
+sldj["spmtinf"] = spmtinf
             
 # Pickle it
-#with open(os.path.join(outpath, outfilename + "-forpub.pkl"),"wb") as f: pk.dump(sdp, f)
+#with open(os.path.join(outpath, outfilename + ".pkl"),"wb") as f: pk.dump(sldj, f)
     
 
 # %% PLOT OUTPUT
@@ -143,7 +140,6 @@ sdp["spmtinf"] = spmtinf
 eventlabels = ["PFO1", "PFS2", "NFO1", "NFS2", "PFO3", "PFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]   
-plotfont = {'fontname': 'Arial'}
 
 # Figure headers
 plotheads = {}
@@ -152,17 +148,17 @@ plotheads["id"] = [k + " moment" for k in plotheads["ik"]]
 
 
 # Generate plots
+eventlist = events["desc"]["total"]["mean"]
 for n in scenario:
 
     # Scenario parameters
     nsubjs = [np.size(datamat[n]["ik"]["time"][s], axis=0) for s in range(len(subjtype))]
-    eventlist = 100 * np.round(events[n]["desc"]["total"]["mean"]) / 101    
 
     # Create plot area
-    fig = plt.figure(constrained_layout=True, figsize=(18, 6))   
-    fig.suptitle("Step-down-and-pivot: %s vs %s - %s limb" % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper(), n.title()), fontsize=20)
-    heights = [2, 1, 2]
-    spec = fig.add_gridspec(nrows = 3, ncols = len(osimvars["ik"]), height_ratios = heights) 
+    fig = plt.figure(constrained_layout=True, figsize=(24, 10))   
+    fig.suptitle("Single-leg drop jump. Stance limb: %s (n%d) vs %s (n%d). %s limb data." % (subjtypefulllabel[0].upper(), np.shape(gp1data)[0], subjtypefulllabel[1].upper(), np.shape(gp2data)[0], n.title()), fontsize=20)
+    heights = [2, 1, 0.5, 2, 1]
+    spec = fig.add_gridspec(nrows = 5, ncols = len(osimvars["ik"]), height_ratios = heights) 
     
     # Plot results
     for s in range(len(subjtype)): 
@@ -172,7 +168,7 @@ for n in scenario:
         for col in range(len(osimvars["ik"])):        
             
             # Mean + stdev
-            for r, row in enumerate([0, 2]):        
+            for r, row in enumerate([0, 3]):        
                  
                 an = analyses[r]
                                
@@ -191,17 +187,16 @@ for n in scenario:
                 # Plot
                 ax = fig.add_subplot(spec[row, col])
                 ax.set_title(plotheads[an][col], fontsize = 12)
-                if (row == 0) and ((col == 0) or (col == 4)):
+                if (row == 0) and (col == 0):
                     ax.set_ylabel("Angle (deg)", fontsize = 12)
-                elif (row == 2) and ((col == 0) or (col == 4)):
+                elif (row == 3) and (col == 0):
                     ax.set_ylabel("Moment (%BW*HT)", fontsize = 12)   
                 ax.fill_between(x, l1, u1, alpha = 0.3, linewidth = 0.0, color = "blue")
                 ax.fill_between(x, l0, u0, alpha = 0.3, linewidth = 0.0, color = "red")
                 ax.plot(x, m1, label = subjtypefulllabel[1], linewidth = 2.0, color = "blue") 
                 ax.plot(x, m0, label = subjtypefulllabel[0], linewidth = 2.0, color = "red")
                 ax.set_xlim([x[0], x[-1]])
-                ax.set_xlabel("% of step-down-and-pivot task", fontsize = 8)
-                for v in range(1, 5): ax.axvline(x = eventlist[v], linewidth = 1.0, linestyle = ":", color = "k")
+                ax.axvline(x = eventlist, linewidth = 1.0, linestyle = ":", color = "k")
                 if (row == 0 and col == 0): ax.legend(frameon = False, loc = "lower left")
             
                 # Event labels
@@ -214,7 +209,20 @@ for n in scenario:
                 t1s = np.where(issigdiff == -1)  # Should be the same length as t0s, I hope!
                 if t0s[0].tolist():
                     for t in range(np.size(t0s[0])):
-                        ax.axvspan(t0s[0][t], t1s[0][t], alpha = 0.3, color = "grey")               
+                        ax.axvspan(t0s[0][t], t1s[0][t], alpha = 0.3, color = "grey")
+                
+            # SPM inference
+            for r, row in enumerate([1, 4]):  
+                
+                an = analyses[r]
+                
+                # plot
+                ax = fig.add_subplot(spec[row, col])
+                ax.set_xlabel("% of stance", fontsize = 12)
+                if col == 0: ax.set_ylabel("SPM{t}", fontsize = 10) 
+                ax.axvline(x = eventlist, linewidth = 1.0, linestyle = ":", color = "k")
+                spmtinf[n][an][osimvars[an][col]].plot(plot_ylabel = False)
+                    
                     
     # save to pdf
-    plt.savefig(os.path.join(outpath, outfilename + "-" + n + "-forpub.pdf"))
+    plt.savefig(os.path.join(outpath, outfilename + "_" + n + ".pdf"))

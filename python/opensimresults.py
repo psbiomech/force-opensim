@@ -26,10 +26,10 @@ OsimResultsKey:
     to both BW and %BW*HT. Data is resample to the desired number of samples.
 '''
 class OsimResultsKey():
-    def __init__(self, osimkey, analyses, user, nsamp):
+    def __init__(self, osimkey, analyses, user, nsamp, partinfo):
         self.subject = osimkey.subject
         self.trial = osimkey.trial
-        self.age = osimkey.age
+        self.age = osimkey.age    # may be overwritten by get_misc_info
         self.mass = osimkey.mass
         self.model = osimkey.model
         self.lab = osimkey.lab
@@ -37,9 +37,101 @@ class OsimResultsKey():
         self.condition = osimkey.condition
         self.events = osimkey.events
         self.outpath = osimkey.outpath
+        self.__get_misc_info(osimkey, analyses, partinfo)
         self.__get_results_raw(osimkey, analyses, nsamp)
         self.__get_results_split(osimkey, analyses, user, nsamp)
         return None
+
+    def __get_misc_info(self, osimkey, analyses, partinfo):
+
+        # Participant info, may overwrite some parameters from the OsimKey
+        self.age = partinfo[0, 1]
+        self.sex = partinfo[0, 2]
+        self.mass = partinfo[0, 3]
+        self.height= partinfo[0, 4]
+        self.dom_foot = partinfo[0, 5]
+        self.aff_side = partinfo[0, 6]
+        self.shomri = [partinfo[0, 7], partinfo[0, 8]]
+        shomri_r = self.shomri[0]
+        shomri_l = self.shomri[1]  
+                
+        # For bilateral symptomatics, affected side based on shomri
+        if self.aff_side == 1:
+            more_aff_side = "r"
+        elif self.aff_side == 2:
+            more_aff_side = "l"
+        elif self.aff_side == 0 or self.aff_side == 3:
+            if np.isnan(shomri_r) or np.isnan(shomri_l):
+                more_aff_side = "r"   # default until data available
+            if shomri_r > shomri_l:
+                more_aff_side = "r"
+            else:
+                more_aff_side = "l"
+        self.more_aff_side = more_aff_side
+        
+        # Additional variables and parameters based on task type
+        data_leg_role = {}
+        trial_combo = {}
+        if self.task.casefold() == "sdp":
+
+            pivot_leg = self.events["labels"][0][0].lower()            
+
+            for f, foot in enumerate(["r","l"]):            
+
+                # Pivot leg or non-pivot leg data
+                if foot == pivot_leg:
+                    data_leg_role[foot] = "pivot"
+                else:
+                    data_leg_role[foot] = "nonpivot"
+                
+                # Trial combinations:
+                #   1. pivot = more affected, nonpivot = less affected
+                #   2. pivot = less affected, nonpivot = more affected
+                if data_leg_role[foot] == "pivot":
+                    if foot == more_aff_side:
+                        trial_combo[foot] = "pivot_more"
+                    else:
+                        trial_combo[foot] = "pivot_less"
+                elif data_leg_role[foot] == "nonpivot":
+                    if foot == more_aff_side:
+                        trial_combo[foot] = "pivot_less"
+                    else:
+                        trial_combo[foot] = "pivot_more"
+                       
+            self.data_leg_role = data_leg_role
+            self.trial_combo = trial_combo
+            self.ground_leg = pivot_leg
+                    
+        elif self.task.casefold() == "sldj":
+            
+            stance_leg = self.events["labels"][1][0].lower()
+            
+            for f, foot in enumerate(["r","l"]):   
+                
+                # Stance or swing leg
+                if foot == stance_leg:
+                    data_leg_role[foot] = "stance"
+                else:
+                    data_leg_role[foot] = "swing"
+                
+                # Trial combinations:
+                #   1. stance = more affected, swing = less affected
+                #   2. stance = less affected, swing = more affected
+                if data_leg_role[foot] == "stance":
+                    if foot == more_aff_side:
+                        trial_combo[foot] = "stance_more"
+                    else:
+                        trial_combo[foot] = "stance_less"
+                elif data_leg_role[foot] == "swing":
+                    if foot == more_aff_side:
+                        trial_combo[foot] = "stance_less"
+                    else:
+                        trial_combo[foot] = "stance_more"
+
+            self.data_leg_role = data_leg_role
+            self.trial_combo = trial_combo
+            self.ground_leg = stance_leg
+                 
         
     def __get_results_raw(self, osimkey, analyses, nsamp):
         
@@ -321,19 +413,12 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
                     pkfile = os.path.join(c3dpath, trial + "_osimkey.pkl")
                     with open(pkfile, "rb") as fid:
                         osimkey = pk.load(fid)
-                        
-                    # get the OpenSim results
-                    osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp)
-                         
+
                     # additional participant info
                     partinfo = addpartinfo[addpartinfo["id"] == meta[subj]["subj"]].values
-                    osimresultskey.age = partinfo[0, 1]
-                    osimresultskey.sex = partinfo[0, 2]
-                    osimresultskey.mass = partinfo[0, 3]
-                    osimresultskey.height= partinfo[0, 4]
-                    osimresultskey.dom_foot = partinfo[0, 5]
-                    osimresultskey.aff_side = partinfo[0, 6]
-                    osimresultskey.shomri = [partinfo[0, 7], partinfo[0, 8]]
+                        
+                    # get the OpenSim results
+                    osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp, partinfo)                         
                     
                     # save OsimResultsKey to file
                     with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:
@@ -356,6 +441,8 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
 export_opensim_results(meta, user, analyses, normalise):
     Collate OpenSim results into dataframes and export to text. Normalise data
     if desired (default = False)
+    
+    NOTE: Do not use to export BodyKinematics, still work in progress
 '''
 def export_opensim_results(meta, user, analyses, normalise = False):
     
@@ -393,13 +480,13 @@ def export_opensim_results(meta, user, analyses, normalise = False):
             
                 try:
                 
-                    # load the trial OsimResultsKey
+                    # Load the trial OsimResultsKey
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
                     with open(pkfile,"rb") as fid:
                         osimresultskey = pk.load(fid)
                                             
-                    # participant data
+                    # Participant data
                     age = osimresultskey.age
                     mass = osimresultskey.mass
                     height = osimresultskey.height
@@ -408,65 +495,44 @@ def export_opensim_results(meta, user, analyses, normalise = False):
                     aff_side = osimresultskey.aff_side
                     shomri_r = osimresultskey.shomri[0]
                     shomri_l = osimresultskey.shomri[1]
-                    
-                    # for bilateral symptomatics, affected side based on shomri
-                    if aff_side == 1:
-                        more_aff_side = "r"
-                    elif aff_side == 2:
-                        more_aff_side = "l"
-                    elif aff_side == 0 or aff_side == 3:
-                        if np.isnan(shomri_r) or np.isnan(shomri_l):
-                            more_aff_side = "r"   # default until data available
-                        if shomri_r > shomri_l:
-                            more_aff_side = "r"
-                        else:
-                            more_aff_side = "l"
                         
-                        
-                    # trial task type (always SDP in this case)
+                    # Trial task type
                     task = osimresultskey.task
-
-                    # pivot leg
-                    pivot_leg = osimresultskey.events["labels"][0][0].lower()
                     
-                    # generic event labels:
+                    
+                    # Generic event labels:
+                        
+                    # Task: SDP
                     #   PFO1: pivot limb foot off FP1
                     #   PFS2: pivot limb foot strike FP2
                     #   NFO1: non-pivot limb foot off FP1
                     #   etc...
-                    events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+                    if osimresultskey.task == "sdp":
+                        events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+                        lastidx = 5
                     
-                    # event timing: relative time and time steps
+                    # Task: SLDJ
+                    elif osimresultskey.task == "sldj":
+                        events_gen_labels = ["FS", "FO"]
+                        lastidx = 1
+                
+                    # Get the relative event times and steps
                     events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
-                    events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
+                    events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][lastidx] - osimresultskey.events["time"][0]))
                     
-                    # foot
+                    # Foot
                     for f, foot in enumerate(["r","l"]):
 
-                        # pivot leg or non-pivot leg data
-                        if foot == pivot_leg:
-                            data_leg_role = "pivot"
-                        else:
-                            data_leg_role = "nonpivot"
+                        # Additional trial data             
+                        more_aff_side = osimresultskey.more_aff_side   
+                        ground_leg = osimresultskey.ground_leg
+                        data_leg_role = osimresultskey.data_leg_role[foot]
+                        trial_combo = osimresultskey.trial_combo[foot]
                         
-                        # trial combinations:
-                        #   1. pivot = more affected, nonpivot = less affected
-                        #   2. pivot = less affected, nonpivot = more affected
-                        if data_leg_role == "pivot":
-                            if foot == more_aff_side:
-                                trial_combo = "pivot_more"
-                            else:
-                                trial_combo = "pivot_less"
-                        elif data_leg_role == "nonpivot":
-                            if foot == more_aff_side:
-                                trial_combo = "pivot_less"
-                            else:
-                                trial_combo = "pivot_more"                        
-                        
-                        # analysis
+                        # Analysis
                         for ans in analyses:
                             
-                            # ignore scaling
+                            # Ignore scaling
                             if ans.casefold() == "scale": continue
                         
                             # data array
@@ -477,7 +543,7 @@ def export_opensim_results(meta, user, analyses, normalise = False):
                             for v, variable in enumerate(varheader):                                
 
                                 # data for the variable (includes time)
-                                drow = data[:, v]
+                                drow = data[:, v].flatten()
     
                                 # normalisation factors
                                 normfactor = 1
@@ -491,12 +557,14 @@ def export_opensim_results(meta, user, analyses, normalise = False):
                                             normfactor = 1 / mass * user.gravity
                                         else:
                                             normfactor = 100 / (mass * user.gravity * height)
+                                    elif ans == "bk":
+                                        normfactor = 1
                                             
                                 # normalise if required
                                 drow = drow  * normfactor
                                             
                                 # create new line of data
-                                csvrow = [subj, trial, subj_type, task, pivot_leg, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, ground_leg, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.transpose().tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -507,7 +575,7 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "pivot_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "ground_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
@@ -530,6 +598,8 @@ def export_opensim_results(meta, user, analyses, normalise = False):
 export_opensim_results_subject_mean(meta, user, analyses, normalise):
     Calculate subject mean/sd waveforms and export to text. Normalise data
     if desired (default = False)
+    
+    NOTE: Do not use to export BodyKinematics, still work in progress
 '''
 def export_opensim_results_subject_mean(meta, user, analyses, normalise = False):
     
@@ -573,7 +643,7 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
                     with open(pkfile,"rb") as fid:
                         osimresultskey = pk.load(fid)
                                             
-                    # participant data
+                    # Participant data
                     age = osimresultskey.age
                     mass = osimresultskey.mass
                     height = osimresultskey.height
@@ -581,62 +651,42 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
                     dom_foot = osimresultskey.dom_foot
                     aff_side = osimresultskey.aff_side
                     shomri_r = osimresultskey.shomri[0]
-                    shomri_l = osimresultskey.shomri[1]
-                    
-                    # for bilateral symptomatics, affected side based on shomri
-                    if aff_side == 1:
-                        more_aff_side = "r"
-                    elif aff_side == 2:
-                        more_aff_side = "l"
-                    elif aff_side == 0 or aff_side == 3:
-                        if np.isnan(shomri_r) or np.isnan(shomri_l):
-                            more_aff_side = "r"   # default until data available
-                        if shomri_r > shomri_l:
-                            more_aff_side = "r"
-                        else:
-                            more_aff_side = "l"
-                        
+                    shomri_l = osimresultskey.shomri[1]                        
                         
                     # trial task type (always SDP in this case)
                     task = osimresultskey.task
 
-                    # pivot leg
-                    pivot_leg = osimresultskey.events["labels"][0][0].lower()
-                    
-                    # generic event labels:
+
+                    # Generic event labels:
+                        
+                    # Task: SDP
                     #   PFO1: pivot limb foot off FP1
                     #   PFS2: pivot limb foot strike FP2
                     #   NFO1: non-pivot limb foot off FP1
                     #   etc...
-                    events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+                    if osimresultskey.task == "sdp":
+                        events_gen_labels = ["PFO1", "PFS2", "NFO1", "NFS3", "PFO2", "PFS4"]
+                        lastidx = 5
                     
-                    # event timing: relative time and time steps
+                    # Task: SLDJ
+                    elif osimresultskey.task == "sldj":
+                        events_gen_labels = ["FS", "FO"]
+                        lastidx = 1
+                
+                    # Get the relative event times and steps
                     events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
-                    events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
+                    events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][lastidx] - osimresultskey.events["time"][0]))
+
                     
-                    # foot
+                    # Foot
                     for f, foot in enumerate(["r","l"]):
 
-                        # pivot leg or non-pivot leg data
-                        if foot == pivot_leg:
-                            data_leg_role = "pivot"
-                        else:
-                            data_leg_role = "nonpivot"
-                        
-                        # trial combinations:
-                        #   1. pivot = more affected, nonpivot = less affected
-                        #   2. pivot = less affected, nonpivot = more affected
-                        if data_leg_role == "pivot":
-                            if foot == more_aff_side:
-                                trial_combo = "pivot_more"
-                            else:
-                                trial_combo = "pivot_less"
-                        elif data_leg_role == "nonpivot":
-                            if foot == more_aff_side:
-                                trial_combo = "pivot_less"
-                            else:
-                                trial_combo = "pivot_more"                        
-                        
+                        # Additional trial data    
+                        more_aff_side = osimresultskey.more_aff_side   
+                        ground_leg = osimresultskey.ground_leg
+                        data_leg_role = osimresultskey.data_leg_role[foot]
+                        trial_combo = osimresultskey.trial_combo[foot]                    
+                                              
                         # analysis
                         for ans in analyses:
                             
@@ -651,7 +701,7 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
                             for v, variable in enumerate(varheader):                                
 
                                 # data for the variable (includes time)
-                                drow = data[:, v]
+                                drow = data[:, v].flatten()
     
                                 # normalisation factors
                                 normfactor = 1
@@ -665,12 +715,14 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
                                             normfactor = 1 / mass * user.gravity
                                         else:
                                             normfactor = 100 / (mass * user.gravity * height)
+                                    elif ans == "bk":
+                                        normfactor = 1
                                             
                                 # normalise if required
                                 drow = drow  * normfactor
                                             
                                 # create new line of data
-                                csvrow = [subj, trial, subj_type, task, pivot_leg, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, subj_type, task, ground_leg, foot, data_leg_role, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_combo] + events_times.tolist() + events_steps.tolist() + [ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -682,11 +734,11 @@ def export_opensim_results_subject_mean(meta, user, analyses, normalise = False)
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "subj_type", "task", "pivot_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "subj_type", "task", "ground_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "more_aff_leg", "trial_combo"] + ["et" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["es" + str(e + 1) + "_" + ev for e, ev in enumerate(events_gen_labels)] + ["analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # group
-    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "pivot_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "trial_combo", "analysis", "variable"])
+    csvdf_grouped = csvdf.groupby(["subject", "subj_type", "task", "ground_leg", "data_leg", "data_leg_role", "age", "mass", "height", "sex", "dom_foot", "aff_side", "shomri_r", "shomri_l", "trial_combo", "analysis", "variable"])
     
     # descriptives
     csvdf_grouped_mean = csvdf_grouped.mean().reset_index()

@@ -108,6 +108,8 @@ print("Done.\n")
 
 # %% COLLATE AND EXPORT RESULTS
 
+# NOTE: Cannot export BodyKinematics yet
+
 # import opensimresults as osr
 
 # print("Converting OpenSim results to Pickle...\n")
@@ -154,16 +156,29 @@ import stability
 # print("Stability analyses (MoS, WBAM) complete.\n")
 
 print("Exporting stability results (MoS, WBAM) to CSV...\n")
-stability.export_stability_metrics(forcedb, user, 101, True)
+stability.export_stability_metrics(forcedb, user, 101, False)
 print("Stability CSV export complete.\n")
 
+print("Exporting normalised stability results (MoS, WBAM) to CSV...\n")
+stability.export_stability_metrics(forcedb, user, 101, True)
+print("Normalised stability CSV export complete.\n")
+
 print("Exporting subject means of stability results (MoS, WBAM) to CSV...\n")
+stability.export_stability_metrics_subject_mean(forcedb, user, 101, False)
+print("Stability CSV export complete.\n")
+
+print("Exporting normalised subject means of stability results (MoS, WBAM) to CSV...\n")
 stability.export_stability_metrics_subject_mean(forcedb, user, 101, True)
 print("Normalised stability CSV export complete.\n")
 
 print("Exporting subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
-stability.export_wbam_discrete_subject_mean(forcedb, user, True)
+stability.export_wbam_discrete_subject_mean(forcedb, user, False)
 print("Discrete WBAM measures CSV export complete.\n")
+
+
+print("Exporting normalised subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
+stability.export_wbam_discrete_subject_mean(forcedb, user, True)
+print("Normalised discrete WBAM measures CSV export complete.\n")
 
 
 
