@@ -156,7 +156,7 @@ for n in scenario:
 
     # Create plot area
     fig = plt.figure(constrained_layout=True, figsize=(24, 10))   
-    fig.suptitle("Single-leg drop jump. Stance limb: %s (n%d) vs %s (n%d). %s limb data." % (subjtypefulllabel[0].upper(), np.shape(gp1data)[0], subjtypefulllabel[1].upper(), np.shape(gp2data)[0], n.title()), fontsize=20)
+    fig.suptitle("Single-leg drop jump. Stance limb: %s vs %s. %s limb data." % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper(), n.title()), fontsize=20)
     heights = [2, 1, 0.5, 2, 1]
     spec = fig.add_gridspec(nrows = 5, ncols = len(osimvars["ik"]), height_ratios = heights) 
     

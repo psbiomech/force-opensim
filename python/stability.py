@@ -1122,6 +1122,24 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                                 # Timeseries data
                                 dmat = wbamkey[ans][seg]
                                 dmat = dmat[bidx0:bidx1 + 1, :]
+
+                                # Set the segment label as stance or swing
+                                # depending on if leg is stance leg or not
+                                seglabel = seg
+                                if seglabel not in ["pelvis", "torso"]:
+                                    if foot == seglabel[-1]:
+                                        seglabel = seglabel[:-1] + "stance"
+                                    else:
+                                        seglabel = seglabel[:-1] + "swing"
+
+                                # Flip signs for frontal and transverse plane
+                                # components for left leg trials
+                                if foot == "l":
+                                    dmat[:, 0:2] = -1 * dmat[:, 0:2]
+
+                                # Resample if required
+                                if dmat.shape[0] != nsamp:
+                                    dmat = resample1d(dmat, nsamp)
                                                                                         
                                 # Normalisation factors
                                 normfactor = 1.0
@@ -1130,14 +1148,10 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                                                 
                                 # Normalise if required
                                 dmat = dmat * normfactor
-    
-                                # Resample if required
-                                if dmat.shape[0] != nsamp:
-                                    dmat = resample1d(dmat, nsamp)
                                     
                                 # create new line of data
                                 for d, dim in enumerate(["X", "Y", "Z"]):
-                                    csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + seg + "_" + dim] + dmat[:, d].flatten().tolist()
+                                    csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + seglabel + "_" + dim] + dmat[:, d].flatten().tolist()
                                     csvdata.append(csvrow)  
                 
                 except:

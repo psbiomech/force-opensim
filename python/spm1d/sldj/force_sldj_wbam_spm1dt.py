@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-FORCE SINGLE LEG DROP JUMP: MARGIN OF STABILITY SPM{t}
+FORCE SINGLE LEG DROP JUMP: WHOLE BODY ANGULAR MOMENTUM SPM{t}
 
 @author: Prasanna Sritharan, August 2023
 '''
@@ -20,13 +20,11 @@ rc("font", **{'family':'sans-serif','sans-serif':['Arial']})
 
 # Data file
 srcpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\csvfolder"
-#srcfile = "force_sldj_results_subject_descriptives_stability.csv"
 srcfile = "force_sldj_results_subject_descriptives_stability_normalised.csv"
 
 # Output file
 outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
-#outfilename = "force_sldj_spm1dt_wbam_more_ctrl"
 outfilename = "force_sldj_spm1dt_wbam_normalised_more_ctrl"
 
 
@@ -103,18 +101,20 @@ for v in variables:
 
 
 # Plot parameters
-plotheads = ["Frontal", "Transverse", "Sagittal"]
+plotheads = ["Frontal (X)", "Transverse (Y)", "Sagittal (Z)"]
 plotfont = {'fontname': 'Arial'}
+units = "(dimensionless)"
 
 
 # Create plot area
 fig = plt.figure(constrained_layout=True, figsize=(18, 6))   
-fig.suptitle("Single-leg drop-jump: %s vs %s" % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper()), fontsize=20)
+fig.suptitle("Single-leg drop-jump: %s vs %s. Whole body angular momentum." % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper()), fontsize=20)
 spec = fig.add_gridspec(nrows = 2, ncols = len(variables), height_ratios = [2, 1]) 
 
 
 # Create plots
 x = range(101)
+event0 = 48.5  # from IKID SPM script
 for col in range(len(variables)):                
          
     # Mean
@@ -133,18 +133,20 @@ for col in range(len(variables)):
     ax = fig.add_subplot(spec[0, col])
     ax.set_title(plotheads[col], fontsize = 12)
     if col == 0:
-        ax.set_ylabel("WBAM ($kgm^2$/s)", fontsize = 12) 
+        ax.set_ylabel("L " + units, fontsize = 12) 
     ax.fill_between(x, l1, u1, alpha = 0.3, linewidth = 0.0, color = "blue")
     ax.fill_between(x, l0, u0, alpha = 0.3, linewidth = 0.0, color = "red")
     ax.plot(x, m1, label = subjtypefulllabel[1], linewidth = 2.0, color = "blue") 
     ax.plot(x, m0, label = subjtypefulllabel[0], linewidth = 2.0, color = "red")
     ax.set_xlim([x[0], x[-1]])
-    ax.set_xlabel("% of drop landing", fontsize = 12)
+    #ax.set_xlabel("% of stance", fontsize = 12)
+    ax.axvline(x = event0, linewidth = 1.0, linestyle = ":", color = "k")
     if col == 0: ax.legend(frameon = False, loc = "lower left")
     
     # SPM plot
     ax = fig.add_subplot(spec[1, col])
-    ax.set_xlabel("% of drop landing", fontsize = 12)
+    ax.set_xlabel("% of stance", fontsize = 12)
+    ax.axvline(x = event0, linewidth = 1.0, linestyle = ":", color = "k")
     if col == 0: ax.set_ylabel("SPM{t}", fontsize = 10) 
     spmtinf[variables[col]].plot(plot_ylabel = False)
 
