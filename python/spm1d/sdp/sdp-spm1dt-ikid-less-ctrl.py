@@ -146,10 +146,11 @@ eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]
 plotheads = {}
 plotheads["ik"] = ["Hip flexion", "Hip adduction", "Hip rotation", "Knee flexion", "Ankle dorsiflexion", "Lumbar extension", "Lumbar bending", "Lumbar rotation"]
 plotheads["id"] = [k + " moment" for k in plotheads["ik"]]
+scenario_title = ["pivot", "swing"]
 
 
 # Generate plots
-for n in scenario:
+for nv, n in enumerate(scenario):
 
     # Scenario parameters
     nsubjs = [np.size(datamat[n]["ik"]["time"][s], axis=0) for s in range(len(subjtype))]
@@ -157,7 +158,7 @@ for n in scenario:
 
     # Create plot area
     fig = plt.figure(constrained_layout=True, figsize=(24, 10))   
-    fig.suptitle("Step-down-and-pivot: %s vs %s - %s limb" % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper(), n.title()), fontsize=20)
+    fig.suptitle("Step-down-and-pivot: %s vs %s - %s limb" % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper(), scenario_title[nv].title()), fontsize=20)
     heights = [2, 1, 0.5, 2, 1]
     spec = fig.add_gridspec(nrows = 5, ncols = len(osimvars["ik"]), height_ratios = heights) 
     
