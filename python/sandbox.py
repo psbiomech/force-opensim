@@ -49,8 +49,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILT02_SLDJ08"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT02\FAILT02_SLDJ08"
+fprefix = "FAILTCRT01_SLDJ02"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILTCRT01\FAILTCRT01_SLDJ02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")
@@ -82,8 +82,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILT08_SLDJ03"
-fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT08\FAILT08_SLDJ03"
+fprefix = "FAILTCRT01_SLDJ02"
+fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILTCRT01\FAILTCRT01_SLDJ02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")

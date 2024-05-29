@@ -43,7 +43,7 @@ df = df0[df0["statistic"] == "mean"]
 
 
 # Data labels
-variables = ["L_int_X", "L_int_Y", "L_int_Z", "L_range_X", "L_range_Y", "L_range_Z",]
+variables = ["L_int_X", "L_int_Y", "L_int_Z", "L_range_X", "L_range_Y", "L_range_Z", "L_avg_X", "L_avg_Y", "L_avg_Z", "stance_time", "CoM_v_mean"]
 subjtype = ["sym", "ctrl"]
 subjtypefulllabel = ["more symptomatic", "control"]
 legtype = [["more"], ["more", "less"]]
@@ -78,12 +78,21 @@ for v in variables:
 # Run t-tests and inference across all legs, analyses, variables and group pairs
 ttest = {}
 ttestinf = {}
+cohens = {}
+n = {}
+pooledsd = {}
+meandiff = {}
+cohensd = {}
 alpha = 0.05
 for v in variables:
     Y0 = datamat[v][0]
     Y1 = datamat[v][1]
     ttest[v] = stats.ttest_ind(Y0, Y1, equal_var=False)
     ttestinf[v] = ttest[v].pvalue < alpha
+    n[v] = [np.size(Y0, axis=0), np.size(Y1, axis=0)]
+    pooledsd[v] = np.sqrt(((n[v][0]-1)*(desc[v][0]["sd"]**2) + (n[v][1] - 1)*(desc[v][1]["sd"]**2)) / (n[v][0] + n[v][1] - 2))
+    meandiff[v] = desc[v][0]["mean"] - desc[v][1]["mean"]
+    cohensd[v] = meandiff[v] / pooledsd[v]
 
 
 # %% OUTPUT TABLE
@@ -97,10 +106,12 @@ for v in variables:
         csvrow.append(desc[v][s]["mean"])
         csvrow.append(desc[v][s]["sd"])
     csvrow.append(ttest[v].pvalue)
+    csvrow.append(meandiff[v])
+    csvrow.append(cohensd[v])
     csvdata.append(csvrow)
     
 # Create dataframe
-headers = ["variable", "sym_mean", "sym_sd", "ctrl_mean", "ctrl_sd", "p"]
+headers = ["variable", "sym_mean", "sym_sd", "ctrl_mean", "ctrl_sd", "p", "mean_diff", "d"]
 csvdf = pd.DataFrame(csvdata, columns = headers)
 
 # Save to CSV

@@ -87,7 +87,7 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
             for trial in meta[subj]["trials"][group]:
                 
                 #****** FOR TESTING ONLY ******
-                # if not (trial == "FAILTCRT13_SLDJ05"): continue
+                #if not (trial == "FAILTCRT01_SLDJ02"): continue
                 #******************************
                 
                 # ignore static trials
@@ -131,7 +131,7 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                     
                     # Calculate whole body angular momentum
                     print("---> Calculating whole body angular momentum...")
-                    wbam = whole_body_angular_momentum(user, datakey)
+                    wbam = whole_body_angular_momentum(user, datakey, osimkey)
                     
                     # Visualise
                     # print("---> Generating visualisations of whole body angular momentum...")
@@ -156,12 +156,12 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
 
 
 '''
-whole_body_angular_momentum(user, datakey):
+whole_body_angular_momentum(user, datakey, osimkey):
     Calculate whole body angular momentum as the sum of segmental angular 
     momentum with respect to the whole body centre-of-mass, from mechanical
     dynamics: L = sum(r x mv + Iw)
 '''
-def whole_body_angular_momentum(user, datakey):
+def whole_body_angular_momentum(user, datakey, osimkey):
 
     # Get the model
     osimfile = os.path.join(datakey.outpath, datakey.model)
@@ -198,16 +198,23 @@ def whole_body_angular_momentum(user, datakey):
         velocities[bname]["v"] = datakey.results["raw"]["bk"]["data"][:, vidxs[0:3], 1]
         velocities[bname]["w"] = np.radians(datakey.results["raw"]["bk"]["data"][:, vidxs[3:6], 1])
     
+    # Get the time vector from BodyKinematics
+    timevec = datakey.results["raw"]["bk"]["data"][:, 0, 0]    
+    
     # Get the absolute centre-of-mass position and velocity
     com = {}
     cidxs0 = [h for h, header in enumerate(datakey.results["raw"]["bk"]["headers"][0]) if "center_of_mass" in header]
     cidxs1 = [h for h, header in enumerate(datakey.results["raw"]["bk"]["headers"][1]) if "center_of_mass" in header]
     com["r"] = datakey.results["raw"]["bk"]["data"][:, cidxs0, 0]    
     com["v"] = datakey.results["raw"]["bk"]["data"][:, cidxs1, 1]
-    
-    # Get the time vector from BodyKinematics
-    timevec = datakey.results["raw"]["bk"]["data"][:, 0, 0]
         
+    # Get the centre of pressure for the time window
+    forces = osimkey.forces    
+    cop = construct_cop_trajectory(forces, timevec)
+
+    # Calculate centre of mass position relative to centre of pressure
+    com["r_cop"] = com["r"] - cop
+    
     # Calculate segmental angular momentum in inertial coordinates
     nsamps = np.shape(com["r"])[0]
     L_seg = {}
@@ -252,7 +259,31 @@ def whole_body_angular_momentum(user, datakey):
             # Store
             L_seg[bname][n, :] = L_seg_t
 
-
+    # Merge segmental model
+    merged_segments = {}
+    merged_segments["head_torso"] = ["torso"]
+    merged_segments["pelvis"] = ["pelvis"]
+    merged_segments["arm_l"] = ["humerus_l", "radius_l", "ulna_l", "hand_l"]
+    merged_segments["arm_r"] = ["humerus_r", "radius_r", "ulna_r", "hand_r"]
+    merged_segments["thigh_l"] = ["femur_l", "patella_l"]
+    merged_segments["thigh_r"] = ["femur_r", "patella_r"]
+    merged_segments["shank_l"] = ["tibia_l", "talus_l"]
+    merged_segments["shank_r"] = ["tibia_r", "talus_r"]
+    merged_segments["foot_l"] = ["calcn_l", "toes_l"]
+    merged_segments["foot_r"] = ["calcn_r", "toes_r"]
+    
+    # Calculate angular momenta for merged segments
+    L_seg_merged = {}
+    for m in merged_segments:
+        
+        # At each time step
+        L_seg_merged[m] = np.zeros([nsamps, 3])
+        for n in range(nsamps):
+            
+            # Sum individual components
+            L_seg_merged[m][n, :] = np.sum([np.array(L_seg[s][n, :]) for s in merged_segments[m]], axis=0)
+        
+        
     # Calculate whole body angular momentum
     L = np.zeros([nsamps, 3])
     for b in range(nbods): 
@@ -266,6 +297,12 @@ def whole_body_angular_momentum(user, datakey):
     # Integrated whole body angular momentum
     L_int = integ.simpson(L, timevec, axis = 0)
     
+    # Stance time
+    stance_time = timevec[-1] - timevec[0]
+    
+    # Average whole body angular momentum
+    L_avg = L_int / stance_time
+    
     # Average 3D centre of mass velocity (for normalisation)
     CoM_v_norm = np.linalg.norm(com["v"], axis = 1)
     CoM_v_mean = np.mean(CoM_v_norm)
@@ -277,12 +314,16 @@ def whole_body_angular_momentum(user, datakey):
     wbam["positions"] = positions
     wbam["velocities"] = velocities
     wbam["com"] = com
+    wbam["cop"] = cop
     wbam["L_seg"] = L_seg
+    wbam["L_seg_merged"] = L_seg_merged
     wbam["L"] = L
     wbam["L_range"] = L_range
     wbam["L_int"] = L_int
+    wbam["L_avg"] = L_avg
     wbam["task"] = datakey.task
     wbam["timevec"] = timevec
+    wbam["stance_time"] = stance_time
     wbam["CoM_v_mean"] = CoM_v_mean
 
     # Pickle it
@@ -291,6 +332,11 @@ def whole_body_angular_momentum(user, datakey):
         pk.dump(wbam, f)
 
     return wbam
+
+
+
+
+
 
 
 
@@ -551,6 +597,7 @@ def margin_of_stability(user, datakey, osimkey, treadmill_speed = 0.0):
             b_z = xcom[1] - bounds[1]        
         MoS["b_z"].append(b_z)        
             
+        
     # Construct dict with all stability data
     stabledict = {}
     stabledict["MoS"] = MoS
@@ -638,8 +685,68 @@ def construct_base_of_support(markers, forces, timevec):
         # Build base of support Polygon, but return the convex hull
         baseshape = shapely.MultiPoint(mkrcoords).convex_hull
         bos["baseshape"].append(baseshape)
+
         
     return bos
+
+
+
+'''
+construct_cop_trajectory(forces, timevec):
+    Construct the centre of pressure trajectory for the time window specified by
+    using splines, rather than simple resampling to ensure smoothness. For single
+    support use the centre of pressure on the respective foot. For double support
+    calculate the net centre-of-pressure from force-moment balance.
+'''
+def construct_cop_trajectory(forces, timevec):
+
+
+    # Get GRF
+    # Note: OpenSim GRF files are set up as FP1: left, FP2: right, even though 
+    # the lab setup is FP1: right, FP2: left.
+    grftime = forces["time"]
+    grfy_right = forces["data"]["right"]["F"][:, 1]
+    grfy_left = forces["data"]["left"]["F"][:, 1]
+        
+    # Determine single or double support from GRF:
+    #   0: no support
+    #   1: single support, right leg
+    #   2: single support, left leg
+    #   3: double support
+    issingle_fp_right = np.array([(fp > 0) * 1 for fp in grfy_right]).astype(int)
+    issingle_fp_left = np.array([(fp > 0) * 2 for fp in grfy_left]).astype(int)
+    issupport = issingle_fp_right + issingle_fp_left
+    
+    # Interpolation function: GRF support (zero-order)
+    supportfun = interp.interp1d(grftime, issupport, kind = "zero", fill_value = "extrapolate", axis = 0)    
+
+    # Create splines for centre of pressure
+    copfun = {}
+    foot = ["right", "left"]
+    for f, ft in enumerate(["r", "l"]):
+        copfun[f] = interp.interp1d(forces["time"], forces["data"][foot[f]]["cop"], kind = "cubic", fill_value = "extrapolate", axis = 0)
+    
+    # Create new centre of pressure trajectory
+    cop = np.empty([np.size(timevec), 3])
+    for tstep, t in enumerate(timevec):
+        
+        # Type of support
+        supportval = supportfun(t)
+        
+        # If no support, then CoP is always zero
+        if supportval == 0:
+            cop[tstep, :] = [0, 0, 0]
+            
+        # If single support, then use single leg centre of pressure
+        elif supportval in [1, 2]:
+            cop[tstep, :] = copfun[supportval - 1](t)
+            
+        # If double support then calculate new mean centre of pressure using
+        # force-moment balance (TBD - temporarily set to zero)
+        elif supportval == 4:
+            cop[tstep, :] = [0, 0, 0]
+            
+    return cop
 
 
 
@@ -796,10 +903,6 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
                     #events_times = osimresultskey.events["time"] - osimresultskey.events["time"][0]
                     #events_steps = np.round(user.samples * (osimresultskey.events["time"] - osimresultskey.events["time"][0]) / (osimresultskey.events["time"][5] - osimresultskey.events["time"][0]))
                     
-                    # Centre of mass velocity
-                    comvidx = osimresultskey.results["raw"][user.bkcode]["headers"][1].index("center_of_mass_X")
-                    comv = osimresultskey.results["raw"][user.bkcode]["data"][:, comvidx:comvidx + 3, 1]
-                    
                     
                     # foot
                     for f, foot in enumerate(["r","l"]):
@@ -827,7 +930,7 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
                         while ((b.dtype is np.dtype("bool")) and (b[bidx1] is None)) or ((b.dtype is not np.dtype("bool")) and (b[bidx1] == 0.0)): bidx1 = bidx1 - 1
                         
                         
-                        # margin of stability components
+                        # Margin of Stability components
                         for ans in ["b", "b_abs", "b_x", "b_z", "isstable"]:
                         
                             # Timeseries data, convert to 1D array and trim
@@ -856,7 +959,7 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
 
 
 
-                        # Whole body angular momentum, range and integral
+                        # Whole Body Angular Momentum, range and integral
                         wbam_int = wbamkey["L_int"]
                         wbam_range = wbamkey["L_range"]
                         for ans in ["L"]:
@@ -886,7 +989,7 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
                                  
  
                         # Whole body angular momentum segmental contributions
-                        for ans in ["L_seg"]:
+                        for ans in ["L_seg", "L_seg_merged"]:
                             
                             # Segments
                             for seg in wbamkey[ans]:
@@ -902,18 +1005,44 @@ def export_stability_metrics(meta, user, nsamp, normalise = False):
                                                 
                                 # Normalise if required
                                 dmat = dmat * normfactor
-                                wbam_int = wbam_int * normfactor
-                                wbam_range = wbam_range * normfactor
     
                                 # Resample if required
                                 if dmat.shape[0] != nsamp:
                                     dmat = resample1d(dmat, nsamp)
                                     
-                                # create new line of data
+                                # Create new line of data
                                 for d, dim in enumerate(["X", "Y", "Z"]):
                                     csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, -1, -1] + [ans + "_" + seg + "_" + dim] + dmat[:, d].flatten().tolist()
                                     csvdata.append(csvrow)            
  
+
+                        # Centre of mass kinematics
+                        for ans in ["com"]:
+                            
+                            # Coordinates (position, velocity)
+                            for q in ["r", "r_cop", "v"]:
+                        
+                                # Timeseries data
+                                dmat = wbamkey[ans][q]
+                                dmat = dmat[bidx0:bidx1 + 1, :]
+                                                                                        
+                                # Normalisation factors
+                                normfactor = 1.0
+                                if normalise:
+                                    normfactor = 1.0 / height
+                                                
+                                # Normalise if required
+                                dmat = dmat * normfactor
+    
+                                # Resample if required
+                                if dmat.shape[0] != nsamp:
+                                    dmat = resample1d(dmat, nsamp)
+                                    
+                                # Create new line of data
+                                for d, dim in enumerate(["X", "Y", "Z"]):
+                                    csvrow = [subj, subjidx, trial, subj_type, subj_type_code, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, -1, -1] + [ans + "_" + q + "_" + dim] + dmat[:, d].flatten().tolist()
+                                    csvdata.append(csvrow)  
+
     
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
@@ -1114,7 +1243,7 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                                 
 
                         # Whole body angular momentum segmental contributions
-                        for ans in ["L_seg"]:
+                        for ans in ["L_seg", "L_seg_merged"]:
                             
                             # Segments
                             for seg in wbamkey[ans]:
@@ -1126,7 +1255,7 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                                 # Set the segment label as stance or swing
                                 # depending on if leg is stance leg or not
                                 seglabel = seg
-                                if seglabel not in ["pelvis", "torso"]:
+                                if seglabel not in ["pelvis", "torso", "head_torso"]:
                                     if foot == seglabel[-1]:
                                         seglabel = seglabel[:-1] + "stance"
                                     else:
@@ -1153,7 +1282,40 @@ def export_stability_metrics_subject_mean(meta, user, nsamp, normalise = False):
                                 for d, dim in enumerate(["X", "Y", "Z"]):
                                     csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + seglabel + "_" + dim] + dmat[:, d].flatten().tolist()
                                     csvdata.append(csvrow)  
-                
+ 
+    
+                        # Centre of mass kinematics
+                        for ans in ["com"]:
+                        
+                            # Coordinates (position, velocity)
+                            for q in ["r", "r_cop", "v"]:
+                        
+                                # Timeseries data
+                                dmat = wbamkey[ans][q]
+                                dmat = dmat[bidx0:bidx1 + 1, :]
+
+                                # Flip signs for mediolateral kinematics
+                                # for left leg trials
+                                if foot == "l":
+                                    dmat[:, 2] = -1 * dmat[:, 2]
+
+                                # Resample if required
+                                if dmat.shape[0] != nsamp:
+                                    dmat = resample1d(dmat, nsamp)
+                                                                                        
+                                # Normalisation factors
+                                normfactor = 1.0
+                                if normalise:
+                                    normfactor = 1.0 / height
+                                                
+                                # Normalise if required
+                                dmat = dmat * normfactor
+                                    
+                                # create new line of data
+                                for d, dim in enumerate(["X", "Y", "Z"]):
+                                    csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + q + "_" + dim] + dmat[:, d].flatten().tolist()
+                                    csvdata.append(csvrow)                
+ 
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)
@@ -1300,7 +1462,7 @@ def export_wbam_discrete_subject_mean(meta, user, normalise = False):
                         
     
                         # Whole body angular momentum components
-                        for ans in ["L_int", "L_range"]:
+                        for ans in ["L_int", "L_range", "L_avg"]:
                         
                             # Data
                             dmat = wbamkey[ans]
@@ -1322,7 +1484,16 @@ def export_wbam_discrete_subject_mean(meta, user, normalise = False):
                             for d, dim in enumerate(["X", "Y", "Z"]):
                                 csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg] + [ans + "_" + dim] + [dmat[d]]
                                 csvdata.append(csvrow)
-                                
+
+                        # Discrete time variables
+                        for ans in ["stance_time", "CoM_v_mean"]:
+                        
+                            # Data
+                            dmat = wbamkey[ans]
+                            
+                            # Create new line of data
+                            csvrow = [subj, trial, subj_type, task, foot, age, mass, height, sex, dom_foot, aff_side, shomri_r, shomri_l, more_aff_side, trial_leg, ans, dmat]
+                            csvdata.append(csvrow)                                
                 
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
