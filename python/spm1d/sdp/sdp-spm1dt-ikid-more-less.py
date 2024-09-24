@@ -109,6 +109,8 @@ for n in scenario:
 
 
 # Run SPM{t} and inference across all legs, analyses, variables and group pairs
+bonferroni = 1      # 0=no, 1=yes
+significance = [0.05, 0.03125]  # [treat variables as independent vs Bonferroni corrected for 16 comparisons]
 spmt = {}
 spmtinf = {}
 for n in scenario:
@@ -121,7 +123,7 @@ for n in scenario:
             Y0 = datamat[n][a][v][0]
             Y1 = datamat[n][a][v][1]
             spmt[n][a][v] = spm1d.stats.ttest2(Y0, Y1, equal_var=False)
-            spmtinf[n][a][v] = spmt[n][a][v].inference(alpha = 0.05, two_tailed=True, interp=True)
+            spmtinf[n][a][v] = spmt[n][a][v].inference(alpha = significance[bonferroni], two_tailed=True, interp=True)
 
 
 # Combine for output
@@ -141,6 +143,8 @@ with open(os.path.join(outpath, outfilename + ".pkl"),"wb") as f: pk.dump(sdp, f
 eventlabels = ["PFO1", "PFS2", "NFO1", "NFS2", "PFO3", "PFS4"]
 eventlabelalign = ["left", "right", "left", "right", "left", "right"]
 eventlabeladjust = [0.01, -0.01, 0.01, -0.01, 0.01, -0.01]   
+bonftext = ["", "-bonferroni"]
+
 
 # Figure headers
 plotheads = {}
@@ -227,4 +231,4 @@ for nv, n in enumerate(scenario):
                     
                     
     # save to pdf
-    plt.savefig(os.path.join(outpath, outfilename + "-" + n + ".pdf"))
+    plt.savefig(os.path.join(outpath, outfilename + bonftext[bonferroni] + "-" + n + ".pdf"))

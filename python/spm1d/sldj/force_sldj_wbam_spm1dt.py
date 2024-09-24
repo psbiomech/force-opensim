@@ -154,3 +154,5 @@ for col in range(len(variables)):
 # Save to pdf
 plt.savefig(os.path.join(outpath, outfilename + ".pdf"))
 plt.close(fig)
+
+

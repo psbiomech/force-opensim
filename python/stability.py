@@ -307,7 +307,6 @@ def whole_body_angular_momentum(user, datakey, osimkey):
     CoM_v_norm = np.linalg.norm(com["v"], axis = 1)
     CoM_v_mean = np.mean(CoM_v_norm)
     
-    
     # Store in dict
     wbam = {}
     wbam["bodies"] = bodies
