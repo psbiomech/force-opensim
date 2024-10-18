@@ -27,10 +27,9 @@ outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
 outfilename = "force_sldj_spm1dt_mos_more_ctrl"
 
-# Outliers
-outliers = []
-# outliers = ["FAILTCRT08", "FAILTCRT13", "FAILTCRT28",  "FAILTCRT26", "FAILTCRT31",
-#             "FAILT69", "FAILT97", "FAILT146", "FAILT117"]
+# Exclusions (must have reason)
+# exclusions = []
+exclusions = ["FAILT105"]   # missing foot markers, unable to construct base of support
 
 
 
@@ -56,18 +55,18 @@ for v in ["time"] + variables:
     datamat[v] = {}
     
     # Group 0: symptomatic
-    gp0data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[0]) & (df["subj_type"] == subjtype[0]) & (df["variable"] == v)]
+    gp0data = df[~df["subject"].isin(exclusions) & df["leg_type"].isin(legtype[0]) & (df["subj_type"] == subjtype[0]) & (df["variable"] == v)]
     datamat[v][0] = gp0data.loc[:, "t1":"t101"].to_numpy()
 
     # # Group 1: Controls (each limb is considered independently)
-    gp1data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
+    gp1data = df[~df["subject"].isin(exclusions) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
     datamat[v][1] = gp1data.loc[:, "t1":"t101"].to_numpy()
 
     # # Group 1: Controls (mean of both limbs)
     # # A single participant mean for each control may not be appropriate for this
     # # study as only one limb is condsidered for each symptomatic. Need to get
     # # clarification.
-    # gp1data = df[~df["subject"].isin(outliers) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
+    # gp1data = df[~df["subject"].isin(exclusions) & df["leg_type"].isin(legtype[1]) & (df["subj_type"] == subjtype[1]) & (df["variable"] == v)]
     # gp1means = gp1data.groupby("subject").mean()
     # datamat[v][1] = gp1means.loc[:, "t1":"t101"].to_numpy()
 
@@ -113,7 +112,7 @@ spec = fig.add_gridspec(nrows = 2, ncols = len(variables), height_ratios = [2, 1
 
 # Create plots
 x = range(101)
-event0 = 48.5   # from IKID SPM script
+event0 = 48.5   # combined mean of max knee flexion angle, from IKID SPM script
 for col in range(len(variables)):                
          
     # Mean

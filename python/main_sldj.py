@@ -151,33 +151,33 @@ print("Done.\n")
 
 import stability
 
-# print("Running stability analyses (MoS, WBAM)...\n")
-# stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0)
-# print("Stability analyses (MoS, WBAM) complete.\n")
+print("Running stability analyses (MoS, WBAM)...\n")
+stability.batch_process_stability(user, forcedb, treadmill_speed = 0.0, restart=("FAILT105", "FAILT105"))
+print("Stability analyses (MoS, WBAM) complete.\n")
 
-print("Exporting stability results (MoS, WBAM) to CSV...\n")
-stability.export_stability_metrics(forcedb, user, 101, False)
-print("Stability CSV export complete.\n")
+# print("Exporting stability results (MoS, WBAM) to CSV...\n")
+# stability.export_stability_metrics(forcedb, user, 101, False)
+# print("Stability CSV export complete.\n")
 
-print("Exporting normalised stability results (MoS, WBAM) to CSV...\n")
-stability.export_stability_metrics(forcedb, user, 101, True)
-print("Normalised stability CSV export complete.\n")
+# print("Exporting normalised stability results (MoS, WBAM) to CSV...\n")
+# stability.export_stability_metrics(forcedb, user, 101, True)
+# print("Normalised stability CSV export complete.\n")
 
-print("Exporting subject means of stability results (MoS, WBAM) to CSV...\n")
-stability.export_stability_metrics_subject_mean(forcedb, user, 101, False)
-print("Stability CSV export complete.\n")
+# print("Exporting subject means of stability results (MoS, WBAM) to CSV...\n")
+# stability.export_stability_metrics_subject_mean(forcedb, user, 101, False)
+# print("Stability CSV export complete.\n")
 
-print("Exporting normalised subject means of stability results (MoS, WBAM) to CSV...\n")
-stability.export_stability_metrics_subject_mean(forcedb, user, 101, True)
-print("Normalised stability CSV export complete.\n")
+# print("Exporting normalised subject means of stability results (MoS, WBAM) to CSV...\n")
+# stability.export_stability_metrics_subject_mean(forcedb, user, 101, True)
+# print("Normalised stability CSV export complete.\n")
 
-print("Exporting subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
-stability.export_wbam_discrete_subject_mean(forcedb, user, False)
-print("Discrete WBAM measures CSV export complete.\n")
+# print("Exporting subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
+# stability.export_wbam_discrete_subject_mean(forcedb, user, False)
+# print("Discrete WBAM measures CSV export complete.\n")
 
-print("Exporting normalised subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
-stability.export_wbam_discrete_subject_mean(forcedb, user, True)
-print("Normalised discrete WBAM measures CSV export complete.\n")
+# print("Exporting normalised subject means of discrete WBAM measures (iWBAM, range) to CSV...\n")
+# stability.export_wbam_discrete_subject_mean(forcedb, user, True)
+# print("Normalised discrete WBAM measures CSV export complete.\n")
 
 
 

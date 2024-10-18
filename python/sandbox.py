@@ -97,7 +97,7 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "FAILT24_SLDJ06"
+fprefix = "FAILT105_SLDJ0"
 fpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\FAILT24\FAILT24_SLDJ06"
 
 # OsimResultsKey

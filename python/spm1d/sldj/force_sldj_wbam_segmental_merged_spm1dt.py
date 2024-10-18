@@ -106,6 +106,8 @@ for f in limb:
             
 
 # Run SPM{t} and inference across all legs, analyses, variables and group pairs
+bonferroni = 1      # 0=no, 1=yes
+significance = [0.05, 0.005]  # [treat variables as independent vs Bonferroni corrected for 10 comparisons]
 spmt = {}
 spmtinf = {}
 for f in limb:
@@ -118,7 +120,7 @@ for f in limb:
             Y0 = datamat[f][v][p][0]
             Y1 = datamat[f][v][p][1]
             spmt[f][v][p] = spm1d.stats.ttest2(Y0, Y1, equal_var=False)
-            spmtinf[f][v][p] = spmt[f][v][p].inference(alpha = 0.05, two_tailed=True, interp=True)
+            spmtinf[f][v][p] = spmt[f][v][p].inference(alpha = significance[bonferroni], two_tailed=True, interp=True)
 
 
 
@@ -130,45 +132,47 @@ planesstr = ["Frontal (X)", "Transverse (Y)", "Sagittal (Z)"]
 plotfont = {'fontname': 'Arial'}
 units = "(dimensionless)"
 subjtypeshortlabel = ["more sym", "ctrl"]
-
+plotvars = [["L_seg_pelvis"] + [v + "_stance" for v in varprefix],
+            ["L_seg_torso"] + [v + "_swing" for v in varprefix]]
 
 # Planes: X (Frontal), Y (Transverse), Z (Sagittal)
-event0 = 48.5  # from IKID SPM script
+event0 = 48.5  # max knee flexion from IKID SPM script
 for pn, p in enumerate(planes): 
 
     # Create plot area
-    fig = plt.figure(constrained_layout=True, figsize=(24, 10))   
+    fig = plt.figure(constrained_layout=True, figsize=(20, 10))   
     fig.suptitle("Single-leg drop jump. Stance limb: %s vs %s. Contributions to WBAM. %s plane." % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper(), planesstr[pn]), fontsize=20)
     heights = [2, 1, 0.5, 2, 1]
-    spec = fig.add_gridspec(nrows = 5, ncols = len(genericvars), height_ratios = heights) 
+    spec = fig.add_gridspec(nrows = 5, ncols = len(plotvars[0]), height_ratios = heights) 
 
     # Plot results
     for s in range(len(subjtype)): 
     
         # Create plots
         x = range(101)
-        for col in range(len(genericvars)):        
+        for col in range(len(plotvars[0])):        
             
             # Mean + stdev
             for r, row in enumerate([0, 3]):        
                  
                 f = limb[r]
+                v = plotvars[r][col]
                                
                 # Mean
-                m0 = desc[f][variables[f][col]][p][0]["mean"]
-                m1 = desc[f][variables[f][col]][p][1]["mean"]
+                m0 = desc[f][v][p][0]["mean"]
+                m1 = desc[f][v][p][1]["mean"]
                 
                 # Upper
-                u0 = m0 + desc[f][variables[f][col]][p][0]["sd"]
-                u1 = m1 + desc[f][variables[f][col]][p][1]["sd"]
+                u0 = m0 + desc[f][v][p][0]["sd"]
+                u1 = m1 + desc[f][v][p][1]["sd"]
                 
                 # Lower
-                l0 = m0 - desc[f][variables[f][col]][p][0]["sd"]
-                l1 = m1 - desc[f][variables[f][col]][p][1]["sd"]       
+                l0 = m0 - desc[f][v][p][0]["sd"]
+                l1 = m1 - desc[f][v][p][1]["sd"]       
                 
                 # Plot
                 ax = fig.add_subplot(spec[row, col])
-                ax.set_title(variables[f][col][6:] + "_" + p, fontsize = 12)
+                ax.set_title(v[6:] + "_" + p, fontsize = 12)
                 if (row == 0) and (col == 0):
                     ax.set_ylabel("L " + units, fontsize = 12)
                 elif (row == 3) and (col == 0):
@@ -185,7 +189,7 @@ for pn, p in enumerate(planes):
                 #for at in range(6): ax.text((eventlist[at] / 100) + eventlabeladjust[at], 0.95, eventlabels[at], transform = ax.transAxes, horizontalalignment = eventlabelalign[at], fontsize = 8)
                 
                 # SPM significance shading
-                issig = [1 if abs(z) > spmtinf[f][variables[f][col]][p].zstar else 0 for t, z in enumerate(spmtinf[f][variables[f][col]][p].z)]
+                issig = [1 if abs(z) > spmtinf[f][v][p].zstar else 0 for t, z in enumerate(spmtinf[f][v][p].z)]
                 issigdiff = np.diff([0] + issig + [0])
                 t0s = np.where(issigdiff == 1)
                 t1s = np.where(issigdiff == -1)  # Should be the same length as t0s, I hope!
@@ -197,13 +201,14 @@ for pn, p in enumerate(planes):
             for r, row in enumerate([1, 4]):  
                 
                 f = limb[r]
+                v = plotvars[r][col]
                 
                 # plot
                 ax = fig.add_subplot(spec[row, col])
                 ax.set_xlabel("% of stance", fontsize = 12)
                 if col == 0: ax.set_ylabel("SPM{t}", fontsize = 10) 
                 ax.axvline(x = event0, linewidth = 1.0, linestyle = ":", color = "k")
-                spmtinf[f][variables[f][col]][p].plot(plot_ylabel = False)
+                spmtinf[f][v][p].plot(plot_ylabel = False)
                         
                         
     # save to pdf

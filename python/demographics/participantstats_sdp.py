@@ -20,7 +20,7 @@ from scipy.stats import mannwhitneyu
 srcfile = r"C:\Users\Owner\Documents\data\FORCe\inputdatabase\force_sdp_participants_for_pub.csv"
 
 # Results
-outfile = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder\force_sdp_participant_descriptives.csv"
+#outfile = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase\csvfolder\force_sdp_participant_descriptives.csv"
 
 
 

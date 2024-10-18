@@ -24,6 +24,10 @@ outpath = r"C:\Users\Owner\Documents\data\FORCe\outputdatabase_sldj\spm1d"
 if not os.path.isdir(outpath): os.makedirs(outpath)
 outfilename = "force_sldj_spm1dt_ikid_more_ctrl"
 
+# Exclusions (must have reason)
+# exclusions = []
+exclusions = ["FAILT105"]   # missing foot markers, unable to construct base of support
+
 
 # %% PREPARE DATA
 
@@ -58,11 +62,11 @@ for sn, n in enumerate(scenario):
             datamat[n][a][v] = {}
             
             # Group 1
-            gp1data = df[(df["subj_type"] == subjtype[0]) & (df["trial_combo"] == trialcombo[sn][0]) & (df["analysis"] == a) & (df["variable"] == v)]
+            gp1data = df[~df["subject"].isin(exclusions) & (df["subj_type"] == subjtype[0]) & (df["trial_combo"] == trialcombo[sn][0]) & (df["analysis"] == a) & (df["variable"] == v)]
             datamat[n][a][v][0] = gp1data.loc[:, "t1":"t101"].to_numpy()
                    
             # Group 2
-            gp2data = df[(df["subj_type"] == subjtype[1]) & (df["trial_combo"].str.contains(trialcombo[sn][1])) & (df["analysis"] == a) & (df["variable"] == v)]
+            gp2data = df[~df["subject"].isin(exclusions) & (df["subj_type"] == subjtype[1]) & (df["trial_combo"].str.contains(trialcombo[sn][1])) & (df["analysis"] == a) & (df["variable"] == v)]
             datamat[n][a][v][1] = gp2data.loc[:, "t1":"t101"].to_numpy()
         
             # Get max knee flexion angle, i.e. most negative knee extension
@@ -108,6 +112,8 @@ for n in scenario:
 
 
 # Run SPM{t} and inference across all legs, analyses, variables and group pairs
+bonferroni = 1      # 0=no, 1=yes
+significance = [0.05, 0.03125]  # [treat variables as independent vs Bonferroni corrected for 16 comparisons]
 spmt = {}
 spmtinf = {}
 for n in scenario:
@@ -120,7 +126,7 @@ for n in scenario:
             Y0 = datamat[n][a][v][0]
             Y1 = datamat[n][a][v][1]
             spmt[n][a][v] = spm1d.stats.ttest2(Y0, Y1, equal_var=False)
-            spmtinf[n][a][v] = spmt[n][a][v].inference(alpha = 0.05, two_tailed=True, interp=True)
+            spmtinf[n][a][v] = spmt[n][a][v].inference(alpha = significance[bonferroni], two_tailed=True, interp=True)
 
 
 # Combine for output

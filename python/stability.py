@@ -52,11 +52,12 @@ batch_process_stability(user, meta, artifperturb, treadmill_speed, restart):
 '''
 def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 0.0, restart = -1):
 
-    
+
+    # Subjects
     failedfiles = []
     startflag = 0
     for subj in meta:
-                
+
         # Skip to restart participant, process until last restart participant.
         # Python uses lazy evaluation so combined expressions are efficient.
         if restart != -1:
@@ -72,9 +73,6 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                 else:
                     continue    
 
-
-    # Subjects
-    for subj in meta:
         
         print("-----------------------------------")
         print("SUBJECT: %s" % subj)
@@ -141,7 +139,7 @@ def batch_process_stability(user, meta, artifperturb = False, treadmill_speed = 
                 except:
                     print("*** FAILED ***")
                     failedfiles.append(trial)     
-                    #raise
+                    raise
                                     
     return failedfiles    
 
