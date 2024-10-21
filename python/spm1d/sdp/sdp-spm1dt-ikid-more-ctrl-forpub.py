@@ -112,7 +112,7 @@ for n in scenario:
 
 # Run SPM{t} and inference across all legs, analyses, variables and group pairs
 bonferroni = 1      # 0=no, 1=yes
-significance = [0.05, 0.03125]  # [treat variables as independent vs Bonferroni corrected for 16 comparisons]
+significance = [0.05, 0.003125]  # [treat variables as independent vs Bonferroni corrected for 16 comparisons]
 spmt = {}
 spmtinf = {}
 for n in scenario:

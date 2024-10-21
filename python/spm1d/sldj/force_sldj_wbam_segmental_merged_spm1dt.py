@@ -134,6 +134,8 @@ units = "(dimensionless)"
 subjtypeshortlabel = ["more sym", "ctrl"]
 plotvars = [["L_seg_pelvis"] + [v + "_stance" for v in varprefix],
             ["L_seg_torso"] + [v + "_swing" for v in varprefix]]
+titles = [["Pelvis", "Arm (Stance limb side)", "Thigh (Stance limb)", "Shank (Stance limb)", "Foot (Stance limb)"],
+          ["Torso", "Arm (Swing limb side)", "Thigh (Swing limb)", "Shank (Swing limb)", "Foot (Swing limb)"]]
 
 # Planes: X (Frontal), Y (Transverse), Z (Sagittal)
 event0 = 48.5  # max knee flexion from IKID SPM script
@@ -172,7 +174,7 @@ for pn, p in enumerate(planes):
                 
                 # Plot
                 ax = fig.add_subplot(spec[row, col])
-                ax.set_title(v[6:] + "_" + p, fontsize = 12)
+                ax.set_title(titles[r][col], fontsize = 12)
                 if (row == 0) and (col == 0):
                     ax.set_ylabel("L " + units, fontsize = 12)
                 elif (row == 3) and (col == 0):

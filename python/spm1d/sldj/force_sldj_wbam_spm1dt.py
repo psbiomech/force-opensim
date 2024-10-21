@@ -107,7 +107,7 @@ units = "(dimensionless)"
 
 
 # Create plot area
-fig = plt.figure(constrained_layout=True, figsize=(18, 6))   
+fig = plt.figure(constrained_layout=True, figsize=(12, 5))   
 fig.suptitle("Single-leg drop-jump: %s vs %s. Whole body angular momentum." % (subjtypefulllabel[0].upper(), subjtypefulllabel[1].upper()), fontsize=20)
 spec = fig.add_gridspec(nrows = 2, ncols = len(variables), height_ratios = [2, 1]) 
 
@@ -116,7 +116,9 @@ spec = fig.add_gridspec(nrows = 2, ncols = len(variables), height_ratios = [2, 1
 x = range(101)
 event0 = 48.5  # from IKID SPM script
 for col in range(len(variables)):                
-         
+    
+    v = variables[col]
+     
     # Mean
     m0 = desc[variables[col]][0]["mean"]
     m1 = desc[variables[col]][1]["mean"]
@@ -142,6 +144,15 @@ for col in range(len(variables)):
     #ax.set_xlabel("% of stance", fontsize = 12)
     ax.axvline(x = event0, linewidth = 1.0, linestyle = ":", color = "k")
     if col == 0: ax.legend(frameon = False, loc = "lower left")
+
+    # SPM significance shading on variable plot
+    issig = [1 if abs(z) > spmtinf[v].zstar else 0 for t, z in enumerate(spmtinf[v].z)]
+    issigdiff = np.diff([0] + issig + [0])
+    t0s = np.where(issigdiff == 1)
+    t1s = np.where(issigdiff == -1)  # Should be the same length as t0s, I hope!
+    if t0s[0].tolist():
+        for t in range(np.size(t0s[0])):
+            ax.axvspan(t0s[0][t], t1s[0][t], alpha = 0.3, color = "grey")
     
     # SPM plot
     ax = fig.add_subplot(spec[1, col])

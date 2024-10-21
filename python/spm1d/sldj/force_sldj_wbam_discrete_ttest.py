@@ -10,7 +10,7 @@ import os
 import numpy as np
 import pandas as pd
 from scipy import stats
-import matplotlib.pyplot as plt
+
 
 from matplotlib import rc
 rc("pdf", fonttype=42)
@@ -82,17 +82,36 @@ cohens = {}
 n = {}
 pooledsd = {}
 meandiff = {}
+pooledse = {}
+statsdfs = {}
+ci95md = {}
 cohensd = {}
 alpha = 0.05
 for v in variables:
+    
+    # Data
     Y0 = datamat[v][0]
     Y1 = datamat[v][1]
+    
+    # T-Tests
     ttest[v] = stats.ttest_ind(Y0, Y1, equal_var=False)
     ttestinf[v] = ttest[v].pvalue < alpha
+    
+    # Ns
     n[v] = [np.size(Y0, axis=0), np.size(Y1, axis=0)]
+    
+    # Pooled stats and DFs
     pooledsd[v] = np.sqrt(((n[v][0]-1)*(desc[v][0]["sd"]**2) + (n[v][1] - 1)*(desc[v][1]["sd"]**2)) / (n[v][0] + n[v][1] - 2))
+    pooledse[v] = np.sqrt((desc[v][0]["sd"]**2 / n[v][0]) + (desc[v][1]["sd"]**2 / n[v][1]))
+    statsdfs[v] = (pooledse[v]**2) / ( ((desc[v][0]["sd"]**2)**2) / (n[v][0]**2 * (n[v][0] - 1))  + ((desc[v][1]["sd"]**2)**2) / (n[v][1]**2 * (n[v][1] - 1)))
+    
+    # Mean difference and 95% CI of mean difference
     meandiff[v] = desc[v][0]["mean"] - desc[v][1]["mean"]
+    ci95md[v] = [meandiff[v] - stats.t.ppf(0.95, statsdfs[v]) * pooledse[v], meandiff[v] + stats.t.ppf(0.95, statsdfs[v]) * pooledse[v]]
+    
+    # Effects size
     cohensd[v] = meandiff[v] / pooledsd[v]
+    
 
 
 # %% OUTPUT TABLE
@@ -107,11 +126,13 @@ for v in variables:
         csvrow.append(desc[v][s]["sd"])
     csvrow.append(ttest[v].pvalue)
     csvrow.append(meandiff[v])
+    csvrow.append(ci95md[v][0])
+    csvrow.append(ci95md[v][1])
     csvrow.append(cohensd[v])
     csvdata.append(csvrow)
     
 # Create dataframe
-headers = ["variable", "sym_mean", "sym_sd", "ctrl_mean", "ctrl_sd", "p", "mean_diff", "d"]
+headers = ["variable", "sym_mean", "sym_sd", "ctrl_mean", "ctrl_sd", "p", "mean_diff", "ci95md_lower", "ci95md_upper", "d"]
 csvdf = pd.DataFrame(csvdata, columns = headers)
 
 # Save to CSV
