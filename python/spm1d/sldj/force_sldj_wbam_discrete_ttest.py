@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-
+# Matplotlib: write text as text not path
 from matplotlib import rc
 rc("pdf", fonttype=42)
 rc("font", **{'family':'sans-serif','sans-serif':['Arial']})

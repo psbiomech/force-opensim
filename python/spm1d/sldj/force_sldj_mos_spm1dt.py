@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import spm1d
 #import pickle as pk
 
+# Matplotlib: write text as text not path
 from matplotlib import rc
 rc("pdf", fonttype=42)
 rc("font", **{'family':'sans-serif','sans-serif':['Arial']})

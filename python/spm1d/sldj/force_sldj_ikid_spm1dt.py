@@ -13,6 +13,10 @@ import matplotlib.pyplot as plt
 import spm1d
 import pickle as pk
 
+# Matplotlib: write text as text not path
+from matplotlib import rc
+rc("pdf", fonttype=42)
+rc("font", **{'family':'sans-serif','sans-serif':['Arial']})
 
 
 # Data file
@@ -224,7 +228,7 @@ for n in scenario:
                 
                 # plot
                 ax = fig.add_subplot(spec[row, col])
-                ax.set_xlabel("% of stance", fontsize = 12)
+                ax.set_xlabel("% of landing", fontsize = 12)
                 if col == 0: ax.set_ylabel("SPM{t}", fontsize = 10) 
                 ax.axvline(x = eventlist, linewidth = 1.0, linestyle = ":", color = "k")
                 spmtinf[n][an][osimvars[an][col]].plot(plot_ylabel = False)
